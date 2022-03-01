@@ -70,6 +70,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
         playing={isPlaying}
         muted={isMuted}
         volume={0.7}
+        playsinline
       />
 
       <Box position="absolute" bottom={0} width="100%" p={controlsPadding}>

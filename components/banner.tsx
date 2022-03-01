@@ -2,7 +2,7 @@ import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import Image from "next/image"
 import { blackBgSx } from "../styles/theme"
-import ev3rethImage from "../public/EV3RETH-big.png"
+import ev3rethImage from "../public/EV3RETH-black.png"
 
 const Banner = () => {
   return (

@@ -24,12 +24,31 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items }) => {
   const isMobile = useMediaQuery(breakpoints.down("md"))
 
   const sliderSx = {
+    backgroundColor: 'rgba(0,0,0,0.1)',
     '& .swiper-coverflow': {
-      backgroundColor: 'rgba(0,0,0,0.1)',
       padding: spacing(5)
     },
     '& .swiper-pagination': {
       bottom: `${spacing(1)} !important`
+    },
+    '& .swiper-button-prev, & .swiper-button-next': {
+      px: {
+        xs: spacing(2),
+        sm: spacing(2.5),
+      },
+      py: {
+        xs: spacing(1),
+        sm: spacing(3.5),
+      },
+      borderRadius: 2,
+      backgroundColor: "rgba(100, 100, 100, 0.4)",
+      '&:after': {
+        fontSize: {
+          xs: spacing(4),
+          sm: spacing(5)
+        }
+      }
+      
     }
   }
 
@@ -52,8 +71,11 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items }) => {
             borderRadius={1}
             variant='subtitle1'
             align="center"
-            bgcolor="rgba(150, 150, 150, 0.3)"
+            bgcolor="rgba(100, 100, 100, 0.5)"
             color={palette.background.default}
+            sx={{
+              opacity: isActive ? 1 : 0.5
+            }}
           >
             {label}
           </Typography>

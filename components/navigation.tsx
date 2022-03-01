@@ -1,5 +1,6 @@
 import { MouseEventHandler, useState } from 'react';
 import type { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,11 +12,28 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import { useTheme } from '@mui/material/styles';
+import TwitterIcon from '@mui/icons-material/Twitter';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = [
+  {
+    label: 'Home',
+    path: '/'
+  },
+  {
+    label: 'Tune Out',
+    path: '/tune-out'
+  },
+  {
+    label: 'Collaborations',
+    path: '/collaborations'
+  }
+];
 
 const Navigation: NextPage = () => {
   const [anchorElNav, setAnchorElNav] = useState<Element | null>(null);
+  const { palette } = useTheme()
+  const router = useRouter()
 
   const handleOpenNavMenu: MouseEventHandler<HTMLButtonElement> = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -25,10 +43,15 @@ const Navigation: NextPage = () => {
     setAnchorElNav(null);
   };
 
-  const handleNavClick = (page: string) => {
-    console.log(page)
-    handleCloseNavMenu()
+  const handleNavClick = (path: string) => {
+    router.push(path)
   }
+
+  const renderTwitterLink = () => (
+    <a href="https://twitter.com/EV3RETH" target="_blank" rel="noreferrer" style={{ width: '100%' }}>
+      <TwitterIcon fontSize='small' />
+    </a>
+  )
 
   return (
     <>
@@ -73,25 +96,34 @@ const Navigation: NextPage = () => {
                     onClose={handleCloseNavMenu}
                     sx={{
                       display: { xs: 'block', md: 'none' },
+                      '& .MuiPaper-elevation': {
+                        backgroundColor: palette.background.default
+                      }
                     }}
                   >
-                    {pages.map((page) => (
-                      <MenuItem key={page} onClick={() => handleNavClick(page)}>
-                        <Typography textAlign="center">{page}</Typography>
+                    {pages.map(({ label, path }) => (
+                      <MenuItem key={path} onClick={() => handleNavClick(path)}>
+                        <Typography textAlign="center">{label}</Typography>
                       </MenuItem>
                     ))}
+                    <MenuItem>
+                      {renderTwitterLink()}
+                    </MenuItem>
                   </Menu>
                 </Box>
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "flex-end" }}>
-                  {pages.map((page) => (
+                  {pages.map(({ label, path }) => (
                     <Button
-                      key={page}
-                      onClick={() => handleNavClick(page)}
+                      key={path}
+                      onClick={() => handleNavClick(path)}
                       sx={{ my: 2, color: 'white', display: 'block' }}
                     >
-                      {page}
+                      {label}
                     </Button>
                   ))}
+                  <Button sx={{ mb: -1, color: 'white' }}>
+                    {renderTwitterLink()}
+                  </Button>
                 </Box>
               </Grid>
             </Grid>
