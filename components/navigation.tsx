@@ -123,6 +123,7 @@ const Navigation: NextPage = () => {
                       my: 2,
                       color: 'white',
                       display: 'block',
+                      borderRadius: 0,
                       "& :after": {
                         position: "absolute",
                         bottom: 0,
@@ -137,9 +138,9 @@ const Navigation: NextPage = () => {
                     }
                     return (
                       <Button
-                      key={path}
-                      onClick={() => handleNavClick(path)}
-                      sx={sx}
+                        key={path}
+                        onClick={() => handleNavClick(path)}
+                        sx={sx}
                       >
                         {label}
                       </Button>
