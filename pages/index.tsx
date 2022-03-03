@@ -6,7 +6,6 @@ import BigDisplay from '../components/big-display';
 import Banner from '../components/banner'
 import SwiperDisplay, { SwiperDisplayItem } from '../components/swiper-display';
 import bg from "../public/seed0092-bg.png"
-import { useTheme } from "@mui/material/styles";
 import Image from 'next/image';
 
 const tuneOutDisplayItems: Array<SwiperDisplayItem> = [

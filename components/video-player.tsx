@@ -45,6 +45,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
     float: "right",
   }
 
+  const videoSx = {
+    '& video': {
+      boxShadow: "2px 3px 4px rgba(0,0,0,0.6)"
+    }
+  }
+
   const handlePlayClick = () => {
     setIsPlaying(prev => !prev)
   }
@@ -54,7 +60,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
   }
 
   return (
-    <Box position="relative" maxWidth={playerWidth} m="auto">
+    <Box position="relative" sx={videoSx} maxWidth={playerWidth} m="auto">
       <ReactPlayer
         height="auto"
         width="100%"
