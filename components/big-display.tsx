@@ -2,10 +2,11 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { useTheme } from "@mui/material/styles";
+import { useTheme, alpha } from "@mui/material/styles";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import VideoPlayer from "./video-player";
-import { blackBgSx } from "../styles/theme";
+import { blackBgSx, whiteBgSx } from "../styles/theme";
+import { Divider } from "@mui/material";
 
 
 interface BigDisplayProps {
@@ -31,8 +32,17 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
   blackBg = false,
   reverseDisplay = false
 }) => {
-  const { breakpoints } = useTheme()
+  const { breakpoints, palette } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down("lg"))
+
+  const bgSx = blackBg ? blackBgSx : whiteBgSx;
+
+  const dividerShadow = blackBg ? "-2px" : "2px";
+  const dividerSx = {
+    border: "none",
+    boxShadow: `0px ${dividerShadow} 8px 2px rgba(0,0,0,0.7)`,
+  }
+ 
 
   const displayElement = () => {
     if (videoSrc) return (
@@ -49,11 +59,10 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
       </Grid>
     )
   }
-
-  const sx = blackBg ? blackBgSx : {}
   
   return (
-    <Box sx={sx}>
+    <Box sx={bgSx}>
+      <Divider sx={dividerSx}/>
       <Grid container maxWidth={1920} margin="auto" >
 
         {reverseDisplay && !isMobile && displayElement()}

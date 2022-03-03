@@ -30,7 +30,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
 
   const size = isSmall ? "small" : "medium"
   const playerWidth = isSmall ? 400 : 700;
-  const borderStyle = isSmall ? "inherit" : `${spacing(0.7)} solid ${palette.secondary.main}`
   const controlsPadding = isSmall ? 2 : 3;
 
   const playPause = isPlaying ? <PauseIcon fontSize={size} /> : <PlayArrowIcon fontSize={size} />
@@ -46,12 +45,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
     float: "right",
   }
 
-  const videoSx = {
-    '& video': {
-      border: borderStyle,
-    }
-  }
-
   const handlePlayClick = () => {
     setIsPlaying(prev => !prev)
   }
@@ -61,7 +54,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
   }
 
   return (
-    <Box position="relative" sx={videoSx} maxWidth={playerWidth} m="auto">
+    <Box position="relative" maxWidth={playerWidth} m="auto">
       <ReactPlayer
         height="auto"
         width="100%"

@@ -1,4 +1,4 @@
-import { createTheme, responsiveFontSizes, SxProps, Theme } from "@mui/material/styles";
+import { createTheme, responsiveFontSizes, SxProps, Theme, alpha } from "@mui/material/styles";
 
 let theme = createTheme({
   palette: {
@@ -34,8 +34,12 @@ theme = responsiveFontSizes(theme);
 export default theme;
 
 export const blackBgSx: SxProps<Theme> = {
-  backgroundColor: theme.palette.primary.main,
+  backgroundColor: alpha(theme.palette.primary.main, 1),
   typography: {
     color: theme.palette.background.paper,
   }
+}
+
+export const whiteBgSx: SxProps<Theme> = {
+  backgroundColor: alpha(theme.palette.background.default, 0.85),
 }

@@ -8,8 +8,7 @@ const Banner = () => {
   return (
     <Box px={{ xs: 4, sm: 10, lg: 16 }} py={{ xs: 12, lg: 18 }} textAlign="center" sx={blackBgSx} >
       <Box maxWidth={1024} mx="auto" mb={10}>
-        <Image src={ev3rethImage} layout="responsive" alt="EV3RETH Logo" />
-
+        <Image src={ev3rethImage} layout="responsive" alt="EV3RETH" />
       </Box>
       <Typography variant="h4">
         Machine Learning Artist and Composer

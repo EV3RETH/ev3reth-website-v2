@@ -9,6 +9,7 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import VideoPlayer from './video-player';
 import { Typography } from '@mui/material';
+import { blackBgSx, whiteBgSx } from '../styles/theme';
 
 export interface SwiperDisplayItem {
   url: string;
@@ -17,12 +18,14 @@ export interface SwiperDisplayItem {
 }
 interface SwiperDisplayProps {
   items: Array<SwiperDisplayItem>
+  blackBg?: boolean
 }
 
-const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items }) => {
+const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false }) => {
   const { breakpoints, spacing, palette } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down("md"))
 
+  const bgSx = blackBg ? blackBgSx : whiteBgSx
   const sliderSx = {
     backgroundColor: 'rgba(0,0,0,0.1)',
     '& .swiper-coverflow': {
@@ -85,35 +88,37 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items }) => {
   }
 
   return (
-    <Box sx={sliderSx}>
-      <Swiper
-        style={{
-          // @ts-ignore
-          "--swiper-theme-color": `${palette.secondary.main}`
-        }}
-        effect={"coverflow"}
-        centeredSlides={true}
-        slidesPerView={isMobile ? 1 : 3}
-        coverflowEffect={{
-          rotate: 40,
-          stretch: 0,
-          depth: 300,
-          modifier: 1,
-          slideShadows: false,
-        }}
-        grabCursor={true}
-        pagination={isMobile}
-        navigation={true}
-        modules={[EffectCoverflow, Pagination, Navigation]}
-      >
-        {items.map((item, index) => {
-          return (
-            <SwiperSlide key={`${item}-${index}}`}>
-              {({ isActive }) => displayElement(isActive, item)}
-            </SwiperSlide>
-          )
-        })}
-      </Swiper>
+    <Box sx={bgSx}>
+      <Box sx={sliderSx}>
+        <Swiper
+          style={{
+            // @ts-ignore
+            "--swiper-theme-color": `${palette.secondary.main}`
+          }}
+          effect={"coverflow"}
+          centeredSlides={true}
+          slidesPerView={isMobile ? 1 : 3}
+          coverflowEffect={{
+            rotate: 40,
+            stretch: 0,
+            depth: 300,
+            modifier: 1,
+            slideShadows: false,
+          }}
+          grabCursor={true}
+          pagination={isMobile}
+          navigation={true}
+          modules={[EffectCoverflow, Pagination, Navigation]}
+        >
+          {items.map((item, index) => {
+            return (
+              <SwiperSlide key={`${item}-${index}}`}>
+                {({ isActive }) => displayElement(isActive, item)}
+              </SwiperSlide>
+            )
+          })}
+        </Swiper>
+      </Box>
     </Box>
 )
 }
