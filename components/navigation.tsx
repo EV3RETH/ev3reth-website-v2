@@ -14,6 +14,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { useTheme } from '@mui/material/styles';
 import TwitterIcon from '@mui/icons-material/Twitter';
+import { inherits } from 'util';
 
 const pages = [
   {
@@ -102,7 +103,11 @@ const Navigation: NextPage = () => {
                     }}
                   >
                     {pages.map(({ label, path }) => (
-                      <MenuItem key={path} onClick={() => handleNavClick(path)}>
+                      <MenuItem
+                        key={path}
+                        onClick={() => handleNavClick(path)}
+                        selected={path === router.pathname}
+                      >
                         <Typography textAlign="center">{label}</Typography>
                       </MenuItem>
                     ))}
@@ -112,15 +117,34 @@ const Navigation: NextPage = () => {
                   </Menu>
                 </Box>
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "flex-end" }}>
-                  {pages.map(({ label, path }) => (
-                    <Button
+                  {pages.map(({ label, path }) => {
+                    const isActive = path === router.pathname
+                    const sx = {
+                      my: 2,
+                      color: 'white',
+                      display: 'block',
+                      "& :after": {
+                        position: "absolute",
+                        bottom: 0,
+                        left: "inherit",
+                        content: "''",
+                        width: "100%",
+                        height: 2,
+                        opacity: isActive ? 1 : 0,
+                        backgroundColor: "white",
+                        transition: "0.3s"
+                      }
+                    }
+                    return (
+                      <Button
                       key={path}
                       onClick={() => handleNavClick(path)}
-                      sx={{ my: 2, color: 'white', display: 'block' }}
-                    >
-                      {label}
-                    </Button>
-                  ))}
+                      sx={sx}
+                      >
+                        {label}
+                      </Button>
+                    )
+                  })}
                   <Button sx={{ mb: -1, color: 'white' }}>
                     {renderTwitterLink()}
                   </Button>

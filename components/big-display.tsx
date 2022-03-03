@@ -8,7 +8,6 @@ import VideoPlayer from "./video-player";
 import { blackBgSx, whiteBgSx } from "../styles/theme";
 import { Divider } from "@mui/material";
 
-
 interface BigDisplayProps {
   title: string;
   tag: string;
@@ -32,7 +31,7 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
   blackBg = false,
   reverseDisplay = false
 }) => {
-  const { breakpoints, palette } = useTheme()
+  const { breakpoints, spacing } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down("lg"))
 
   const bgSx = blackBg ? blackBgSx : whiteBgSx;
@@ -40,7 +39,7 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
   const dividerShadow = blackBg ? "-2px" : "2px";
   const dividerSx = {
     border: "none",
-    boxShadow: `0px ${dividerShadow} 8px 2px rgba(0,0,0,0.7)`,
+    boxShadow: `0px ${dividerShadow} 8px 2px rgba(0,0,0,0.5)`,
   }
  
 

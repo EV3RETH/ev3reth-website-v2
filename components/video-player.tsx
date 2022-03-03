@@ -47,12 +47,13 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
 
   const videoSx = {
     '& video': {
-      boxShadow: "2px 3px 4px rgba(0,0,0,0.6)"
+      boxShadow: "2px 3px 4px rgba(0,0,0,0.6)",
     }
   }
 
   const handlePlayClick = () => {
     setIsPlaying(prev => !prev)
+    if(isMuted) setIsMuted(false)
   }
 
   const handleMuteClick = () => {
