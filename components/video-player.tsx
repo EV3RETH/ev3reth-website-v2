@@ -65,7 +65,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
 
   return (
     <Box position="relative" sx={videoSx} width={playerWidth} m="auto">
-      <Box position="absolute" bottom={0} width="100%" height="100%" p={controlsPadding} zIndex={1} display="flex" justifyContent="space-between" alignItems="flex-end">
+      <Box position="absolute" bottom={0} width="100%" height="100%" p={controlsPadding} zIndex={1} display="flex" justifyContent="space-between" alignItems="flex-end" boxSizing="border-box">
         <Fab color="secondary" onClick={handlePlayClick} sx={playSx} size={size} disabled={!isActive}>
           {playPause}
         </Fab>
