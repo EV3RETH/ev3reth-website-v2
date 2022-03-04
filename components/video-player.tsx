@@ -81,12 +81,15 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
         playing={isPlaying}
         muted={isMuted}
         volume={0.7}
+        controls={false}
         config={{
           vimeo: {
             playerOptions: {
+              playsinline: true,
               width: playerWidth,
               controls: false,
-              responsive: true
+              responsive: true,
+              pip: false
             }
           }
         }}
