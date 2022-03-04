@@ -43,11 +43,11 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false })
     },
     '& .swiper-button-prev, & .swiper-button-next': {
       px: {
-        xs: spacing(2),
+        xs: spacing(0),
         sm: spacing(2.5),
       },
       py: {
-        xs: spacing(1),
+        xs: spacing(0),
         sm: spacing(3.5),
       },
       borderRadius: 2,
@@ -72,9 +72,9 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false })
       <Box>
         {element}
         {label && (
-          <Box position="absolute" bottom={spacing(2)} width="100%" display="flex" justifyContent="center">
+          <Box position="absolute" bottom={spacing(1)} width="100%" display="flex" justifyContent="center">
             <Typography
-              width={180}
+              width={190}
               borderRadius={1}
               variant='subtitle1'
               align="center"

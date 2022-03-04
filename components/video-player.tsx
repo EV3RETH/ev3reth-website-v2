@@ -32,7 +32,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
   const size = isSmall ? "small" : "medium"
   const smallWidth = isMobile ? 300 : 400
   const playerWidth = isSmall ? smallWidth : 700;
-  const controlsPadding = isSmall ? 2 : 3;
+  const controlsPadding = isSmall ? 1 : 1.5;
 
   const playPause = isPlaying ? <PauseIcon fontSize={size} /> : <PlayArrowIcon fontSize={size} />
   const playOpacity = isPlaying ? 0.3 : 1;
@@ -52,7 +52,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
     ? {
       boxShadow: "2px 3px 4px rgba(0,0,0,0.6)",
     }
-    : { }
+    : {}
 
   const handlePlayClick = () => {
     setIsPlaying(prev => !prev)
