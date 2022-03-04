@@ -23,11 +23,18 @@ interface SwiperDisplayProps {
 
 const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false }) => {
   const { breakpoints, spacing, palette } = useTheme()
-  const isMobile = useMediaQuery(breakpoints.down("md"))
+  const isTablet = useMediaQuery(breakpoints.down("md"))
+  const isDesktop = useMediaQuery(breakpoints.down("lg"))
 
+  const slidesPerView = () => {
+    if (isTablet) return 1;
+    if (isDesktop) return 2;
+    return 3
+  }
   const bgSx = blackBg ? blackBgSx : whiteBgSx
   const sliderSx = {
     backgroundColor: 'rgba(0,0,0,0.1)',
+    '--swiper-theme-color': `${palette.secondary.main}`,
     '& .swiper-coverflow': {
       padding: spacing(5)
     },
@@ -51,7 +58,6 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false })
           sm: spacing(5)
         }
       }
-      
     }
   }
 
@@ -66,22 +72,21 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false })
       <Box>
         {element}
         {label && (
-          <Typography
-            position="absolute"
-            bottom={spacing(2)}
-            left="25%"
-            width="50%"
-            borderRadius={1}
-            variant='subtitle1'
-            align="center"
-            bgcolor="rgba(100, 100, 100, 0.5)"
-            color={palette.background.default}
-            sx={{
-              opacity: isActive ? 1 : 0.5
-            }}
-          >
-            {label}
-          </Typography>
+          <Box position="absolute" bottom={spacing(2)} width="100%" display="flex" justifyContent="center">
+            <Typography
+              width={180}
+              borderRadius={1}
+              variant='subtitle1'
+              align="center"
+              bgcolor="rgba(100, 100, 100, 0.5)"
+              color={palette.background.default}
+              sx={{
+                opacity: isActive ? 1 : 0.5
+              }}
+            >
+              {label}
+            </Typography>
+          </Box>
         )}
       </Box>
     )
@@ -91,13 +96,9 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false })
     <Box sx={bgSx}>
       <Box sx={sliderSx}>
         <Swiper
-          style={{
-            // @ts-ignore
-            "--swiper-theme-color": `${palette.secondary.main}`
-          }}
           effect={"coverflow"}
           centeredSlides={true}
-          slidesPerView={isMobile ? 1 : 3}
+          slidesPerView={slidesPerView()}
           coverflowEffect={{
             rotate: 40,
             stretch: 0,
@@ -106,7 +107,7 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false })
             slideShadows: false,
           }}
           grabCursor={true}
-          pagination={isMobile}
+          pagination={isTablet}
           navigation={true}
           modules={[EffectCoverflow, Pagination, Navigation]}
         >

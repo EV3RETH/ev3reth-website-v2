@@ -48,8 +48,7 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
       <Grid item xs={12} lg={6}>
         <Box
           p={{ xs: 0, sm: 4, md: 8 }}
-          pt={{ xs: 0, sm: 0, md: 0, lg: 8 }}
-          mb={{ xs: -0.8, lg: 0 }}
+          pt={{ md: 0, lg: 8 }}
           display="flex"
           justifyContent="center"
         >
