@@ -23,11 +23,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
   const { breakpoints } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down("sm"))
 
-  useEffect(() => {
-    if (isSmall) {
-      setIsPlaying(isActive)
-    }
-  }, [isActive, isSmall])
+  // useEffect(() => {
+  //   if (isSmall) {
+  //     setIsPlaying(isActive)
+  //   }
+  // }, [isActive, isSmall])
 
   const size = isSmall ? "small" : "medium"
   const smallWidth = isMobile ? 300 : 400

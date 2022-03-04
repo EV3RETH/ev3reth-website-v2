@@ -34,7 +34,6 @@ const Home: NextPage = () => {
         marketText="View Collection on Paras"
         marketLink="https://paras.id/collection/tune-out-by-ev3rethnear"
         videoSrc="https://vimeo.com/684484577"
-        autoPlayVideo
       />
       <SwiperDisplay items={tuneOutDisplayItems} />
       <BigDisplay
