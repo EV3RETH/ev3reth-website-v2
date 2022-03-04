@@ -46,6 +46,7 @@ const Navigation: NextPage = () => {
 
   const handleNavClick = (path: string) => {
     router.push(path)
+    handleCloseNavMenu()
   }
 
   const renderTwitterLink = () => (

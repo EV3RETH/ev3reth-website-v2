@@ -17,39 +17,39 @@ interface DisplayListItem extends SwiperDisplayItem {
 
 export const tuneOutDisplayItems: Array<DisplayListItem> = [
   {
-    url: '/CH1 - The Endless.mp4',
+    url: 'https://vimeo.com/684482975',
     label: 'CH1 - The Endless',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253374/253374:1",
     tagText: "Sold"
   },
   {
-    url: '/CH2 - The Expanse.mp4',
+    url: 'https://vimeo.com/684482985',
     label: 'CH2 - The Expanse',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253392"
   },
   {
-    url: '/CH3 - The Serene.mp4',
+    url: 'https://vimeo.com/684482993',
     label: 'CH3 - The Serene',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253401"
   },
   {
-    url: '/CH4 - The Disturbed.mp4',
+    url: 'https://vimeo.com/684483006',
     label: 'CH4 - The Disturbed',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253415/253415:1",
     tagText: "Sold"
   },
   {
-    url: '/CH5 - The Traveler.mp4',
+    url: 'https://vimeo.com/684483019',
     label: 'CH5 - The Traveler',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253421"
   },
   {
-    url: '/CH6 - The Mystic.mp4',
+    url: 'https://vimeo.com/684483034',
     label: 'CH6 - The Mystic',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253461"

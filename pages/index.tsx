@@ -33,7 +33,7 @@ const Home: NextPage = () => {
         tag="Part One Available Now"
         marketText="View Collection on Paras"
         marketLink="https://paras.id/collection/tune-out-by-ev3rethnear"
-        videoSrc="/Tune out promo v3.mp4"
+        videoSrc="https://vimeo.com/684484577"
         autoPlayVideo
       />
       <SwiperDisplay items={tuneOutDisplayItems} />
@@ -42,7 +42,7 @@ const Home: NextPage = () => {
         tag="Sold"
         marketText="View on Paras"
         marketLink="https://paras.id/token/x.paras.near::188803"
-        videoSrc="/SUMMERSUN-long-trimmed.mp4"
+        videoSrc="https://vimeo.com/684484141"
         reverseDisplay
         blackBg
       />

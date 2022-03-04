@@ -33,7 +33,7 @@ const Collaborations: NextPage = () => {
         tag="Sold"
         marketText="View on Paras"
         marketLink="https://paras.id/token/x.paras.near::188803"
-        videoSrc="/SUMMERSUN-long-trimmed.mp4"
+        videoSrc="https://vimeo.com/684484141"
       />
 
       <BannerWrapper blackBg>
@@ -46,7 +46,7 @@ const Collaborations: NextPage = () => {
         <TwitterLink url="https://twitter.com/griffindart" />
       </BannerWrapper>
       <BigDisplay
-        videoSrc="/CH6 - The Mystic.mp4"
+        videoSrc="https://vimeo.com/684483034"
         title="CH6 - The Mystic"
         tag="Available"
         marketText="View on Paras"

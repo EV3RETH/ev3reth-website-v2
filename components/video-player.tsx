@@ -46,9 +46,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
   }
 
   const videoSx = {
-    '& video': {
+    // '& iframe': {
       boxShadow: "2px 3px 4px rgba(0,0,0,0.6)",
-    }
+    // }
   }
 
   const handlePlayClick = () => {
@@ -61,18 +61,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
   }
 
   return (
-    <Box position="relative" sx={videoSx} maxWidth={playerWidth} m="auto">
-      <ReactPlayer
-        height="auto"
-        width="100%"
-        url={url}
-        loop
-        playing={isPlaying}
-        muted={isMuted}
-        volume={0.7}
-        playsinline
-      />
-
+    <Box position="relative" sx={videoSx} width={playerWidth} m="auto">
       <Box position="absolute" bottom={0} width="100%" p={controlsPadding}>
         <Fab color="secondary" onClick={handlePlayClick} sx={playSx} size={size} disabled={!isActive}>
           {playPause}
@@ -81,6 +70,19 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
           {mutedUnmuted}
         </Fab>
       </Box>
+      <ReactPlayer
+        controls={false}
+        // height="auto"
+        width="100%"
+        // width={playerWidth}
+        url={url}
+        loop
+        playing={isPlaying}
+        muted={isMuted}
+        volume={0.7}
+        pip={false}
+        playsinline
+      />
     </Box>
   )
 }
