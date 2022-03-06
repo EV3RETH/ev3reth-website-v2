@@ -10,7 +10,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 
 
 
-const TwitterLink = ({url} : {url: string}) => (
+export const TwitterLink = ({url} : {url: string}) => (
   <Button color="secondary">
     <a href={url} target="_blank" rel="noreferrer">
       <TwitterIcon />

@@ -3,11 +3,12 @@ import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import { useEffect, useState } from "react";
+import { useEffect,  useState } from "react";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
-import { useTheme } from "@mui/material/styles";
-import { useMediaQuery } from "@mui/material";
+import Button from "@mui/material/Button";
+import { useTheme, SxProps, Theme, alpha } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface VideoPlayerProps {
   url: string;
@@ -18,34 +19,32 @@ interface VideoPlayerProps {
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmall = false, isActive = true }) => {
   const [isPlaying, setIsPlaying] = useState(autoPlay)
-  const [isMuted, setIsMuted] = useState(true)
+  const [isMuted, setIsMuted] = useState(false)
+  const [showingControls, setShowingControls] = useState(false)
 
-  const { breakpoints } = useTheme()
+  const { breakpoints, palette } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down("sm"))
 
-  // useEffect(() => {
-  //   if (isSmall) {
-  //     setIsPlaying(isActive)
-  //   }
-  // }, [isActive, isSmall])
+  useEffect(() => {
+    if (isSmall && !isActive) {
+      setIsPlaying(false)
+    }
+  }, [isActive, isSmall])
 
-  const size = isSmall ? "small" : "medium"
+  useEffect(() => {
+    if(!isPlaying) setShowingControls(true)
+  }, [isPlaying, showingControls])
+
+  const size = (isSmall || isMobile) ? "small" : "medium"
   const smallWidth = isMobile ? 300 : 400
   const playerWidth = isSmall ? smallWidth : 700;
   const controlsPadding = isSmall ? 1 : 1.5;
 
   const playPause = isPlaying ? <PauseIcon fontSize={size} /> : <PlayArrowIcon fontSize={size} />
-  const playOpacity = isPlaying ? 0.3 : 1;
-  const playSx = {
-    opacity: playOpacity,
-    borderRadius: 1
-  }
-
   const mutedUnmuted = isMuted ? <VolumeOffIcon fontSize={size} /> : <VolumeUpIcon fontSize={size} />
-  const muteOpacity = isMuted ? 1 : 0.3;
-  const muteSx = {
-    opacity: muteOpacity,
-    borderRadius: 1
+  const buttonSx = {
+    zIndex: 2,
+    borderRadius: 1,
   }
 
   const videoSx = !isMobile || isSmall
@@ -53,23 +52,73 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
       boxShadow: "2px 3px 4px rgba(0,0,0,0.6)",
     }
     : {}
+  
+  const controlsSx: SxProps<Theme> = {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    height: "100%",
+    p: controlsPadding,
+    zIndex: 1,
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
+    boxSizing: "border-box",
+    opacity: showingControls ? 1 : 0,
+    transition: "0.7s",
+  }
+
+  const controlScrimSx = {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    width: "100%",
+    height: "100%",
+    borderRadius: 0,
+    cursor: "default",
+    boxSizing: "border-box",
+  }
+
+  const hideControls = () => {
+    setTimeout(() => setShowingControls(false), 2000)
+  }
+  
+  const handleMouseEnter = () => {
+    setShowingControls(true)
+  }
+  const handleMouseOut = () => {
+    setShowingControls(false)
+  }
 
   const handlePlayClick = () => {
-    setIsPlaying(prev => !prev)
-    if(isMuted) setIsMuted(false)
+    setIsPlaying(prev => {
+      if(!prev) hideControls()
+      return !prev
+    })
   }
 
   const handleMuteClick = () => {
     setIsMuted(prev => !prev)
   }
 
+  const handleControlsClick = () => {
+    if (isMobile) {
+      if (showingControls) {
+        if (!isPlaying) handlePlayClick()
+        else setShowingControls(false)
+      } else setShowingControls(true)
+    }
+    else handlePlayClick();
+  }
+
   return (
     <Box position="relative" sx={videoSx} width={playerWidth} m="auto">
-      <Box position="absolute" bottom={0} width="100%" height="100%" p={controlsPadding} zIndex={1} display="flex" justifyContent="space-between" alignItems="flex-end" boxSizing="border-box">
-        <Fab color="secondary" onClick={handlePlayClick} sx={playSx} size={size} disabled={!isActive}>
+      <Box sx={controlsSx} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseOut}>
+        <Button onClick={handleControlsClick} variant="text" sx={controlScrimSx} disabled={!isActive}/>
+        <Fab color="secondary" onClick={handlePlayClick} sx={buttonSx} size={size} disabled={!isActive} >
           {playPause}
         </Fab>
-        <Fab color="secondary" onClick={handleMuteClick} sx={muteSx} size={size} disabled={!isActive}>
+        <Fab color="secondary" onClick={handleMuteClick} sx={buttonSx} size={size} disabled={!isActive} >
           {mutedUnmuted}
         </Fab>
       </Box>
@@ -81,7 +130,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
         playing={isPlaying}
         muted={isMuted}
         volume={0.7}
-        controls={false}
         config={{
           vimeo: {
             playerOptions: {

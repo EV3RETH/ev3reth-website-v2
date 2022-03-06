@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import { useTheme, alpha } from "@mui/material/styles";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import VideoPlayer from "./video-player";
-import { blackBgSx, whiteBgSx } from "../styles/theme";
+import { blackBgSx, maxDisplayWidth, whiteBgSx } from "../styles/theme";
 import { Divider } from "@mui/material";
 
 interface BigDisplayProps {

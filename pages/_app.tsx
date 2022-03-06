@@ -5,6 +5,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import Head from 'next/head'
 import theme from '../styles/theme'
 import Navigation from '../components/navigation';
+import Footer from '../components/footer';
 
 
 
@@ -17,6 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <Navigation />
       <Component {...pageProps} />
+      <Footer />
     </ThemeProvider>
   )
 }

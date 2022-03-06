@@ -1,5 +1,4 @@
 import { MouseEventHandler, useState } from 'react';
-import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -14,7 +13,6 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { useTheme } from '@mui/material/styles';
 import TwitterIcon from '@mui/icons-material/Twitter';
-import { inherits } from 'util';
 
 const pages = [
   {
@@ -31,7 +29,13 @@ const pages = [
   }
 ];
 
-const Navigation: NextPage = () => {
+export const Ev3rethTwitterLink = () => (
+  <a href="https://twitter.com/EV3RETH" target="_blank" rel="noreferrer" style={{ width: '100%' }}>
+    <TwitterIcon fontSize='small' />
+  </a>
+)
+
+const Navigation: React.FC = () => {
   const [anchorElNav, setAnchorElNav] = useState<Element | null>(null);
   const { palette } = useTheme()
   const router = useRouter()
@@ -49,12 +53,6 @@ const Navigation: NextPage = () => {
     handleCloseNavMenu()
   }
 
-  const renderTwitterLink = () => (
-    <a href="https://twitter.com/EV3RETH" target="_blank" rel="noreferrer" style={{ width: '100%' }}>
-      <TwitterIcon fontSize='small' />
-    </a>
-  )
-
   return (
     <>
       <AppBar position="fixed">
@@ -62,12 +60,14 @@ const Navigation: NextPage = () => {
           <Toolbar disableGutters >
             <Grid container spacing={3} alignItems="center">
               <Grid item xs={6}>
-                <Typography
-                  variant="h6"
-                  noWrap
-                >
-                  EV3RETH
-                </Typography>
+                <Button color="inherit" variant='text' onClick={()=> handleNavClick("/")}>
+                  <Typography
+                    variant="h6"
+                    noWrap
+                  >
+                    EV3RETH
+                  </Typography>
+                </Button>
               </Grid>
 
               <Grid item xs={6}>
@@ -113,7 +113,7 @@ const Navigation: NextPage = () => {
                       </MenuItem>
                     ))}
                     <MenuItem>
-                      {renderTwitterLink()}
+                      <Ev3rethTwitterLink />
                     </MenuItem>
                   </Menu>
                 </Box>
@@ -148,7 +148,7 @@ const Navigation: NextPage = () => {
                     )
                   })}
                   <Button sx={{ mb: -1, color: 'white' }}>
-                    {renderTwitterLink()}
+                    <Ev3rethTwitterLink />
                   </Button>
                 </Box>
               </Grid>

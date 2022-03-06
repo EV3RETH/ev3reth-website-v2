@@ -46,3 +46,5 @@ export const whiteBgSx: SxProps<Theme> = {
     textShadow: "1px 2px 3px rgba(0,0,0,0.3)"
   }
 }
+
+export const maxDisplayWidth = 1536
