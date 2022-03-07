@@ -29,17 +29,17 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
   videoSrc,
   autoPlayVideo = false,
   blackBg = false,
-  reverseDisplay = false
+  reverseDisplay = false,
 }) => {
-  const { breakpoints, spacing } = useTheme()
-  const isMobile = useMediaQuery(breakpoints.down("lg"))
+  const { breakpoints } = useTheme()
+  const isTablet = useMediaQuery(breakpoints.down("lg"))
 
   const bgSx = blackBg ? blackBgSx : whiteBgSx;
 
-  const dividerShadow = blackBg ? "-2px" : "2px";
+  const dividerShadow = blackBg ? "0px" : "2px";
   const dividerSx = {
     border: "none",
-    boxShadow: `0px ${dividerShadow} 8px 2px rgba(0,0,0,0.5)`,
+    boxShadow: `0px ${dividerShadow} 6px 2px rgba(0,0,0,0.5)`,
   }
  
 
@@ -47,8 +47,8 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
     if (videoSrc) return (
       <Grid item xs={12} lg={6}>
         <Box
-          p={{ xs: 0, sm: 4, md: 8 }}
-          pt={{ md: 0, lg: 8 }}
+          px={{ xs: 2, sm: 4, md: 6 }}
+          py={{ xs: 2, sm: 4, lg: 8 }}
           display="flex"
           justifyContent="center"
         >
@@ -63,11 +63,12 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
       <Divider sx={dividerSx}/>
       <Grid container maxWidth={1920} margin="auto" >
 
-        {reverseDisplay && !isMobile && displayElement()}
+        {reverseDisplay && !isTablet && displayElement()}
 
         <Grid item xs={12} lg={6}>
           <Box
-            p={10}
+            pt={{ xs: 8, sm: 10 }}
+            pb={{xs: 4, lg: 10}}
             display="flex"
             flexDirection="column"
             justifyContent="center"
@@ -77,7 +78,7 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
             <Typography variant="h5" fontStyle="italic">
               {tag}
             </Typography>
-            <Typography variant="h2" noWrap>
+            <Typography variant="h3" noWrap>
               {title}
             </Typography>
             <Button color="secondary" variant="contained" sx={{ mt: 3 }} >
@@ -88,7 +89,7 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
           </Box>
         </Grid>
 
-        {(!reverseDisplay || isMobile) && displayElement()}
+        {(!reverseDisplay || isTablet) && displayElement()}
 
       </Grid>
     </Box>

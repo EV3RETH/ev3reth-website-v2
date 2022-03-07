@@ -121,7 +121,7 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false })
         </Swiper>
       </Box>
     </Box>
-)
+  )
 }
 
 export default SwiperDisplay

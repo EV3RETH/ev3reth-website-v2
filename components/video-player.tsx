@@ -22,7 +22,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
   const [isMuted, setIsMuted] = useState(false)
   const [showingControls, setShowingControls] = useState(false)
 
-  const { breakpoints, palette } = useTheme()
+  const { breakpoints } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down("sm"))
 
   useEffect(() => {
@@ -47,11 +47,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
     borderRadius: 1,
   }
 
-  const videoSx = !isMobile || isSmall
-    ? {
-      boxShadow: "2px 3px 4px rgba(0,0,0,0.6)",
-    }
-    : {}
+  const videoSx: SxProps<Theme> = {
+    boxShadow: "2px 3px 4px rgba(0,0,0,0.6)",
+  }
   
   const controlsSx: SxProps<Theme> = {
     position: "absolute",
@@ -68,7 +66,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
     transition: "0.7s",
   }
 
-  const controlScrimSx = {
+  const controlScrimSx: SxProps<Theme> = {
     position: "absolute",
     left: 0,
     top: 0,

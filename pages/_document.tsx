@@ -5,7 +5,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <meta name="description" content="Portfolio Website of EV3RETH a GAN Artist and Composer" />
+          <meta name="description" content="Portfolio Website of EV3RETH: Machine Learning Artist and Composer" />
           <link rel="icon" href="/favicon.ico" />
 
           <link rel="preconnect" href="https://fonts.googleapis.com"/>
