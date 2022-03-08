@@ -5,7 +5,7 @@ import type { NextPage } from 'next';
 import { MainBG } from ".";
 import BannerWrapper from "../components/banner-wrapper";
 import BigDisplay from "../components/big-display";
-import Navigation from "../components/navigation";
+import Navigation, { Ev3rethTwitterLink } from "../components/navigation";
 import { SwiperDisplayItem } from "../components/swiper-display";
 
 
@@ -64,16 +64,24 @@ const TuneOut: NextPage = () => {
         <Typography variant="h1" mb={2} >
           Tune Out
         </Typography>
-        <Typography variant="h5" mb={6} >
+        <Typography variant="h5"  >
           An exploration into new mediums of art. Combining original music with machine learning art to produce something completely unique.
         </Typography>
+        <Typography variant="subtitle1" mt={2} mb={6}>
+          Contact me via twitter for auction details
+          <Box display="inline" position="relative" top={4} left={8}>
+            <Ev3rethTwitterLink />
+          </Box>
+        </Typography >
+        
         <Button color="secondary" variant="contained">
           <a href="https://paras.id/publication/tune-out-621670f9b1808d092e26027f" target="_blank" rel="noreferrer">
             Learn more
           </a>
         </Button>
       </BannerWrapper>
-      {tuneOutDisplayItems.map(({url, label, marketUrl, tagText = "Available"}, index) => {
+      {tuneOutDisplayItems.map(({
+        url, label, marketUrl, tagText = "Available by auction soon"}, index) => {
         const isOdd = !!(index % 2)
         return <BigDisplay
           key={label}

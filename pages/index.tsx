@@ -30,7 +30,7 @@ const Home: NextPage = () => {
       </BannerWrapper>
       <BigDisplay
         title="Tune Out"
-        tag="Part One Available Now"
+        tag="Part One - Out Now"
         marketText="View Collection on Paras"
         marketLink="https://paras.id/collection/tune-out-by-ev3rethnear"
         videoSrc="https://vimeo.com/684484577"
