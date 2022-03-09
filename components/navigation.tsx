@@ -60,7 +60,7 @@ const Navigation: React.FC = () => {
           <Toolbar disableGutters >
             <Grid container spacing={3} alignItems="center">
               <Grid item xs={6}>
-                <Button color="inherit" variant='text' onClick={()=> handleNavClick("/")}>
+                <Button color="inherit" variant='text' onClick={()=> handleNavClick("/")} sx={{p:0}}>
                   <Typography
                     variant="h6"
                     noWrap
@@ -147,7 +147,7 @@ const Navigation: React.FC = () => {
                       </Button>
                     )
                   })}
-                  <Button sx={{ mb: -1, color: 'white' }}>
+                  <Button sx={{ mb: -1, ml: 2, p: 0, color: 'white', minWidth: "inherit"}}>
                     <Ev3rethTwitterLink />
                   </Button>
                 </Box>

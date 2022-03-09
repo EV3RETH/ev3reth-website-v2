@@ -110,7 +110,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
   }
 
   return (
-    <Box position="relative" sx={videoSx} width={playerWidth} m="auto">
+    <Box position="relative" sx={videoSx} width={playerWidth} margin={isSmall ? "auto" : "inherit"}>
       <Box sx={controlsSx} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseOut}>
         <Button onClick={handleControlsClick} variant="text" sx={controlScrimSx} disabled={!isActive}/>
         <Fab color="secondary" onClick={handlePlayClick} sx={buttonSx} size={size} disabled={!isActive} >

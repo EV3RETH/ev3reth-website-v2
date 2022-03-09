@@ -44,13 +44,19 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
  
 
   const displayElement = () => {
+    const justify = isTablet
+      ? "center"
+      : reverseDisplay
+        ? "flex-start"
+        : "flex-end";
+    
     if (videoSrc) return (
       <Grid item xs={12} lg={6}>
         <Box
-          px={{ xs: 2, sm: 4, md: 6 }}
+          px={{ xs: 2, sm: 4, md: 6, lg: 0 }}
           py={{ xs: 2, sm: 4, lg: 8 }}
           display="flex"
-          justifyContent="center"
+          justifyContent={justify}
         >
           <VideoPlayer url={videoSrc} autoPlay={autoPlayVideo} />
         </Box>
@@ -61,7 +67,7 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
   return (
     <Box sx={bgSx}>
       <Divider sx={dividerSx}/>
-      <Grid container maxWidth={1920} margin="auto" >
+      <Grid container maxWidth={maxDisplayWidth} margin="auto" px={{ xs: 0, md: 3 }} >
 
         {reverseDisplay && !isTablet && displayElement()}
 

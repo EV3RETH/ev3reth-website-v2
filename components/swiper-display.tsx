@@ -5,11 +5,11 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import Box from '@mui/material/Box';
-import { useTheme } from '@mui/material/styles';
+import { useTheme, alpha } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import VideoPlayer from './video-player';
 import { Typography } from '@mui/material';
-import { blackBgSx, whiteBgSx } from '../styles/theme';
+import { maxDisplayWidth } from '../styles/theme';
 
 export interface SwiperDisplayItem {
   url: string;
@@ -31,9 +31,10 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false })
     if (isDesktop) return 2;
     return 3
   }
-  const bgSx = blackBg ? blackBgSx : whiteBgSx
+  // const bgSx = blackBg ? blackBgSx : whiteBgSx;
+  const bgSx = { backgroundColor: alpha(palette.primary.main, 0.2)}
   const sliderSx = {
-    backgroundColor: 'rgba(0,0,0,0.1)',
+    px: { xs: 0, md: 3 },
     '--swiper-theme-color': `${palette.secondary.main}`,
     '& .swiper-coverflow': {
       padding: spacing(5)
@@ -93,8 +94,8 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false })
   }
 
   return (
-    <Box sx={bgSx}>
-      <Box sx={sliderSx}>
+    <Box sx={bgSx} >
+      <Box sx={sliderSx} maxWidth={maxDisplayWidth} margin="auto">
         <Swiper
           effect={"coverflow"}
           centeredSlides={true}

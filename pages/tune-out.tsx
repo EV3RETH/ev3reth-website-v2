@@ -65,7 +65,7 @@ const TuneOut: NextPage = () => {
           Tune Out
         </Typography>
         <Typography variant="h5"  >
-          An exploration into new mediums of art. Combining original music with machine learning art to produce something completely unique.
+          An exploration into new artistic mediums. Combining original music with machine learning art to produce something completely unique.
         </Typography>
         <Typography variant="subtitle1" mt={2} mb={6}>
           Contact me via twitter for auction details
