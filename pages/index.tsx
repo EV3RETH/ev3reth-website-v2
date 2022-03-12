@@ -52,7 +52,7 @@ const Home: NextPage = () => {
       <SwiperDisplay items={tuneOutDisplayItems} />
       <BigDisplay
         title="S U M M E R S U N / /"
-        tag="Sold"
+        tag="Owner - earthshine.near"
         marketText="View on Paras"
         marketLink="https://paras.id/token/x.paras.near::188803"
         videoSrc="https://vimeo.com/684484141"

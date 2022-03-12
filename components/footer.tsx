@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography'
 import { useTheme } from '@mui/material/styles';
 import { useRouter } from 'next/router';
 import { blackBgSx, maxDisplayWidth } from '../styles/theme';
-import { Ev3rethTwitterLink } from './navigation';
+import { DiscordLink, Ev3rethTwitterLink } from './navigation';
 
 const Footer: React.FC = () => {
   const year = new Date().getFullYear()
@@ -15,6 +15,9 @@ const Footer: React.FC = () => {
         </Typography>
         <Box>
           <Ev3rethTwitterLink />
+          <Box ml={2} display="inline" sx={{ filter: "invert(1)"}}>
+            <DiscordLink />
+          </Box>
         </Box>
       </Box>
     </Box>

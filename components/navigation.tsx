@@ -13,6 +13,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { useTheme } from '@mui/material/styles';
 import TwitterIcon from '@mui/icons-material/Twitter';
+import Image from 'next/image';
 
 const pages = [
   {
@@ -30,8 +31,14 @@ const pages = [
 ];
 
 export const Ev3rethTwitterLink = () => (
-  <a href="https://twitter.com/EV3RETH" target="_blank" rel="noreferrer" style={{ width: '100%' }}>
+  <a href="https://twitter.com/EV3RETH" target="_blank" rel="noreferrer">
     <TwitterIcon fontSize='small' />
+  </a>
+)
+
+export const DiscordLink = () => (
+  <a href="https://discord.gg/CwvgaWdfwM" target="_blank" rel="noreferrer">
+    <Image src="/discord.png" height={17} width={17} alt="discord"/>
   </a>
 )
 
@@ -114,10 +121,13 @@ const Navigation: React.FC = () => {
                     ))}
                     <MenuItem>
                       <Ev3rethTwitterLink />
+                      <Box ml={2}>
+                        <DiscordLink />
+                      </Box>
                     </MenuItem>
                   </Menu>
                 </Box>
-                <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "flex-end" }}>
+                <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "flex-end", alignItems: "center" }}>
                   {pages.map(({ label, path }) => {
                     const isActive = path === router.pathname
                     const sx = {
@@ -147,8 +157,11 @@ const Navigation: React.FC = () => {
                       </Button>
                     )
                   })}
-                  <Button sx={{ mb: -1, ml: 2, p: 0, color: 'white', minWidth: "inherit"}}>
+                  <Button sx={{ mb: -1, ml: 2, p: 0, color: 'white', minWidth: "inherit",  height: 20}}>
                     <Ev3rethTwitterLink />
+                  </Button>
+                  <Button sx={{ mb: -1, ml: 2, p: 0, filter: "invert(1)", minWidth: "inherit", height: 20 }}>
+                    <DiscordLink />
                   </Button>
                 </Box>
               </Grid>

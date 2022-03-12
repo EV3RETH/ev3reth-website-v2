@@ -5,7 +5,7 @@ import type { NextPage } from 'next';
 import { MainBG } from ".";
 import BannerWrapper from "../components/banner-wrapper";
 import BigDisplay from "../components/big-display";
-import Navigation, { Ev3rethTwitterLink } from "../components/navigation";
+import Navigation, { DiscordLink, Ev3rethTwitterLink } from "../components/navigation";
 import { SwiperDisplayItem } from "../components/swiper-display";
 
 
@@ -21,7 +21,7 @@ export const tuneOutDisplayItems: Array<DisplayListItem> = [
     label: 'CH1 - The Endless',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253374/253374:1",
-    tagText: "Sold"
+    tagText: "Owner - supah.near"
   },
   {
     url: 'https://vimeo.com/684482985',
@@ -40,7 +40,7 @@ export const tuneOutDisplayItems: Array<DisplayListItem> = [
     label: 'CH4 - The Disturbed',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253415/253415:1",
-    tagText: "Sold"
+    tagText: "Owner - steveospirals.near"
   },
   {
     url: 'https://vimeo.com/684483019',
@@ -67,18 +67,17 @@ const TuneOut: NextPage = () => {
         <Typography variant="h5"  >
           An exploration into new artistic mediums. Combining original music with machine learning art to produce something completely unique.
         </Typography>
-        <Typography variant="subtitle1" mt={2} mb={6}>
-          Contact me via twitter for auction details
-          <Box display="inline" position="relative" top={4} left={8}>
-            <Ev3rethTwitterLink />
+        <Typography variant="subtitle1" my={2}>
+          <a href="https://paras.id/publication/tune-out-621670f9b1808d092e26027f" target="_blank" rel="noreferrer">
+            Click here to read the full article on Tune Out.
+          </a>
+        </Typography>
+        <Typography variant="subtitle1">
+          Join my discord for auction details
+          <Box display="inline" position="relative" top={4} left={8} sx={{ filter: "invert(1)" }}>
+            <DiscordLink />
           </Box>
         </Typography >
-        
-        <Button color="secondary" variant="contained">
-          <a href="https://paras.id/publication/tune-out-621670f9b1808d092e26027f" target="_blank" rel="noreferrer">
-            Learn more
-          </a>
-        </Button>
       </BannerWrapper>
       {tuneOutDisplayItems.map(({
         url, label, marketUrl, tagText = "Available by auction soon"}, index) => {
