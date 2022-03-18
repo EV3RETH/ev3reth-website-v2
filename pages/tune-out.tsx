@@ -27,7 +27,8 @@ export const tuneOutDisplayItems: Array<DisplayListItem> = [
     url: 'https://vimeo.com/684482985',
     label: 'CH2 - The Expanse',
     isVideo: true,
-    marketUrl: "https://paras.id/token/x.paras.near::253392"
+    marketUrl: "https://paras.id/token/x.paras.near::253392",
+    tagText: "Owner - echobase.near"
   },
   {
     url: 'https://vimeo.com/684482993',
