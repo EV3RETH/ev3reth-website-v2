@@ -48,7 +48,7 @@ const Collaborations: NextPage = () => {
       <BigDisplay
         videoSrc="https://vimeo.com/684483034"
         title="CH6 - The Mystic"
-        tag="Available by auction soon"
+        tag="Owner - jared.near"
         marketText="View on Paras"
         marketLink="https://paras.id/token/x.paras.near::253461"
         reverseDisplay

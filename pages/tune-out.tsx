@@ -34,7 +34,8 @@ export const tuneOutDisplayItems: Array<DisplayListItem> = [
     url: 'https://vimeo.com/684482993',
     label: 'CH3 - The Serene',
     isVideo: true,
-    marketUrl: "https://paras.id/token/x.paras.near::253401"
+    marketUrl: "https://paras.id/token/x.paras.near::253401",
+    tagText: "Owner - bennybrown.near"
   },
   {
     url: 'https://vimeo.com/684483006',
@@ -47,13 +48,15 @@ export const tuneOutDisplayItems: Array<DisplayListItem> = [
     url: 'https://vimeo.com/684483019',
     label: 'CH5 - The Traveler',
     isVideo: true,
-    marketUrl: "https://paras.id/token/x.paras.near::253421"
+    marketUrl: "https://paras.id/token/x.paras.near::253421",
+    tagText: "Owner - yupig.near"
   },
   {
     url: 'https://vimeo.com/684483034',
     label: 'CH6 - The Mystic',
     isVideo: true,
-    marketUrl: "https://paras.id/token/x.paras.near::253461"
+    marketUrl: "https://paras.id/token/x.paras.near::253461",
+    tagText: "Owner - jared.near"
   }
 ]
 
@@ -74,7 +77,7 @@ const TuneOut: NextPage = () => {
           </a>
         </Typography>
         <Typography variant="subtitle1">
-          Join my discord for auction details
+          Part one is sold out! Join my discord for details on future listings
           <Box display="inline" position="relative" top={4} left={8} sx={{ filter: "invert(1)" }}>
             <DiscordLink />
           </Box>
