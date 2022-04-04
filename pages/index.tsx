@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Typography from "@mui/material/Typography"
 import { useTheme, alpha } from '@mui/material/styles';
 import ev3rethImage from "../public/EV3RETH-black.png"
+import SNxEV3 from "../public/SNxEV3_promo-768.gif"
 import BigDisplay from '../components/big-display';
 import BannerWrapper from '../components/banner-wrapper'
 import SwiperDisplay from '../components/swiper-display';
@@ -42,22 +43,32 @@ const Home: NextPage = () => {
           Machine Learning Artist and Composer
         </Typography>
       </BannerWrapper>
+
+      <BigDisplay
+        title="SNxEV3"
+        tag="Mint - April 14th"
+        imgSrc={SNxEV3}
+        marketText="Join the discord for more details"
+        marketLink="https://discord.gg/CwvgaWdfwM"
+      />
+
       <BigDisplay
         title="Tune Out"
         tag="Part One - Sold Out"
         marketText="View Collection on Paras"
         marketLink="https://paras.id/collection/tune-out-by-ev3rethnear"
         videoSrc="https://vimeo.com/684484577"
+        reverseDisplay
+        blackBg
       />
-      <SwiperDisplay items={tuneOutDisplayItems} />
+      <SwiperDisplay items={tuneOutDisplayItems} blackBg />
+      
       <BigDisplay
         title="S U M M E R S U N / /"
         tag="Owner - earthshine.near"
         marketText="View on Paras"
         marketLink="https://paras.id/token/x.paras.near::188803"
         videoSrc="https://vimeo.com/684484141"
-        reverseDisplay
-        blackBg
       />
     </Box>
   )

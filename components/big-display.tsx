@@ -4,9 +4,10 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { useTheme, alpha } from "@mui/material/styles";
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { Divider } from "@mui/material";
+import Image from 'next/image';
 import VideoPlayer from "./video-player";
 import { blackBgSx, maxDisplayWidth, whiteBgSx } from "../styles/theme";
-import { Divider } from "@mui/material";
 
 interface BigDisplayProps {
   title: string;
@@ -15,7 +16,7 @@ interface BigDisplayProps {
   marketText: string;
   videoSrc?: string;
   autoPlayVideo?: boolean;
-  imgSrc?: string;
+  imgSrc?: string | StaticImageData;
   blackBg?: boolean;
   reverseDisplay?: boolean;
 };
@@ -49,8 +50,10 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
       : reverseDisplay
         ? "flex-start"
         : "flex-end";
-    
-    if (videoSrc) return (
+    let element;
+    if (videoSrc) element = <VideoPlayer url={videoSrc} autoPlay={autoPlayVideo} />;
+    if (imgSrc) element = <Image src={imgSrc} alt={title} />
+    return (
       <Grid item xs={12} lg={6}>
         <Box
           px={{ xs: 2, sm: 4, md: 6, lg: 0 }}
@@ -58,7 +61,7 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
           display="flex"
           justifyContent={justify}
         >
-          <VideoPlayer url={videoSrc} autoPlay={autoPlayVideo} />
+          {element}
         </Box>
       </Grid>
     )
@@ -87,11 +90,13 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
             <Typography variant="h3" noWrap>
               {title}
             </Typography>
-            <Button color="secondary" variant="contained" sx={{ mt: 3 }} >
-              <a target="_blank" rel="noreferrer" href={marketLink}>
-                {marketText}
-              </a>
-            </Button>
+            {marketText && (
+              <Button color="secondary" variant="contained" sx={{ mt: 3 }} >
+                <a target="_blank" rel="noreferrer" href={marketLink}>
+                  {marketText}
+                </a>
+              </Button>
+            )}
           </Box>
         </Grid>
 

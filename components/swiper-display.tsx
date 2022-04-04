@@ -31,8 +31,11 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false })
     if (isDesktop) return 2;
     return 3
   }
-  // const bgSx = blackBg ? blackBgSx : whiteBgSx;
-  const bgSx = { backgroundColor: alpha(palette.primary.main, 0.2)}
+
+  const bgSx = blackBg
+    ? { backgroundColor: palette.primary.main }
+    : { backgroundColor: alpha(palette.primary.main, 0.2) }
+  
   const sliderSx = {
     px: { xs: 0, md: 3 },
     '--swiper-theme-color': `${palette.secondary.main}`,
