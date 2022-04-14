@@ -46,10 +46,10 @@ const Home: NextPage = () => {
 
       <BigDisplay
         title="SNxEV3"
-        tag="Mint - April 14th"
+        tag="Mint - Live"
         imgSrc={SNxEV3}
-        marketText="Join the discord for more details"
-        marketLink="https://discord.gg/CwvgaWdfwM"
+        marketText="Go to mint page"
+        marketLink="https://mint.ev3reth.com/"
       />
 
       <BigDisplay
