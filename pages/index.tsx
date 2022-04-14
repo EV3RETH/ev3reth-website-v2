@@ -49,7 +49,7 @@ const Home: NextPage = () => {
         tag="Mint - Live"
         imgSrc={SNxEV3}
         marketText="Go to mint page"
-        marketLink="https://mint.ev3reth.com/"
+        marketLink="https://launch.havendao.community/"
       />
 
       <BigDisplay
