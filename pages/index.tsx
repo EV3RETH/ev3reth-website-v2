@@ -46,10 +46,10 @@ const Home: NextPage = () => {
 
       <BigDisplay
         title="SNxEV3"
-        tag="Mint - Live"
+        tag="Sold Out"
         imgSrc={SNxEV3}
-        marketText="Go to mint page"
-        marketLink="https://launch.havendao.community/"
+        marketText="Buy on Secondary"
+        marketLink="https://paras.id/collection/mint.snxev3.near"
       />
 
       <BigDisplay
