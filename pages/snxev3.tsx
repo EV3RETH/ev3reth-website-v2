@@ -26,7 +26,7 @@ const TuneOut: NextPage = () => {
           The SNxEV3 GAN (Generative Adversarial Network) model is two models blended together.
         </Typography>
         <Typography variant="h5" >
-          One trained on Marko's Starry Night collection and the other trained on a compiled texture dataset.
+          One trained on Marko&apos;s Starry Night collection and the other trained on a compiled texture dataset.
         </Typography>
         <Button color="secondary" variant="contained" sx={{ mt: 3 }} >
           <a target="_blank" rel="noreferrer" href="https://paras.id/collection/mint.snxev3.near">
