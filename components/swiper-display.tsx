@@ -10,6 +10,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import VideoPlayer from './video-player';
 import { Typography } from '@mui/material';
 import { maxDisplayWidth } from '../styles/theme';
+import Image from 'next/image';
 
 export interface SwiperDisplayItem {
   url: string;
@@ -65,12 +66,20 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false })
     }
   }
 
+  const imageSx = {
+    '& span': {
+      boxShadow: "2px 3px 4px rgba(0, 0, 0, 0.5)"
+    }
+  }
+
   const displayElement = (isActive: boolean, item: SwiperDisplayItem) => {
     const { url, label, isVideo } = item;
 
     const element = isVideo
       ? <VideoPlayer url={url} isSmall isActive={isActive} />
-      : "image goes here";
+      : <Box width="100%" display="flex" justifyContent="center" sx={imageSx} >
+          <Image src={url} alt={label} height="500" width="500" />
+        </Box>
     
     return (
       <Box>

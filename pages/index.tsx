@@ -45,11 +45,21 @@ const Home: NextPage = () => {
       </BannerWrapper>
 
       <BigDisplay
+        title="EV3: Genesis"
+        tag="Live Auctions Soon"
+        videoSrc="https://vimeo.com/711008604"
+        marketLink="https://discord.gg/CwvgaWdfwM"
+        marketText="Join the discord"
+      />
+
+      <BigDisplay
         title="SNxEV3"
         tag="Sold Out"
         imgSrc={SNxEV3}
-        marketText="Buy on Secondary"
+        marketText="View Collection on Paras"
         marketLink="https://paras.id/collection/mint.snxev3.near"
+        reverseDisplay
+        blackBg
       />
 
       <BigDisplay
@@ -58,18 +68,9 @@ const Home: NextPage = () => {
         marketText="View Collection on Paras"
         marketLink="https://paras.id/collection/tune-out-by-ev3rethnear"
         videoSrc="https://vimeo.com/684484577"
-        reverseDisplay
-        blackBg
       />
-      <SwiperDisplay items={tuneOutDisplayItems} blackBg />
-      
-      <BigDisplay
-        title="S U M M E R S U N / /"
-        tag="Owner - earthshine.near"
-        marketText="View on Paras"
-        marketLink="https://paras.id/token/x.paras.near::188803"
-        videoSrc="https://vimeo.com/684484141"
-      />
+      <SwiperDisplay items={tuneOutDisplayItems} />
+    
     </Box>
   )
 }

@@ -1,6 +1,5 @@
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import type { NextPage } from 'next';
 import { MainBG } from ".";
 import BannerWrapper from "../components/banner-wrapper";

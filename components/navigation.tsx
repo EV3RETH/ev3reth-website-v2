@@ -21,6 +21,10 @@ const pages = [
     path: '/'
   },
   {
+    label: "SNxEV3",
+    path: "/snxev3"
+  },
+  {
     label: 'Tune Out',
     path: '/tune-out'
   },
