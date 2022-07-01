@@ -6,17 +6,17 @@ import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import { useEffect,  useState } from "react";
 import { useTheme, SxProps, Theme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { LinearProgress, Box, Fab, Button } from "@mui/material";
+import { LinearProgress, Box, Fab, Button, Skeleton } from "@mui/material";
 
 interface VideoPlayerProps {
   url: string;
   autoPlay?: boolean;
   isSmall?: boolean;
   isActive?: boolean;
-  placeHolder?: JSX.Element
+  placeholderHeight?: number
 }
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmall = false, isActive = true, placeHolder }) => {
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmall = false, isActive = true, placeholderHeight = 700 }) => {
   const [isPlaying, setIsPlaying] = useState(autoPlay)
   const [isMuted, setIsMuted] = useState(false)
   const [showingControls, setShowingControls] = useState(false)
@@ -39,7 +39,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
   const smallWidth = isMobile ? 300 : 400
   const playerWidth = isSmall ? smallWidth : 700;
   const controlsPadding = isSmall ? 1 : 1.5;
-
+  const phMultiplier = isMobile ? 0.49 : 1
   const playPause = isPlaying ? <PauseIcon fontSize={size} /> : <PlayArrowIcon fontSize={size} />
   const mutedUnmuted = isMuted ? <VolumeOffIcon fontSize={size} /> : <VolumeUpIcon fontSize={size} />
   const buttonSx = {
@@ -123,7 +123,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
           {mutedUnmuted}
         </Fab>
       </Box>
-      {!loaded && placeHolder}
+      {!loaded && <Skeleton variant="rectangular" width="100%" height={placeholderHeight * phMultiplier} animation="wave" sx={{ bgcolor: 'grey.800' }} />}
       <ReactPlayer
         onReady={() => setLoaded(true)}
         style={{display: loaded ? "block" : "none"}}

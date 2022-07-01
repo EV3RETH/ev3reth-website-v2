@@ -1,6 +1,6 @@
 import { useTheme, alpha } from "@mui/material/styles";
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { Divider, LinearProgress, Box, Grid, Button, Typography, Slide } from "@mui/material";
+import { Divider, LinearProgress, Box, Grid, Button, Typography, Slide, Skeleton } from "@mui/material";
 import Image from 'next/image';
 import VideoPlayer from "./video-player";
 import { blackBgSx, maxDisplayWidth, whiteBgSx } from "../styles/theme";
@@ -36,14 +36,10 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
 }) => {
   const { breakpoints, palette } = useTheme()
   const isTablet = useMediaQuery(breakpoints.down("lg"))
-  const isMobile = useMediaQuery(breakpoints.down("sm"))
 
   const bgSx = blackBg ? blackBgSx : whiteBgSx;
-  const topPad = 6
-  const phMultiplier = isMobile ? 0.49 : 1
+  const topPad = { xs: 0, lg: 6 }
  
-  const videoPlaceHolder = () => <Box width={"100%"} height={placeholderHeight*phMultiplier}><LinearProgress color="secondary" sx={{ top: "50%" }} /></Box>
-
   const displayElement = () => {
     const justify = isTablet
       ? "center"
@@ -51,7 +47,7 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
         ? "flex-start"
         : "flex-end";
     let element;
-    if (videoSrc) element = <VideoPlayer url={videoSrc} autoPlay={autoPlayVideo} placeHolder={videoPlaceHolder()} />;
+    if (videoSrc) element = <VideoPlayer url={videoSrc} autoPlay={autoPlayVideo} placeholderHeight={placeholderHeight} />;
     if (imgSrc) element = <Image src={imgSrc} alt={title} width={700} height={700} placeholder="blur" blurDataURL={blurImage} />;
     return (
       <Grid item xs={12} lg={6} zIndex={2} pt={topPad}>

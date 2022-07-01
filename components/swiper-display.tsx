@@ -7,7 +7,7 @@ import "swiper/css/navigation";
 import { useTheme, alpha } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import VideoPlayer from './video-player';
-import { LinearProgress, Typography, Box } from '@mui/material';
+import { LinearProgress, Typography, Box, Skeleton } from '@mui/material';
 import { maxDisplayWidth } from '../styles/theme';
 import Image from 'next/image';
 import { blurImage } from './big-display';
@@ -72,13 +72,11 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, p
     }
   }
 
-  const videoPlaceHolder = () => <Box width={500} height={placeholderHeight}><LinearProgress color="secondary" sx={{ top: "50%", width: "400px" }} /></Box>
-
   const displayElement = (isActive: boolean, item: SwiperDisplayItem) => {
     const { url, label, isVideo } = item;
 
     const element = isVideo
-      ? <VideoPlayer url={url} isSmall isActive={isActive} placeHolder={videoPlaceHolder()} />
+      ? <VideoPlayer url={url} isSmall isActive={isActive} placeholderHeight={placeholderHeight} />
       : <Box width="100%" display="flex" justifyContent="center" sx={imageSx} >
         <Image src={url} alt={label} height="500" width="500" placeholder="blur" blurDataURL={blurImage} />
         </Box>

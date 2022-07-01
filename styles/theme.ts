@@ -41,7 +41,6 @@ export const blackBgSx: SxProps<Theme> = {
 }
 
 export const whiteBgSx: SxProps<Theme> = {
-  // backgroundColor: alpha(theme.palette.background.default, 0.85),
   typography: {
     textShadow: "1px 2px 3px rgba(0,0,0,0.3)"
   }

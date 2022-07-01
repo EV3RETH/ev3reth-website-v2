@@ -12,7 +12,7 @@ const SvgCurve: React.FC<curveProps> = ({ color, flipped }) => {
   const isVisible = useElementObserver(ref, "50px")
 
   const rotate = flipped ? "rotate(0deg)" : "rotateY(180deg)";
-  const translate = isVisible? "scaleY(1)" : "scaleY(0)";
+  const translate = isVisible? "scaleY(0.7)" : "scaleY(0)";
   const transform = `${rotate} ${translate}`
 
   const sx: SxProps<Theme> = {
