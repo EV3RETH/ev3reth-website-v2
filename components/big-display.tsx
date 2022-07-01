@@ -36,11 +36,13 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
 }) => {
   const { breakpoints, palette } = useTheme()
   const isTablet = useMediaQuery(breakpoints.down("lg"))
+  const isMobile = useMediaQuery(breakpoints.down("sm"))
 
   const bgSx = blackBg ? blackBgSx : whiteBgSx;
   const topPad = 6
+  const phMultiplier = isMobile ? 0.49 : 1
  
-  const videoPlaceHolder = () => <Box width={700} height={placeholderHeight}><LinearProgress color="secondary" sx={{ top: "50%" }} /></Box>
+  const videoPlaceHolder = () => <Box width={"100%"} height={placeholderHeight*phMultiplier}><LinearProgress color="secondary" sx={{ top: "50%" }} /></Box>
 
   const displayElement = () => {
     const justify = isTablet

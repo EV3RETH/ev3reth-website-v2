@@ -1,4 +1,3 @@
-import { Translate } from "@mui/icons-material"
 import { Box, SxProps, Theme } from "@mui/material"
 import { useRef } from "react";
 import useElementObserver from "../hooks/useElementObserver";
@@ -7,9 +6,8 @@ import Curve from "../public/large-curve.svg"
 interface curveProps {
   color: string;
   flipped?: boolean;
-  inView?: boolean;
 }
-const SvgCurve: React.FC<curveProps> = ({ color, flipped, }) => {
+const SvgCurve: React.FC<curveProps> = ({ color, flipped }) => {
   const ref = useRef(null)
   const isVisible = useElementObserver(ref, "50px")
 
@@ -18,10 +16,11 @@ const SvgCurve: React.FC<curveProps> = ({ color, flipped, }) => {
   const transform = `${rotate} ${translate}`
 
   const sx: SxProps<Theme> = {
+    width: "100%",
     position: "absolute",
     left: 0,
     marginTop: {
-      xs: "0px",
+      xs: "-1px",
       md: "-5px",
     },
     transformOrigin: "50% 0",
@@ -32,7 +31,7 @@ const SvgCurve: React.FC<curveProps> = ({ color, flipped, }) => {
     }
   }
   return (
-    <Box sx={sx} width="100%" ref={ref}>
+    <Box sx={sx} ref={ref}>
       <Curve />
     </Box>
   )
