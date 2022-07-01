@@ -2,7 +2,7 @@ import { Translate } from "@mui/icons-material"
 import { Box, SxProps, Theme } from "@mui/material"
 import { useRef } from "react";
 import useElementObserver from "../hooks/useElementObserver";
-import Curve from "../public/large-curve2.svg"
+import Curve from "../public/large-curve.svg"
 
 interface curveProps {
   color: string;
