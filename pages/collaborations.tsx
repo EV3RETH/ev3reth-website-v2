@@ -32,6 +32,7 @@ const Collaborations: NextPage = () => {
         marketText="View on Paras"
         marketLink="https://paras.id/token/x.paras.near::188803"
         videoSrc="https://vimeo.com/684484141"
+        placeholderHeight={800}
       />
 
       <BannerWrapper blackBg>
@@ -49,7 +50,7 @@ const Collaborations: NextPage = () => {
         tag="Owner - jared.near"
         marketText="View on Paras"
         marketLink="https://paras.id/token/x.paras.near::253461"
-        reverseDisplay
+        placeholderHeight={394}
       />
 
     </Box>

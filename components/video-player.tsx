@@ -48,7 +48,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
   }
 
   const videoSx: SxProps<Theme> = {
-    boxShadow: "2px 3px 4px rgba(0,0,0,0.6)",
+    boxShadow: "2px 3px 4px rgba(0,0,0,0.4)",
     transition: "filter 2s",
     filter: loaded ? "" : "blur(3px)",
     backgroundColor: palette.primary.main

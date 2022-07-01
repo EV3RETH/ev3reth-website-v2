@@ -1,9 +1,12 @@
 import { useTheme, alpha } from "@mui/material/styles";
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { Divider, LinearProgress, Box, Grid, Button, Typography } from "@mui/material";
+import { Divider, LinearProgress, Box, Grid, Button, Typography, Slide } from "@mui/material";
 import Image from 'next/image';
 import VideoPlayer from "./video-player";
 import { blackBgSx, maxDisplayWidth, whiteBgSx } from "../styles/theme";
+import SvgCurve from "./svgCurve";
+import useElementObserver from "../hooks/useElementObserver";
+import { useRef } from "react";
 
 export const blurImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNUUHCpBwAB8QEFGb0nOgAAAABJRU5ErkJggg=="
 interface BigDisplayProps {
@@ -31,16 +34,11 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
   reverseDisplay = false,
   placeholderHeight = 700
 }) => {
-  const { breakpoints } = useTheme()
+  const { breakpoints, palette } = useTheme()
   const isTablet = useMediaQuery(breakpoints.down("lg"))
 
   const bgSx = blackBg ? blackBgSx : whiteBgSx;
-
-  const dividerShadow = blackBg ? "0px" : "2px";
-  const dividerSx = {
-    border: "none",
-    boxShadow: `0px ${dividerShadow} 6px 2px rgba(0,0,0,0.5)`,
-  }
+  const topPad = 6
  
   const videoPlaceHolder = () => <Box width={700} height={placeholderHeight}><LinearProgress color="secondary" sx={{ top: "50%" }} /></Box>
 
@@ -54,7 +52,7 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
     if (videoSrc) element = <VideoPlayer url={videoSrc} autoPlay={autoPlayVideo} placeHolder={videoPlaceHolder()} />;
     if (imgSrc) element = <Image src={imgSrc} alt={title} width={700} height={700} placeholder="blur" blurDataURL={blurImage} />;
     return (
-      <Grid item xs={12} lg={6}>
+      <Grid item xs={12} lg={6} zIndex={2} pt={topPad}>
         <Box
           px={{ xs: 2, sm: 4, md: 6, lg: 0 }}
           py={{ xs: 2, sm: 4, lg: 8 }}
@@ -71,9 +69,12 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
     <Box sx={bgSx}>
       <Grid container maxWidth={maxDisplayWidth} margin="auto" px={{ xs: 0, md: 3 }} >
 
+        <SvgCurve color={blackBg ? palette.background.default : palette.primary.main} flipped={blackBg} />
+
         {reverseDisplay && !isTablet && displayElement()}
 
-        <Grid item xs={12} lg={6}>
+        <Grid item xs={12} lg={6} position="relative" pt={topPad} >
+          
           <Box
             pt={{ xs: 8, sm: 10 }}
             pb={{xs: 4, lg: 10}}
@@ -97,6 +98,7 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
               </Button>
             )}
           </Box>
+         
         </Grid>
 
         {(!reverseDisplay || isTablet) && displayElement()}

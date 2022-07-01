@@ -6,7 +6,7 @@ let theme = createTheme({
       main: '#212121',
     },
     secondary: {
-      main: '#607d8b',
+      main: '#84738c',
     },
     error: {
       main: '#e57373',

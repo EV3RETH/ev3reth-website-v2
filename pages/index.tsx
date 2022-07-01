@@ -15,7 +15,7 @@ const Home: NextPage = () => {
         <Box maxWidth={1024} mx="auto" mb={10}>
           <Image src={ev3rethImage} alt="EV3RETH" priority/>
         </Box>
-        <Typography variant="h4">
+        <Typography variant="h4" position="relative" zIndex={1}>
           Machine Learning Artist and Composer
         </Typography>
       </BannerWrapper>

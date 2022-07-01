@@ -92,6 +92,7 @@ const TuneOut: NextPage = () => {
           reverseDisplay={isOdd}
           blackBg={isOdd}
           videoSrc={url}
+          placeholderHeight={394}
         />
       })}
     </Box>
