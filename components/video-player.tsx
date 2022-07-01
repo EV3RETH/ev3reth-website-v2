@@ -4,25 +4,25 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import { useEffect,  useState } from "react";
-import Box from "@mui/material/Box";
-import Fab from "@mui/material/Fab";
-import Button from "@mui/material/Button";
-import { useTheme, SxProps, Theme, alpha } from "@mui/material/styles";
+import { useTheme, SxProps, Theme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { LinearProgress, Box, Fab, Button } from "@mui/material";
 
 interface VideoPlayerProps {
   url: string;
   autoPlay?: boolean;
   isSmall?: boolean;
-  isActive?: boolean
+  isActive?: boolean;
+  placeHolder?: JSX.Element
 }
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmall = false, isActive = true }) => {
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmall = false, isActive = true, placeHolder }) => {
   const [isPlaying, setIsPlaying] = useState(autoPlay)
   const [isMuted, setIsMuted] = useState(false)
   const [showingControls, setShowingControls] = useState(false)
+  const [loaded, setLoaded] = useState(false)
 
-  const { breakpoints } = useTheme()
+  const { breakpoints, palette } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down("sm"))
 
   useEffect(() => {
@@ -49,6 +49,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
 
   const videoSx: SxProps<Theme> = {
     boxShadow: "2px 3px 4px rgba(0,0,0,0.6)",
+    transition: "filter 2s",
+    filter: loaded ? "" : "blur(3px)",
+    backgroundColor: palette.primary.main
   }
   
   const controlsSx: SxProps<Theme> = {
@@ -120,7 +123,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
           {mutedUnmuted}
         </Fab>
       </Box>
+      {!loaded && placeHolder}
       <ReactPlayer
+        onReady={() => setLoaded(true)}
+        style={{display: loaded ? "block" : "none"}}
         height="auto"
         width="100%" 
         url={url}

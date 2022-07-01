@@ -1,14 +1,11 @@
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import { useTheme, alpha } from "@mui/material/styles";
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { Divider } from "@mui/material";
+import { Divider, LinearProgress, Box, Grid, Button, Typography } from "@mui/material";
 import Image from 'next/image';
 import VideoPlayer from "./video-player";
 import { blackBgSx, maxDisplayWidth, whiteBgSx } from "../styles/theme";
 
+export const blurImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNUUHCpBwAB8QEFGb0nOgAAAABJRU5ErkJggg=="
 interface BigDisplayProps {
   title: string;
   tag: string;
@@ -16,9 +13,10 @@ interface BigDisplayProps {
   marketText: string;
   videoSrc?: string;
   autoPlayVideo?: boolean;
-  imgSrc?: string | StaticImageData;
+  imgSrc?: string;
   blackBg?: boolean;
   reverseDisplay?: boolean;
+  placeholderHeight?: number;
 };
 
 const BigDisplay: React.FC<BigDisplayProps> = ({
@@ -31,6 +29,7 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
   autoPlayVideo = false,
   blackBg = false,
   reverseDisplay = false,
+  placeholderHeight = 700
 }) => {
   const { breakpoints } = useTheme()
   const isTablet = useMediaQuery(breakpoints.down("lg"))
@@ -43,6 +42,7 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
     boxShadow: `0px ${dividerShadow} 6px 2px rgba(0,0,0,0.5)`,
   }
  
+  const videoPlaceHolder = () => <Box width={700} height={placeholderHeight}><LinearProgress color="secondary" sx={{ top: "50%" }} /></Box>
 
   const displayElement = () => {
     const justify = isTablet
@@ -51,8 +51,8 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
         ? "flex-start"
         : "flex-end";
     let element;
-    if (videoSrc) element = <VideoPlayer url={videoSrc} autoPlay={autoPlayVideo} />;
-    if (imgSrc) element = <Image src={imgSrc} alt={title} />
+    if (videoSrc) element = <VideoPlayer url={videoSrc} autoPlay={autoPlayVideo} placeHolder={videoPlaceHolder()} />;
+    if (imgSrc) element = <Image src={imgSrc} alt={title} width={700} height={700} placeholder="blur" blurDataURL={blurImage} />;
     return (
       <Grid item xs={12} lg={6}>
         <Box
@@ -69,7 +69,6 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
   
   return (
     <Box sx={bgSx}>
-      <Divider sx={dividerSx}/>
       <Grid container maxWidth={maxDisplayWidth} margin="auto" px={{ xs: 0, md: 3 }} >
 
         {reverseDisplay && !isTablet && displayElement()}

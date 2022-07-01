@@ -3,7 +3,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["verbos.mypinata.cloud"]
+    domains: ["ev3reth.s3.us-west-2.amazonaws.com"]
   }
 }
 

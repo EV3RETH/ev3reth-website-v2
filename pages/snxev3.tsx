@@ -1,20 +1,18 @@
 import type { NextPage } from 'next';
 import Box from "@mui/material/Box";
-import { MainBG } from ".";
 import BannerWrapper from "../components/banner-wrapper";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import SwiperDisplay, { SwiperDisplayItem } from '../components/swiper-display';
 
 const snxItems: Array<SwiperDisplayItem> = Array.from(Array(30).keys()).map(i => ({
-  url: `https://verbos.mypinata.cloud/ipfs/QmZFLdP4eurUSuYcfZ2F3VoPXomRVV1oGWSznCBxAbYftT/${i}.png`,
+  url: `https://ev3reth.s3.us-west-2.amazonaws.com/SNxEV3-images/SNxEV3-${i}.png`,
   label: `SNxEV3-${i}`
 }))
 
 const TuneOut: NextPage = () => {
   return (
     <Box component="main">
-      <MainBG />
       <BannerWrapper>
         <Typography variant="h1" mb={2} >
           SNxEV3
@@ -40,3 +38,4 @@ const TuneOut: NextPage = () => {
 }
 
 export default TuneOut;
+

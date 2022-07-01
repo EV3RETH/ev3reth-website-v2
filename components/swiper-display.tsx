@@ -4,25 +4,25 @@ import 'swiper/css';
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import Box from '@mui/material/Box';
 import { useTheme, alpha } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import VideoPlayer from './video-player';
-import { Typography } from '@mui/material';
+import { LinearProgress, Typography, Box } from '@mui/material';
 import { maxDisplayWidth } from '../styles/theme';
 import Image from 'next/image';
-
+import { blurImage } from './big-display';
 export interface SwiperDisplayItem {
   url: string;
   label?: string;
   isVideo?: boolean;
 }
 interface SwiperDisplayProps {
-  items: Array<SwiperDisplayItem>
-  blackBg?: boolean
+  items: Array<SwiperDisplayItem>;
+  blackBg?: boolean;
+  placeholderHeight?: number;
 }
 
-const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false }) => {
+const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, placeholderHeight = 225 }) => {
   const { breakpoints, spacing, palette } = useTheme()
   const isTablet = useMediaQuery(breakpoints.down("md"))
   const isDesktop = useMediaQuery(breakpoints.down("lg"))
@@ -72,13 +72,15 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false })
     }
   }
 
+  const videoPlaceHolder = () => <Box width={500} height={placeholderHeight}><LinearProgress color="secondary" sx={{ top: "50%", width: "400px" }} /></Box>
+
   const displayElement = (isActive: boolean, item: SwiperDisplayItem) => {
     const { url, label, isVideo } = item;
 
     const element = isVideo
-      ? <VideoPlayer url={url} isSmall isActive={isActive} />
+      ? <VideoPlayer url={url} isSmall isActive={isActive} placeHolder={videoPlaceHolder()} />
       : <Box width="100%" display="flex" justifyContent="center" sx={imageSx} >
-          <Image src={url} alt={label} height="500" width="500" />
+        <Image src={url} alt={label} height="500" width="500" placeholder="blur" blurDataURL={blurImage} />
         </Box>
     
     return (

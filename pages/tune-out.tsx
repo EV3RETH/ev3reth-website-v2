@@ -1,7 +1,6 @@
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import type { NextPage } from 'next';
-import { MainBG } from ".";
 import BannerWrapper from "../components/banner-wrapper";
 import BigDisplay from "../components/big-display";
 import Navigation, { DiscordLink, Ev3rethTwitterLink } from "../components/navigation";
@@ -62,7 +61,6 @@ export const tuneOutDisplayItems: Array<DisplayListItem> = [
 const TuneOut: NextPage = () => {
   return (
     <Box component="main">
-      <MainBG />
       <BannerWrapper>
         <Typography variant="h1" mb={2} >
           Tune Out

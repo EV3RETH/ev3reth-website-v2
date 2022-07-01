@@ -2,7 +2,6 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import type { NextPage } from 'next';
-import { MainBG } from ".";
 import BannerWrapper from "../components/banner-wrapper";
 import BigDisplay from "../components/big-display";
 import Navigation from "../components/navigation";
@@ -21,7 +20,6 @@ export const TwitterLink = ({url} : {url: string}) => (
 const Collaborations: NextPage = () => {
   return (
     <Box component="main">
-      <MainBG />
       <BannerWrapper>
         <Typography variant="h2">
           Danil
