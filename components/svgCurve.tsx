@@ -1,4 +1,4 @@
-import { Box, SxProps, Theme } from "@mui/material"
+import { Box, SxProps, Theme, useMediaQuery, useTheme } from "@mui/material"
 import { useRef } from "react";
 import useElementObserver from "../hooks/useElementObserver";
 import Curve from "../public/large-curve.svg"
@@ -10,10 +10,13 @@ interface curveProps {
 const SvgCurve: React.FC<curveProps> = ({ color, flipped }) => {
   const ref = useRef(null)
   const isVisible = useElementObserver(ref, "50px")
+  const { breakpoints} = useTheme()
+  const isTablet = useMediaQuery(breakpoints.down("lg"))
 
   const rotate = flipped ? "rotate(0deg)" : "rotateY(180deg)";
-  const translate = isVisible? "scaleY(0.7)" : "scaleY(0)";
-  const transform = `${rotate} ${translate}`
+  const scaleAmount = isTablet ? 0.9 : 0.7
+  const scale = isVisible ? `scaleY(${scaleAmount})` : "scaleY(0)";
+  const transform = `${rotate} ${scale}`
 
   const sx: SxProps<Theme> = {
     width: "100%",
@@ -21,7 +24,7 @@ const SvgCurve: React.FC<curveProps> = ({ color, flipped }) => {
     left: 0,
     marginTop: {
       xs: "-1px",
-      md: "-5px",
+      lg: "-3px",
     },
     transformOrigin: "50% 0",
     transition: "transform 3s",

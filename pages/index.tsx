@@ -7,13 +7,21 @@ import BigDisplay from '../components/big-display';
 import BannerWrapper from '../components/banner-wrapper'
 import SwiperDisplay from '../components/swiper-display';
 import { tuneOutDisplayItems } from './tune-out';
+import { useState } from 'react';
 
 const Home: NextPage = () => {
+  const [logoLoaded, setLogoLoaded] = useState(false)
+
+  const logoSx = {
+    transition: "filter 2s",
+    filter: logoLoaded ? "blur(0px) brightness(1)" : "blur(8px) brightness(0.4)"
+  }
+  
   return (
     <Box component="main">
       <BannerWrapper>
-        <Box maxWidth={1024} mx="auto" mb={10}>
-          <Image src={ev3rethImage} alt="EV3RETH" priority/>
+        <Box maxWidth={1024} mx="auto" mb={10} sx={logoSx}>
+          <Image src={ev3rethImage} alt="EV3RETH" priority onLoadingComplete={()=> setLogoLoaded(true)}/>
         </Box>
         <Typography variant="h4" position="relative" zIndex={1}>
           Machine Learning Artist and Composer
