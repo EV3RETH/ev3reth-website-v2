@@ -29,6 +29,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
   const containerVisible = useElementObserver(containerRef, "0px")
   const { breakpoints, palette } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down("sm"))
+  const isSSR = typeof window === 'undefined'
 
   useEffect(() => {
     if (isSmall && !isActive && videoRef.current) {
@@ -42,13 +43,13 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
   }, [isPlaying, showingControls])
 
   useEffect(() => {
-    //lazy loading
-    if (containerVisible) {
+    //lazy loading and forcing client side rendering
+    if (containerVisible && !isSSR) {
       //the video element doesn't fire events correctly when rendered server side, 
       //adding this mounted check forces it to be rendered client side
       setMounted(true)
     }
-  }, [containerVisible])
+  }, [containerVisible, isSSR])
 
   const size = (isSmall || isMobile) ? "small" : "medium"
   const smallWidth = isMobile ? 300 : 400
@@ -153,7 +154,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
         ref={videoRef}
         muted={isMuted}
         src={url}
-        onCanPlayThrough={() => setLoaded(true)}
+        onLoadedData={() => setLoaded(true)}
+        onCanPlayThrough={()=> setLoaded(true)}
         style={{ display: loaded ? "block" : "none" }}
       />}      
     </Box>
