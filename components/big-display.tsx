@@ -5,8 +5,7 @@ import Image from 'next/image';
 import VideoPlayer from "./video-player";
 import { blackBgSx, maxDisplayWidth, whiteBgSx } from "../styles/theme";
 import SvgCurve from "./svgCurve";
-
-export const blurImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNUUHCpBwAB8QEFGb0nOgAAAABJRU5ErkJggg=="
+import base64Shimmer from "../utils/svgShimmer";
 interface BigDisplayProps {
   title: string;
   tag: string;
@@ -18,6 +17,7 @@ interface BigDisplayProps {
   blackBg?: boolean;
   reverseDisplay?: boolean;
   placeholderHeight?: number;
+  videoThumbnail?: string;
 };
 
 const BigDisplay: React.FC<BigDisplayProps> = ({
@@ -30,13 +30,16 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
   autoPlayVideo = false,
   blackBg = false,
   reverseDisplay = false,
-  placeholderHeight = 700
+  placeholderHeight = 700,
+  videoThumbnail
 }) => {
   const { breakpoints, palette } = useTheme()
   const isTablet = useMediaQuery(breakpoints.down("lg"))
+  const isMobile = useMediaQuery(breakpoints.down("sm"))
 
   const bgSx = blackBg ? blackBgSx : whiteBgSx;
   const topPad = { xs: 0, lg: 6 }
+  const phMultiplier = isMobile ? 0.49 : 1
  
   const displayElement = () => {
     const justify = isTablet
@@ -45,8 +48,8 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
         ? "flex-start"
         : "flex-end";
     let element;
-    if (videoSrc) element = <VideoPlayer url={videoSrc} autoPlay={autoPlayVideo} placeholderHeight={placeholderHeight} />;
-    if (imgSrc) element = <Image src={imgSrc} alt={title} width={700} height={700} placeholder="blur" blurDataURL={blurImage} />;
+    if (videoSrc) element = <VideoPlayer url={videoSrc} autoPlay={autoPlayVideo} placeholderHeight={placeholderHeight * phMultiplier} thumbnail={videoThumbnail} />;
+    if (imgSrc) element = <Image src={imgSrc} alt={title} width={700} height={700} placeholder="blur" blurDataURL={base64Shimmer(700, 700)} />;
     return (
       <Grid item xs={12} lg={6} zIndex={2} pt={topPad}>
         <Box

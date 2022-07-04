@@ -8,20 +8,29 @@ import BannerWrapper from '../components/banner-wrapper'
 import SwiperDisplay from '../components/swiper-display';
 import { tuneOutDisplayItems } from './tune-out';
 import { useState } from 'react';
+import { SxProps, Theme, useTheme } from "@mui/material/styles"
 
 const Home: NextPage = () => {
   const [logoLoaded, setLogoLoaded] = useState(false)
-
-  const logoSx = {
+  const {typography} = useTheme()
+  const logoSx: SxProps<Theme>  = {
     transition: "filter 2s",
-    filter: logoLoaded ? "blur(0px) brightness(1)" : "blur(8px) brightness(0.4)"
+    filter: logoLoaded ? "blur(0px) brightness(1)" : "blur(8px) brightness(0.4)",
+    ...typography.h1, //for alt text fallback
   }
   
   return (
     <Box component="main">
       <BannerWrapper>
         <Box maxWidth={1024} mx="auto" mb={10} sx={logoSx}>
-          <Image src={ev3rethImage} alt="EV3RETH" priority onLoadingComplete={()=> setLogoLoaded(true)}/>
+          <Image
+            height={324}
+            width={1937}
+            src="https://ev3reth.s3.us-west-2.amazonaws.com/misc/EV3RETH-black.png"
+            alt={"EV3RETH"}
+            priority
+            onLoadingComplete={() => setLogoLoaded(true)}
+          />
         </Box>
         <Typography variant="h4" position="relative" zIndex={1}>
           Machine Learning Artist and Composer
@@ -53,6 +62,7 @@ const Home: NextPage = () => {
         marketLink="https://paras.id/collection/tune-out-by-ev3rethnear"
         videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/Tune+out+promo+v3.mp4"
         placeholderHeight={394}
+        videoThumbnail="https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/tune-out-thumbnail.jpg"
       />
       <SwiperDisplay items={tuneOutDisplayItems} />
     

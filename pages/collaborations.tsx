@@ -1,10 +1,9 @@
+import type { NextPage } from 'next';
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import type { NextPage } from 'next';
 import BannerWrapper from "../components/banner-wrapper";
 import BigDisplay from "../components/big-display";
-import Navigation from "../components/navigation";
 import TwitterIcon from '@mui/icons-material/Twitter';
 import SvgCurve from "../components/svgCurve";
 import { useTheme } from "@mui/material";
@@ -34,7 +33,7 @@ const Collaborations: NextPage = () => {
         tag="Owner - earthshine.near"
         marketText="View on Paras"
         marketLink="https://paras.id/token/x.paras.near::188803"
-        videoSrc="https://vimeo.com/684484141"
+        videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/collaborations/SUMMERSUN.mp4"
         placeholderHeight={800}
       />
       <SvgCurve color={palette.background.default} flipped/>
@@ -48,7 +47,7 @@ const Collaborations: NextPage = () => {
         <TwitterLink url="https://twitter.com/griffindart" />
       </BannerWrapper>
       <BigDisplay
-        videoSrc="https://vimeo.com/684483034"
+        videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH6+-+The+Mystic.mp4"
         title="CH6 - The Mystic"
         tag="Owner - jared.near"
         marketText="View on Paras"

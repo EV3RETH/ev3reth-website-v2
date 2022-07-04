@@ -10,7 +10,7 @@ import VideoPlayer from './video-player';
 import { LinearProgress, Typography, Box, Skeleton } from '@mui/material';
 import { maxDisplayWidth } from '../styles/theme';
 import Image from 'next/image';
-import { blurImage } from './big-display';
+import base64Shimmer from '../utils/svgShimmer';
 export interface SwiperDisplayItem {
   url: string;
   label?: string;
@@ -24,6 +24,7 @@ interface SwiperDisplayProps {
 
 const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, placeholderHeight = 225 }) => {
   const { breakpoints, spacing, palette } = useTheme()
+  const isMobile = useMediaQuery(breakpoints.down("sm"))
   const isTablet = useMediaQuery(breakpoints.down("md"))
   const isDesktop = useMediaQuery(breakpoints.down("lg"))
 
@@ -36,6 +37,7 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, p
   const bgSx = blackBg
     ? { backgroundColor: palette.primary.main }
     : { backgroundColor: alpha(palette.primary.main, 0.2) }
+  const phMultiplier = isMobile ? 0.75 : 1
   
   const sliderSx = {
     px: { xs: 0, md: 3 },
@@ -76,9 +78,9 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, p
     const { url, label, isVideo } = item;
 
     const element = isVideo
-      ? <VideoPlayer url={url} isSmall isActive={isActive} placeholderHeight={placeholderHeight} />
+      ? <VideoPlayer url={url} isSmall isActive={isActive} placeholderHeight={placeholderHeight * phMultiplier} />
       : <Box width="100%" display="flex" justifyContent="center" sx={imageSx} >
-        <Image src={url} alt={label} height="500" width="500" placeholder="blur" blurDataURL={blurImage} />
+        <Image src={url} alt={label} height="500" width="500" placeholder="blur" blurDataURL={base64Shimmer(500, 500)} />
         </Box>
     
     return (
