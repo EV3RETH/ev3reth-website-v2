@@ -4,13 +4,13 @@ const shimmer = (w: number, h: number) => `
   <defs>
     <linearGradient id="g">
       <stop stop-color="#333" offset="20%" />
-      <stop stop-color="#222" offset="50%" />
+      <stop stop-color="#303030" offset="50%" />
       <stop stop-color="#333" offset="70%" />
     </linearGradient>
   </defs>
-  <rect width="${w}" height="${h}" fill="#333" />
-  <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
-  <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="2s" repeatCount="indefinite"  />
+  <rect width="${w}" height="${h}" fill="#333"/>
+  <rect id="r" width="${w}" height="${h}" fill="url(#g)"/>
+  <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1.5s" repeatCount="indefinite" />
 </svg>`
 
 const toBase64 = (svg: string) =>

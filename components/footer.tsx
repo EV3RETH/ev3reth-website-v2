@@ -1,7 +1,5 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography'
-import { useTheme } from '@mui/material/styles';
-import { useRouter } from 'next/router';
 import { blackBgSx, maxDisplayWidth } from '../styles/theme';
 import { DiscordLink, Ev3rethTwitterLink } from './navigation';
 
