@@ -39,7 +39,7 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
 
   const bgSx = blackBg ? blackBgSx : whiteBgSx;
   const topPad = { xs: 0, lg: 6 }
-  const phMultiplier = isMobile ? 0.49 : 1
+  const phMultiplier = isMobile ? 0.5 : 1
  
   const displayElement = () => {
     const justify = isTablet

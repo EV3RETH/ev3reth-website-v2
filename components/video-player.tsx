@@ -43,11 +43,13 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
   }, [isPlaying, showingControls])
 
   useEffect(() => {
+    console.log("🚀 ~ file: video-player.tsx ~ line 48 ~ useEffect ~ containerVisible && !isSSR", containerVisible, !isSSR)
     //lazy loading and forcing client side rendering
     if (containerVisible && !isSSR) {
       //the video element doesn't fire events correctly when rendered server side, 
       //adding this mounted check forces it to be rendered client side
       setMounted(true)
+      setTimeout(()=>setLoaded(true), 1000)
     }
   }, [containerVisible, isSSR])
 
