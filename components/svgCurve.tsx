@@ -4,13 +4,13 @@ import useElementObserver from "../hooks/useElementObserver";
 import Curve from "../public/large-curve.svg"
 
 interface curveProps {
-  color: string;
+  color?: string;
   flipped?: boolean;
 }
 const SvgCurve: React.FC<curveProps> = ({ color, flipped }) => {
   const ref = useRef(null)
   const isVisible = useElementObserver(ref, "50px")
-  const { breakpoints} = useTheme()
+  const { breakpoints, palette } = useTheme()
   const isTablet = useMediaQuery(breakpoints.down("lg"))
 
   const rotate = flipped ? "rotate(0deg)" : "rotateY(180deg)";
@@ -30,7 +30,7 @@ const SvgCurve: React.FC<curveProps> = ({ color, flipped }) => {
     transition: "transform 3s",
     transform,
     '& svg>*': {
-      fill: color
+      fill: color || palette.primary.main
     }
   }
   return (

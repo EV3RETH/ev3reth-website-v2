@@ -31,7 +31,7 @@ const Home: NextPage = () => {
       <BigDisplay
         title="EV3: Genesis"
         tag="Regular Live Auctions"
-        videoSrc="https://vimeo.com/711008604"
+        videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Genesis-final/Genesis-promo.mp4"
         marketLink="https://discord.gg/CwvgaWdfwM"
         marketText="Join the discord"
       />
@@ -51,7 +51,7 @@ const Home: NextPage = () => {
         tag="Part One - Sold Out"
         marketText="Visit Secondary Market"
         marketLink="https://paras.id/collection/tune-out-by-ev3rethnear"
-        videoSrc="https://vimeo.com/684484577"
+        videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/Tune+out+promo+v3.mp4"
         placeholderHeight={394}
       />
       <SwiperDisplay items={tuneOutDisplayItems} />

@@ -3,10 +3,11 @@ import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import { useEffect,  useState } from "react";
+import { useEffect,  useRef,  useState } from "react";
 import { useTheme, SxProps, Theme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { LinearProgress, Box, Fab, Button, Skeleton } from "@mui/material";
+import { Box, Fab, Button, Skeleton } from "@mui/material";
+import useElementObserver from "../hooks/useElementObserver";
 
 interface VideoPlayerProps {
   url: string;
@@ -21,12 +22,17 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
   const [isMuted, setIsMuted] = useState(false)
   const [showingControls, setShowingControls] = useState(false)
   const [loaded, setLoaded] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
+  const videoRef = useRef<HTMLVideoElement | null>(null)
+  const containerRef = useRef()
+  const containerVisible = useElementObserver(containerRef, "0px")
   const { breakpoints, palette } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down("sm"))
 
   useEffect(() => {
-    if (isSmall && !isActive) {
+    if (isSmall && !isActive && videoRef.current) {
+      videoRef.current.pause()
       setIsPlaying(false)
     }
   }, [isActive, isSmall])
@@ -34,6 +40,15 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
   useEffect(() => {
     if(!isPlaying) setShowingControls(true)
   }, [isPlaying, showingControls])
+
+  useEffect(() => {
+    //lazy loading
+    if (containerVisible) {
+      //the video element doesn't fire events correctly when rendered server side, 
+      //adding this mounted check forces it to be rendered client side
+      setMounted(true)
+    }
+  }, [containerVisible])
 
   const size = (isSmall || isMobile) ? "small" : "medium"
   const smallWidth = isMobile ? 300 : 400
@@ -93,7 +108,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
 
   const handlePlayClick = () => {
     setIsPlaying(prev => {
-      if(!prev) hideControls()
+      if (!prev) {
+        videoRef.current?.play()
+      } else {
+        videoRef.current?.pause()
+        hideControls()
+      }
       return !prev
     })
   }
@@ -113,7 +133,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
   }
 
   return (
-    <Box position="relative" sx={videoSx} width={playerWidth} margin={isSmall ? "auto" : "inherit"}>
+    <Box position="relative" sx={videoSx} width={playerWidth} margin={isSmall ? "auto" : "inherit"} ref={containerRef}>
       <Box sx={controlsSx} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseOut}>
         <Button onClick={handleControlsClick} variant="text" sx={controlScrimSx} disabled={!isActive}/>
         <Fab color="secondary" onClick={handlePlayClick} sx={buttonSx} size={size} disabled={!isActive} >
@@ -124,28 +144,16 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
         </Fab>
       </Box>
       {!loaded && <Skeleton variant="rectangular" width="100%" height={placeholderHeight * phMultiplier} animation="wave" sx={{ bgcolor: 'grey.800' }} />}
-      <ReactPlayer
-        onReady={() => setLoaded(true)}
-        style={{display: loaded ? "block" : "none"}}
+      {mounted && <video
+        style={{ display: loaded ? "block" : "none" }}
         height="auto"
-        width="100%" 
-        url={url}
+        width="100%"
         loop
-        playing={isPlaying}
+        ref={videoRef}
         muted={isMuted}
-        volume={0.7}
-        config={{
-          vimeo: {
-            playerOptions: {
-              playsinline: true,
-              width: playerWidth,
-              controls: false,
-              responsive: true,
-              pip: false
-            }
-          }
-        }}
-      />
+        src={url}
+        onCanPlayThrough={() => setLoaded(true)}
+      />}      
     </Box>
   )
 }

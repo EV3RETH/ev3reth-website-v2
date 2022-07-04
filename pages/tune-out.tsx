@@ -15,42 +15,42 @@ interface DisplayListItem extends SwiperDisplayItem {
 
 export const tuneOutDisplayItems: Array<DisplayListItem> = [
   {
-    url: 'https://vimeo.com/684482975',
+    url: 'https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH1+-+The+Endless.mp4',
     label: 'CH1 - The Endless',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253374/253374:1",
     tagText: "Owner - supah.near"
   },
   {
-    url: 'https://vimeo.com/684482985',
+    url: 'https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH2+-+The+Expanse.mp4',
     label: 'CH2 - The Expanse',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253392",
     tagText: "Owner - echobase.near"
   },
   {
-    url: 'https://vimeo.com/684482993',
+    url: 'https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH3+-+The+Serene.mp4',
     label: 'CH3 - The Serene',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253401",
     tagText: "Owner - bennybrown.near"
   },
   {
-    url: 'https://vimeo.com/684483006',
+    url: 'https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH4+-+The+Disturbed.mp4',
     label: 'CH4 - The Disturbed',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253415/253415:1",
     tagText: "Owner - steveospirals.near"
   },
   {
-    url: 'https://vimeo.com/684483019',
+    url: 'https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH5+-+The+Traveler.mp4',
     label: 'CH5 - The Traveler',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253421",
     tagText: "Owner - yupig.near"
   },
   {
-    url: 'https://vimeo.com/684483034',
+    url: 'https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH6+-+The+Mystic.mp4',
     label: 'CH6 - The Mystic',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253461",

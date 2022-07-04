@@ -1,12 +1,10 @@
-import { useTheme, alpha } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { Divider, LinearProgress, Box, Grid, Button, Typography, Slide, Skeleton } from "@mui/material";
+import { Box, Grid, Button, Typography } from "@mui/material";
 import Image from 'next/image';
 import VideoPlayer from "./video-player";
 import { blackBgSx, maxDisplayWidth, whiteBgSx } from "../styles/theme";
 import SvgCurve from "./svgCurve";
-import useElementObserver from "../hooks/useElementObserver";
-import { useRef } from "react";
 
 export const blurImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNUUHCpBwAB8QEFGb0nOgAAAABJRU5ErkJggg=="
 interface BigDisplayProps {

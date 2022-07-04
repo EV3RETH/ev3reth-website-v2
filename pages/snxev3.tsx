@@ -4,6 +4,7 @@ import BannerWrapper from "../components/banner-wrapper";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import SwiperDisplay, { SwiperDisplayItem } from '../components/swiper-display';
+import SvgCurve from '../components/svgCurve';
 
 const snxItems: Array<SwiperDisplayItem> = Array.from(Array(30).keys()).map(i => ({
   url: `https://ev3reth.s3.us-west-2.amazonaws.com/SNxEV3-images/SNxEV3-${i}.png`,
@@ -28,10 +29,11 @@ const TuneOut: NextPage = () => {
         </Typography>
         <Button color="secondary" variant="contained" sx={{ mt: 3 }} >
           <a target="_blank" rel="noreferrer" href="https://paras.id/collection/mint.snxev3.near">
-            View Collection on Paras
+            Visit Secondary Market
           </a>
         </Button>
       </BannerWrapper>
+      <SvgCurve />
       <SwiperDisplay items={snxItems} />
     </Box>
   )

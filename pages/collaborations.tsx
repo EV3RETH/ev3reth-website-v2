@@ -6,6 +6,8 @@ import BannerWrapper from "../components/banner-wrapper";
 import BigDisplay from "../components/big-display";
 import Navigation from "../components/navigation";
 import TwitterIcon from '@mui/icons-material/Twitter';
+import SvgCurve from "../components/svgCurve";
+import { useTheme } from "@mui/material";
 
 
 
@@ -18,6 +20,7 @@ export const TwitterLink = ({url} : {url: string}) => (
 )
 
 const Collaborations: NextPage = () => {
+  const {palette} = useTheme()
   return (
     <Box component="main">
       <BannerWrapper>
@@ -34,7 +37,7 @@ const Collaborations: NextPage = () => {
         videoSrc="https://vimeo.com/684484141"
         placeholderHeight={800}
       />
-
+      <SvgCurve color={palette.background.default} flipped/>
       <BannerWrapper blackBg>
         <Typography variant="h2" mb={1}>
           GDM
