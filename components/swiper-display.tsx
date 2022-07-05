@@ -1,18 +1,22 @@
+import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCoverflow, Pagination, Navigation } from "swiper";
+import { useTheme, alpha } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { Typography, Box, Fab, Theme, SxProps, DialogActions, Button, CircularProgress } from '@mui/material';
+import OpenInFullIcon from '@mui/icons-material/OpenInFull';
+import Image from 'next/image';
+import VideoPlayer from './video-player';
+import Modal from './modal';
+import base64Shimmer from '../utils/svgShimmer';
+import { maxDisplayWidth } from '../styles/theme';
 import 'swiper/css';
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { useTheme, alpha } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import VideoPlayer from './video-player';
-import { LinearProgress, Typography, Box, Skeleton } from '@mui/material';
-import { maxDisplayWidth } from '../styles/theme';
-import Image from 'next/image';
-import base64Shimmer from '../utils/svgShimmer';
 export interface SwiperDisplayItem {
   url: string;
+  hiResUrl?: string;
   label?: string;
   isVideo?: boolean;
 }
@@ -23,10 +27,14 @@ interface SwiperDisplayProps {
 }
 
 const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, placeholderHeight = 225 }) => {
+  const [modalImage, setModalImage] = useState<string>()
+  const [downloading, setDownloading] = useState(false)
   const { breakpoints, spacing, palette } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down("sm"))
   const isTablet = useMediaQuery(breakpoints.down("md"))
   const isDesktop = useMediaQuery(breakpoints.down("lg"))
+
+  const modalOpen = Boolean(modalImage)
 
   const slidesPerView = () => {
     if (isTablet) return 1;
@@ -34,12 +42,13 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, p
     return 3
   }
 
+  const phMultiplier = isMobile ? 0.75 : 1
+
   const bgSx = blackBg
     ? { backgroundColor: palette.primary.main }
     : { backgroundColor: alpha(palette.primary.main, 0.2) }
-  const phMultiplier = isMobile ? 0.75 : 1
   
-  const sliderSx = {
+  const sliderSx: SxProps<Theme> = {
     px: { xs: 0, md: 3 },
     '--swiper-theme-color': `${palette.secondary.main}`,
     '& .swiper-coverflow': {
@@ -68,19 +77,58 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, p
     }
   }
 
-  const imageSx = {
+  const imageSx: SxProps<Theme> = {
     '& span': {
       boxShadow: "2px 3px 4px rgba(0, 0, 0, 0.5)"
     }
   }
+  const expandSx: SxProps<Theme> = {
+    position: "absolute",
+    zIndex: 2,
+    right: 0,
+    m: 1
+  }
+
+  const handleModalClose = () => setModalImage(undefined)
+
+  const download = () => {
+    if (!modalImage) return;
+    const pathName = modalImage.split("/");
+    const fileName = pathName[pathName.length - 1]
+    setDownloading(true)
+    fetch(modalImage, {
+      method: "GET",
+      headers: {}
+    })
+      .then(response => {
+        response.arrayBuffer().then(function(buffer) {
+          const url = window.URL.createObjectURL(new Blob([buffer]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", fileName);
+          document.body.appendChild(link);
+          link.click();
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      .finally(()=> setDownloading(false))
+  } 
 
   const displayElement = (isActive: boolean, item: SwiperDisplayItem) => {
-    const { url, label, isVideo } = item;
+    const { url, hiResUrl, label, isVideo } = item;
 
+    const handleExpand = () => {
+      setModalImage(hiResUrl || url)
+    }
     const element = isVideo
       ? <VideoPlayer url={url} isSmall isActive={isActive} placeholderHeight={placeholderHeight * phMultiplier} />
       : <Box width="100%" display="flex" justifyContent="center" sx={imageSx} >
-        <Image src={url} alt={label} height="500" width="500" placeholder="blur" blurDataURL={base64Shimmer(500, 500)} />
+          <Fab color="secondary" size="small" sx={expandSx} onClick={handleExpand} >
+            <OpenInFullIcon fontSize="small" />
+          </Fab>
+          <Image src={url} alt={label} height="500" width="500" placeholder="blur" blurDataURL={base64Shimmer(500, 500)} />
         </Box>
     
     return (
@@ -135,6 +183,22 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, p
           })}
         </Swiper>
       </Box>
+
+      <Modal
+        open={modalOpen}
+        onClose={handleModalClose}
+        footer={
+          <DialogActions sx={{position: "absolute", bottom: -30, left: "calc(50% - 5rem)", padding: 0 }} >
+            <Button color="secondary" variant="contained" onClick={download} sx={{width: "10rem"}} disabled={downloading}>
+              {downloading ? <CircularProgress color="inherit" size="1.5rem"/> : "Download"}
+            </Button>
+          </DialogActions>
+        }
+      >
+        <Box position="relative" width="100%" height="100%">
+          {modalImage && <Image src={modalImage} alt="" objectFit="contain" layout="fill" placeholder="blur" blurDataURL={base64Shimmer(1024, 1024)} />}
+        </Box>
+      </Modal>
     </Box>
   )
 }

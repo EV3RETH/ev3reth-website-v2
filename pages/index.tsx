@@ -2,7 +2,6 @@ import type { NextPage } from 'next'
 import Image from 'next/image';
 import Box from '@mui/material/Box';
 import Typography from "@mui/material/Typography"
-import ev3rethImage from "../public/EV3RETH-black.png"
 import BigDisplay from '../components/big-display';
 import BannerWrapper from '../components/banner-wrapper'
 import SwiperDisplay from '../components/swiper-display';

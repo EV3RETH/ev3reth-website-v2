@@ -66,7 +66,7 @@ const Navigation: React.FC = () => {
 
   return (
     <>
-      <AppBar position="fixed">
+      <AppBar position="fixed" sx={{ background: palette.primary.light}}>
         <Container maxWidth="xl">
           <Toolbar disableGutters >
             <Grid container spacing={3} alignItems="center">

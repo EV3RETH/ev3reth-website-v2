@@ -1,11 +1,9 @@
+import { useEffect,  useRef,  useState } from "react";
 import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import { useEffect,  useRef,  useState } from "react";
-import { useTheme, SxProps, Theme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { Box, Fab, Button, Skeleton } from "@mui/material";
+import { Box, Fab, Button, Skeleton, useTheme, SxProps, Theme, useMediaQuery } from "@mui/material";
 import useElementObserver from "../hooks/useElementObserver";
 
 interface VideoPlayerProps {

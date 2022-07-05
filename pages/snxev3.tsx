@@ -8,6 +8,7 @@ import SvgCurve from '../components/svgCurve';
 
 const snxItems: Array<SwiperDisplayItem> = Array.from(Array(30).keys()).map(i => ({
   url: `https://ev3reth.s3.us-west-2.amazonaws.com/SNxEV3-images/SNxEV3-${i}.png`,
+  hiResUrl: `https://ev3reth.s3.us-west-2.amazonaws.com/SNxEV3-upres-images/SNxEV3-${i}-4k.png`,
   label: `SNxEV3-${i}`
 }))
 
