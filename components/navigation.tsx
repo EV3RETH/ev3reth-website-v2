@@ -14,6 +14,8 @@ import MenuItem from '@mui/material/MenuItem';
 import { useTheme } from '@mui/material/styles';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import Image from 'next/image';
+import { colors, Tab, Tabs, useMediaQuery } from '@mui/material';
+import logoIcon from '../public/logo-small.png'
 
 const pages = [
   {
@@ -47,9 +49,15 @@ export const DiscordLink = () => (
 )
 
 const Navigation: React.FC = () => {
+  const [tab, setTab] = useState(0)
   const [anchorElNav, setAnchorElNav] = useState<Element | null>(null);
-  const { palette } = useTheme()
+  const { palette, typography, breakpoints } = useTheme()
+  const isTablet = useMediaQuery(breakpoints.down("md"))
   const router = useRouter()
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTab(newValue);
+  };
 
   const handleOpenNavMenu: MouseEventHandler<HTMLButtonElement> = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -64,41 +72,52 @@ const Navigation: React.FC = () => {
     handleCloseNavMenu()
   }
 
+  const handleLogoClick = () => {
+    setTab(0)
+    handleNavClick("/")
+  }
+
   return (
     <>
       <AppBar position="fixed" sx={{ background: palette.primary.light}}>
         <Container maxWidth="xl">
-          <Toolbar disableGutters >
+          <Toolbar disableGutters
+            sx={{
+              height: (Boolean(anchorElNav) && isTablet) ? 320 : 60,
+              alignItems: "flex-start",
+              transition: "height 1s",
+              pt: 1
+            }}>
             <Grid container spacing={3} alignItems="center">
-              <Grid item xs={6}>
-                <Button color="inherit" variant='text' onClick={()=> handleNavClick("/")} sx={{p:0}}>
-                  <Typography
-                    variant="h6"
-                    noWrap
-                  >
-                    EV3RETH
-                  </Typography>
+              <Grid item xs={2}>
+                <Button color="inherit" variant='text' onClick={handleLogoClick} sx={{p:0, ...typography.h6}}>
+                  <Image width="35px" height="35px" src={logoIcon} alt="EV3RETH"/>
                 </Button>
               </Grid>
 
-              <Grid item xs={6}>
+              <Grid item xs={10}>
                 <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, justifyContent: "flex-end" }}>
                   <IconButton
                     size="large"
-                    aria-label="account of current user"
+                    aria-label="menu icon"
                     aria-controls="menu-appbar"
                     aria-haspopup="true"
                     onClick={handleOpenNavMenu}
                     color="inherit"
+                    sx={{ transition: "transform 1s", transform: Boolean(anchorElNav) ? "rotate(90deg)": "rotate(0deg)"}}
                   >
                     <MenuIcon />
                   </IconButton>
-                  <Menu
+                  <Menu                    
                     id="menu-appbar"
                     anchorEl={anchorElNav}
                     anchorOrigin={{
                       vertical: 'bottom',
                       horizontal: 'left',
+                    }}
+                    transitionDuration={{
+                      enter: 1700,
+                      exit: 200
                     }}
                     keepMounted
                     transformOrigin={{
@@ -110,7 +129,10 @@ const Navigation: React.FC = () => {
                     sx={{
                       display: { xs: 'block', md: 'none' },
                       '& .MuiPaper-elevation': {
-                        backgroundColor: palette.background.default
+                        boxShadow: "none",
+                        width: "100%",
+                        backgroundColor: "transparent",
+                        color: colors.grey[400]
                       }
                     }}
                   >
@@ -119,48 +141,36 @@ const Navigation: React.FC = () => {
                         key={path}
                         onClick={() => handleNavClick(path)}
                         selected={path === router.pathname}
+                        sx={{ height: "50px", "&.Mui-selected": { color: "white", borderLeft: "1px solid white", transition: "1s" } }}
+                        
                       >
                         <Typography textAlign="center">{label}</Typography>
                       </MenuItem>
                     ))}
                     <MenuItem>
                       <Ev3rethTwitterLink />
-                      <Box ml={2}>
+                      <Box ml={2} sx={{ filter: "invert(0.7)" }}>
                         <DiscordLink />
                       </Box>
                     </MenuItem>
                   </Menu>
                 </Box>
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "flex-end", alignItems: "center" }}>
-                  {pages.map(({ label, path }) => {
-                    const isActive = path === router.pathname
-                    const sx = {
-                      my: 2,
-                      color: 'white',
-                      display: 'block',
-                      borderRadius: 0,
-                      "& :after": {
-                        position: "absolute",
-                        bottom: 0,
-                        left: "inherit",
-                        content: "''",
-                        width: "100%",
-                        height: 2,
-                        opacity: isActive ? 1 : 0,
-                        backgroundColor: "white",
-                        transition: "0.3s"
+                  <Tabs variant="scrollable" value={tab} onChange={handleTabChange} indicatorColor="secondary" textColor="inherit"
+                    TabIndicatorProps={{
+                      style: {
+                        bottom: 7,
                       }
-                    }
-                    return (
-                      <Button
+                    }}
+                  >
+                    {pages.map(({ label, path }) => (
+                      <Tab
                         key={path}
                         onClick={() => handleNavClick(path)}
-                        sx={sx}
-                      >
-                        {label}
-                      </Button>
-                    )
-                  })}
+                        label={label}
+                      />
+                    ))}
+                  </Tabs>
                   <Button sx={{ mb: -1, ml: 2, p: 0, color: 'white', minWidth: "inherit",  height: 20}}>
                     <Ev3rethTwitterLink />
                   </Button>

@@ -1,7 +1,7 @@
 import { Box, SxProps, Theme, useMediaQuery, useTheme } from "@mui/material"
 import { useRef } from "react";
 import useElementObserver from "../hooks/useElementObserver";
-import Curve from "../public/large-curve.svg"
+import Curve from "../public/curve.svg"
 
 interface curveProps {
   color?: string;

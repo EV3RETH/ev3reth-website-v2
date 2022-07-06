@@ -189,8 +189,8 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, p
         onClose={handleModalClose}
         footer={
           <DialogActions sx={{position: "absolute", bottom: -30, left: "calc(50% - 5rem)", padding: 0 }} >
-            <Button color="secondary" variant="contained" onClick={download} sx={{width: "10rem"}} disabled={downloading}>
-              {downloading ? <CircularProgress color="inherit" size="1.5rem"/> : "Download"}
+            <Button color="secondary" variant="contained" onClick={download} sx={{ width: "10rem" }} disabled={downloading}>
+              {downloading ? <CircularProgress color="inherit" size="1.5rem" /> : "Download"}
             </Button>
           </DialogActions>
         }

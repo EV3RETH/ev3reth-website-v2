@@ -23,10 +23,12 @@ const Collaborations: NextPage = () => {
   return (
     <Box component="main">
       <BannerWrapper>
-        <Typography variant="h2">
+        <Typography variant="h2" textAlign="center">
           Danil
         </Typography>
-        <TwitterLink url="https://twitter.com/pan_danil"/>
+        <Box textAlign="center">
+          <TwitterLink url="https://twitter.com/pan_danil"/>
+        </Box>
       </BannerWrapper>
       <BigDisplay
         title="S U M M E R S U N / /"
@@ -38,13 +40,15 @@ const Collaborations: NextPage = () => {
       />
       <SvgCurve color={palette.background.default} flipped/>
       <BannerWrapper blackBg>
-        <Typography variant="h2" mb={1}>
+        <Typography variant="h2" mb={1} textAlign="center">
           GDM
         </Typography>
         <Typography variant="h5" mb={1}>
           GDM is an artist working at the intersection of surrealism and fantasy, creating Chiral worlds and the creatures which live within.
         </Typography>
-        <TwitterLink url="https://twitter.com/griffindart" />
+        <Box textAlign="center">
+          <TwitterLink url="https://twitter.com/griffindart" /> 
+        </Box>
       </BannerWrapper>
       <BigDisplay
         videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH6+-+The+Mystic.mp4"

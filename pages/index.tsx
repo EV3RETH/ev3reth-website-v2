@@ -31,7 +31,7 @@ const Home: NextPage = () => {
             onLoadingComplete={() => setLogoLoaded(true)}
           />
         </Box>
-        <Typography variant="h4" position="relative" zIndex={1}>
+        <Typography variant="h4" position="relative" zIndex={1} textAlign="center">
           Machine Learning Artist and Composer
         </Typography>
       </BannerWrapper>
