@@ -5,6 +5,8 @@ import BannerWrapper from "../components/banner-wrapper";
 import BigDisplay from "../components/big-display";
 import Navigation, { DiscordLink, Ev3rethTwitterLink } from "../components/navigation";
 import { SwiperDisplayItem } from "../components/swiper-display";
+import { DISCORD_LINK, TUNE_OUT_ARTICLE_LINK, TUNE_OUT_SECONDARY_LINK } from "../utils/links";
+import { Button } from "@mui/material";
 
 
 interface DisplayListItem extends SwiperDisplayItem {
@@ -62,23 +64,28 @@ const TuneOut: NextPage = () => {
   return (
     <Box component="main">
       <BannerWrapper>
-        <Typography variant="h1" mb={2} >
+        <Typography variant="h1" mb={3} >
           Tune Out
         </Typography>
-        <Typography variant="h5"  >
+        <Typography variant="h4" mb={4}>
+          Part one has sold out. Join my discord for details on future listings.
+        </Typography>
+        <Typography variant="h6">
           An exploration into new artistic mediums. Combining original music with machine learning art to produce something completely unique.
         </Typography>
-        <Typography variant="subtitle1" my={2}>
-          <a href="https://paras.id/publication/tune-out-621670f9b1808d092e26027f" target="_blank" rel="noreferrer">
-            Click here to read the full article on Tune Out.
-          </a>
+        <Typography variant="h6">
+          Click <a href={TUNE_OUT_ARTICLE_LINK} target="_blank" rel="noreferrer">here</a> to read the full article on Tune Out.
         </Typography>
-        <Typography variant="subtitle1">
-          Part one is sold out! Join my discord for details on future listings
-          <Box display="inline" position="relative" top={4} left={8} sx={{ filter: "invert(1)" }}>
-            <DiscordLink />
-          </Box>
-        </Typography >
+
+        <Box mt={4} gap={2}>
+          <Button color="secondary" variant="contained" sx={{ mr: 2, mt: 2 }} href={DISCORD_LINK} target="_blank" rel="noreferrer">
+            Join Discord
+          </Button>
+          <Button color="secondary" variant="outlined" sx={{ mt: 2 }} href={TUNE_OUT_SECONDARY_LINK} target="_blank" rel="noreferrer">
+            Visit Secondary Market
+          </Button>
+        </Box>
+
       </BannerWrapper>
       {tuneOutDisplayItems.map(({
         url, label, marketUrl, tagText = "Available by auction soon"}, index) => {
@@ -87,7 +94,7 @@ const TuneOut: NextPage = () => {
           key={label}
           title={label}
           tag={tagText}
-          marketText="View on Paras"
+          marketText="View on Secondary"
           marketLink={marketUrl}
           reverseDisplay={isOdd}
           blackBg={isOdd}

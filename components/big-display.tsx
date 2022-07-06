@@ -6,6 +6,7 @@ import VideoPlayer from "./video-player";
 import { blackBgSx, maxDisplayWidth, whiteBgSx } from "../styles/theme";
 import SvgCurve from "./svgCurve";
 import base64Shimmer from "../utils/svgShimmer";
+import Link from "next/link";
 interface BigDisplayProps {
   title: string;
   tag: string;
@@ -40,6 +41,7 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
   const bgSx = blackBg ? blackBgSx : whiteBgSx;
   const topPad = { xs: 0, lg: 6 }
   const phMultiplier = isMobile ? 0.5 : 1
+  const isNavLink = marketLink[0] === "/"
  
   const displayElement = () => {
     const justify = isTablet
@@ -89,13 +91,22 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
             <Typography variant="h3" noWrap>
               {title}
             </Typography>
-            {marketText && (
-              <Button color="secondary" variant="contained" sx={{ mt: 3 }} >
-                <a target="_blank" rel="noreferrer" href={marketLink}>
-                  {marketText}
-                </a>
+
+            <Link
+              href={marketLink}
+              passHref
+            >
+              <Button
+                color="secondary"
+                variant="contained"
+                sx={{ mt: 3 }}
+                target={isNavLink ? "" : "_blank"}
+                rel={isNavLink ? "" : "noreferrer"}
+                href=""
+              >
+                {marketText}
               </Button>
-            )}
+            </Link>
           </Box>
          
         </Grid>

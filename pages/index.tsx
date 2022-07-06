@@ -38,18 +38,18 @@ const Home: NextPage = () => {
 
       <BigDisplay
         title="EV3: Genesis"
-        tag="Regular Live Auctions"
+        tag="Weekly Auctions"
         videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Genesis-final/Genesis-promo.mp4"
-        marketLink="https://discord.gg/CwvgaWdfwM"
-        marketText="Join the discord"
+        marketText="Learn More"
+        marketLink="/genesis"
       />
 
       <BigDisplay
         title="SNxEV3"
         tag="Sold Out"
         imgSrc="https://ev3reth.s3.us-west-2.amazonaws.com/SNxEV3-images/SNxEV3-0.png"
-        marketText="Visit Secondary Market"
-        marketLink="https://paras.id/collection/mint.snxev3.near"
+        marketText="Learn More"
+        marketLink="/snxev3"
         reverseDisplay
         blackBg
       />
@@ -57,8 +57,8 @@ const Home: NextPage = () => {
       <BigDisplay
         title="Tune Out"
         tag="Part One - Sold Out"
-        marketText="Visit Secondary Market"
-        marketLink="https://paras.id/collection/tune-out-by-ev3rethnear"
+        marketText="Learn More"
+        marketLink="/tune-out"
         videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/Tune+out+promo+v3.mp4"
         placeholderHeight={394}
         videoThumbnail="https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/tune-out-thumbnail.jpg"

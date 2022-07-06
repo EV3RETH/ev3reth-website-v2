@@ -8,6 +8,8 @@ body {
 
 a {
   color: inherit;
+}
+button a {
   text-decoration: none;
 }
 
