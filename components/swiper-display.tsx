@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCoverflow, Pagination, Navigation } from "swiper";
 import { useTheme, alpha } from '@mui/material/styles';
@@ -8,12 +8,14 @@ import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import Image from 'next/image';
 import VideoPlayer from './video-player';
 import Modal from './modal';
-import base64Shimmer from '../utils/svgShimmer';
+import base64Shimmer, { toBase64 } from '../utils/svgShimmer';
 import { maxDisplayWidth } from '../styles/theme';
 import 'swiper/css';
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import LoadingSkrim from './loading-skrim';
+import { SMALL_LOGO_LINK } from '../utils/links';
 export interface SwiperDisplayItem {
   url: string;
   hiResUrl?: string;
@@ -28,6 +30,7 @@ interface SwiperDisplayProps {
 
 const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, placeholderHeight = 225 }) => {
   const [modalImage, setModalImage] = useState<string>()
+  const [modalImageLoaded, setModalImageLoaded] = useState(false);
   const [downloading, setDownloading] = useState(false)
   const { breakpoints, spacing, palette } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down("sm"))
@@ -89,7 +92,21 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, p
     m: 1
   }
 
-  const handleModalClose = () => setModalImage(undefined)
+  useEffect(() => {
+    const preventRightClick = (e: any) => {
+      if (e && e.target.className === "prevent-right-click") {
+        e.preventDefault();
+      }
+    }
+    document.addEventListener("contextmenu", preventRightClick);
+
+    return () => document.removeEventListener("contextmenu", preventRightClick);
+  }, [])
+
+  const handleModalClose = () => {
+    setModalImageLoaded(false)
+    setModalImage(undefined)
+  }
 
   const download = () => {
     if (!modalImage) return;
@@ -122,6 +139,7 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, p
     const handleExpand = () => {
       setModalImage(hiResUrl || url)
     }
+    
     const element = isVideo
       ? <VideoPlayer url={url} isSmall isActive={isActive} placeholderHeight={placeholderHeight * phMultiplier} />
       : <Box width="100%" display="flex" justifyContent="center" sx={imageSx} >
@@ -196,7 +214,17 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, p
         }
       >
         <Box position="relative" width="100%" height="100%">
-          {modalImage && <Image src={modalImage} alt="" objectFit="contain" layout="fill" placeholder="blur" blurDataURL={base64Shimmer(1024, 1024)} />}
+          {!modalImageLoaded && <LoadingSkrim />}
+          {modalImage && (
+            <Image
+              className="prevent-right-click"
+              src={modalImage}
+              alt=""
+              objectFit="contain"
+              layout="fill"
+              onLoadingComplete={() => setModalImageLoaded(true)}
+            />
+          )}
         </Box>
       </Modal>
     </Box>

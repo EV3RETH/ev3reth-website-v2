@@ -1,13 +1,14 @@
+import { useState } from 'react';
 import type { NextPage } from 'next'
 import Image from 'next/image';
-import Box from '@mui/material/Box';
-import Typography from "@mui/material/Typography"
+import { Typography, Box } from "@mui/material"
+import { SxProps, Theme, useTheme } from "@mui/material/styles"
 import BigDisplay from '../components/big-display';
 import BannerWrapper from '../components/banner-wrapper'
 import SwiperDisplay from '../components/swiper-display';
 import { tuneOutDisplayItems } from './tune-out';
-import { useState } from 'react';
-import { SxProps, Theme, useTheme } from "@mui/material/styles"
+import titleBackup from '../public/EV3RETH-black.png'
+import { MAIN_TITLE_LINK } from '../utils/links';
 
 const Home: NextPage = () => {
   const [logoLoaded, setLogoLoaded] = useState(false)
@@ -25,7 +26,7 @@ const Home: NextPage = () => {
           <Image
             height={324}
             width={1937}
-            src="https://ev3reth.s3.us-west-2.amazonaws.com/misc/EV3RETH-black.png"
+            src={MAIN_TITLE_LINK}
             alt={"EV3RETH"}
             priority
             onLoadingComplete={() => setLogoLoaded(true)}

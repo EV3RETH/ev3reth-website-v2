@@ -5,28 +5,35 @@ import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import { Box, Fab, Button, Skeleton, useTheme, SxProps, Theme, useMediaQuery } from "@mui/material";
 import useElementObserver from "../hooks/useElementObserver";
+import LoadingSkrim from "./loading-skrim";
 
 interface VideoPlayerProps {
   url: string;
-  autoPlay?: boolean;
   isSmall?: boolean;
   isActive?: boolean;
   placeholderHeight?: number;
   thumbnail?: string;
 }
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmall = false, isActive = true, placeholderHeight = 700, thumbnail }) => {
-  const [isPlaying, setIsPlaying] = useState(autoPlay)
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActive = true, placeholderHeight = 700, thumbnail }) => {
+  const [isPlaying, setIsPlaying] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
   const [showingControls, setShowingControls] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [loaded, setLoaded] = useState(false)
+  const [isIOS, setIsIOS] = useState(false)
 
   const { breakpoints, palette } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down("sm"))
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const containerRef = useRef()
   const containerVisible = useElementObserver(containerRef, "0px")
+
+  useEffect(() => {
+    // safeguard for autoplaying on ios
+    videoRef.current?.pause()
+    setIsPlaying(false)
+  }, [mounted])
 
   useEffect(() => {
     if (isSmall && !isActive && videoRef.current) {
@@ -138,7 +145,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, autoPlay = false, isSmal
           {mutedUnmuted}
         </Fab>
       </Box>
-      {!loaded && <Skeleton variant="rectangular" width="100%" height={placeholderHeight} animation="wave" sx={{ bgcolor: 'grey.800' }} />}
+      {/* {!loaded && <Skeleton variant="rectangular" width="100%" height={placeholderHeight} animation="wave" sx={{ bgcolor: 'grey.800' }} />} */}
+      {!loaded && (
+        <Box width="100%" height={placeholderHeight}>
+          <LoadingSkrim />
+        </Box>
+      )}
       {mounted && <video
         autoPlay={/iPad|iPhone|iPod/.test(navigator.userAgent)} //loads in data for safari instead of waiting for user touch
         loop

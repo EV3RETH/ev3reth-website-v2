@@ -13,7 +13,6 @@ interface BigDisplayProps {
   marketLink: string;
   marketText: string;
   videoSrc?: string;
-  autoPlayVideo?: boolean;
   imgSrc?: string;
   blackBg?: boolean;
   reverseDisplay?: boolean;
@@ -28,7 +27,6 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
   marketText,
   imgSrc,
   videoSrc,
-  autoPlayVideo = false,
   blackBg = false,
   reverseDisplay = false,
   placeholderHeight = 700,
@@ -50,7 +48,7 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
         ? "flex-start"
         : "flex-end";
     let element;
-    if (videoSrc) element = <VideoPlayer url={videoSrc} autoPlay={autoPlayVideo} placeholderHeight={placeholderHeight * phMultiplier} thumbnail={videoThumbnail} />;
+    if (videoSrc) element = <VideoPlayer url={videoSrc} placeholderHeight={placeholderHeight * phMultiplier} thumbnail={videoThumbnail} />;
     if (imgSrc) element = <Image src={imgSrc} alt={title} width={700} height={700} placeholder="blur" blurDataURL={base64Shimmer(700, 700)} />;
     return (
       <Grid item xs={12} lg={6} zIndex={2} pt={topPad}>

@@ -14,8 +14,9 @@ import MenuItem from '@mui/material/MenuItem';
 import { useTheme } from '@mui/material/styles';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import Image from 'next/image';
-import { colors, Tab, Tabs, useMediaQuery } from '@mui/material';
-import logoIcon from '../public/logo-small.png'
+import { colors, Hidden, Tab, Tabs, useMediaQuery } from '@mui/material';
+import logoIconBackup from '../public/logo-100.png'
+import { DISCORD_LINK, TWITTER_LINK, SMALL_LOGO_LINK } from '../utils/links';
 
 const pages = [
   {
@@ -41,13 +42,13 @@ const pages = [
 ];
 
 export const Ev3rethTwitterLink = () => (
-  <a href="https://twitter.com/EV3RETH" target="_blank" rel="noreferrer">
+  <a href={TWITTER_LINK} target="_blank" rel="noreferrer">
     <TwitterIcon fontSize='small' />
   </a>
 )
 
 export const DiscordLink = () => (
-  <a href="https://discord.gg/CwvgaWdfwM" target="_blank" rel="noreferrer">
+  <a href={DISCORD_LINK} target="_blank" rel="noreferrer">
     <Image src="/discord.png" height={17} width={17} alt="discord"/>
   </a>
 )
@@ -99,13 +100,14 @@ const Navigation: React.FC = () => {
             key={path}
             onClick={() => handleNavClick(path)}
             label={label}
+            disableRipple
           />
         ))}
       </Tabs>
-      <Button sx={{ mb: -1, ml: 2, p: 0, color: 'white', minWidth: "inherit", height: 20 }}>
+      <Button sx={{ mb: -1, ml: 2, p: 0, color: colors.grey[400], minWidth: "inherit", height: 20 }}>
         <Ev3rethTwitterLink />
       </Button>
-      <Button sx={{ mb: -1, ml: 2, p: 0, filter: "invert(1)", minWidth: "inherit", height: 20 }}>
+      <Button sx={{ mb: -1, ml: 2, p: 0, filter: "invert(0.7)", minWidth: "inherit", height: 20 }}>
         <DiscordLink />
       </Button>
     </Box>
@@ -157,6 +159,7 @@ const Navigation: React.FC = () => {
             key={path}
             onClick={() => handleNavClick(path)}
             selected={path === router.pathname}
+            disableRipple
             sx={{ height: "50px", "&.Mui-selected": { color: "white", borderLeft: "2px solid gray", transition: "1s" } }}
           >
             <Typography textAlign="center">{label}</Typography>
@@ -169,7 +172,6 @@ const Navigation: React.FC = () => {
             <DiscordLink />
           </Box>
         </Box>
-
       </Menu>
     </Box>
   )
@@ -187,12 +189,17 @@ const Navigation: React.FC = () => {
             }}>
             <Grid container spacing={3} alignItems="center">
               <Grid item xs={2}>
-                <Button color="inherit" variant='text' onClick={handleLogoClick} sx={{p:0, ...typography.h6}}>
-                  <Image width="35px" height="35px" src={logoIcon} alt="EV3RETH"/>
+                <Button color="inherit" variant='text' onClick={handleLogoClick} disableRipple sx={{p:0, ...typography.h6}}>
+                  <Image width="35px" height="35px" src={SMALL_LOGO_LINK} alt="EV3RETH" priority/>
                 </Button>
               </Grid>
               <Grid item xs={10}>
-                {isTablet ? displayMenu() : displayTabs()}
+                <Hidden mdUp>
+                  {displayMenu()}
+                </Hidden>
+                <Hidden mdDown>
+                  {displayTabs()}
+                </Hidden>
               </Grid>
             </Grid>
           </Toolbar>
