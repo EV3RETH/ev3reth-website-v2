@@ -47,4 +47,16 @@ export const whiteBgSx: SxProps<Theme> = {
   }
 }
 
-export const maxDisplayWidth = 1536
+export const maxDisplayWidth = 1536;
+
+export const getGradientTextStyle = (gradient: string) => ({
+  background: gradient,
+  backgroundClip: 'text',
+  textFillColor: 'transparent',
+  WebkitBackgroundClip: 'text',
+  WebkitTextFillColor: 'transparent',
+  WebkitBoxDecorationBreak: 'clone',
+  MozBackgroundClip: 'text',
+  MozTextFillColor: 'transparent',
+  MozBoxDecorationBreak: 'clone',
+})

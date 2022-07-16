@@ -21,7 +21,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
   const [showingControls, setShowingControls] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [loaded, setLoaded] = useState(false)
-  const [isIOS, setIsIOS] = useState(false)
 
   const { breakpoints, palette } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down("sm"))
@@ -30,9 +29,17 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
   const containerVisible = useElementObserver(containerRef, "0px")
 
   useEffect(() => {
+    // if IOS set to muted for breif second when autoplay set, but pause hasnt been triggered
+    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+      setIsMuted(true)
+    }
+  }, [])
+  
+  useEffect(() => {
     // safeguard for autoplaying on ios
     videoRef.current?.pause()
     setIsPlaying(false)
+    setIsMuted(false)
   }, [mounted])
 
   useEffect(() => {

@@ -22,7 +22,7 @@ const TuneOut: NextPage = () => {
           SNxEV3
         </Typography>
         <Typography variant="h4" mb={4}>
-          Sold out. May be available on secondary markets.
+          Available on secondary markets.
         </Typography>
         <Typography variant="h6">
           Thirty unique pieces generated from a machine learning algorithm trained by EV3RETH.
