@@ -42,7 +42,7 @@ export const tuneOutDisplayItems: Array<DisplayListItem> = [
   },
   {
     url: 'https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH4+-+The+Disturbed.mp4',
-    thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-disturbed-thumbnail.jpg",
+    thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-disturbed-thumbnail.png",
     label: 'CH4 - The Disturbed',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253415/253415:1",
@@ -74,7 +74,7 @@ const TuneOut: NextPage = () => {
           Tune Out
         </Typography>
         <Typography variant="h4" mb={4}>
-          Part one has sold out. Join my discord for details on future listings.
+          Part one has sold out. Join my discord for future listings.
         </Typography>
         <Typography variant="h6">
           An exploration into new artistic mediums. Combining original music with machine learning art to produce something completely unique.

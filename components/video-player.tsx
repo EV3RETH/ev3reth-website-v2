@@ -144,12 +144,13 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
           {mutedUnmuted}
         </Fab>
       </Box>
-      {/* {!loaded && <Skeleton variant="rectangular" width="100%" height={placeholderHeight} animation="wave" sx={{ bgcolor: 'grey.800' }} />} */}
+
       {!loaded && (
         <Box width="100%" height={placeholderHeight}>
           <LoadingSkrim />
         </Box>
       )}
+      
       {mounted && <video
         loop
         playsInline

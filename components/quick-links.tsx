@@ -1,19 +1,19 @@
 import { Button, Stack, Typography, useTheme } from "@mui/material"
 import { FC } from "react"
-import { EVE_GENESIS_SECONDARY_LINK, MEDIUM_MODEL_IS_ART_PART1_LINK, MEDIUM_MODEL_IS_ART_PART2_LINK, PARAS_COLLECTIONS, SNXEV3_SECONDARY_LINK, TUNE_OUT_SECONDARY_LINK } from "../utils/links";
+import { DISCORD_LINK, EVE_GENESIS_SECONDARY_LINK, MEDIUM_MODEL_IS_ART_PART1_LINK, MEDIUM_MODEL_IS_ART_PART2_LINK, PARAS_COLLECTIONS, SNXEV3_SECONDARY_LINK, TUNE_OUT_SECONDARY_LINK, TWITTER_LINK } from "../utils/links";
 import Modal from "./modal";
 
 interface QuickLinksProps {
   open: boolean;
   onClose: () => void;
   title?: string;
-  noArticles?: boolean
+  onlyMarketLinks?: boolean
 }
 const QuickLinks: FC<QuickLinksProps> = ({
   open, 
   onClose,
   title = "Wanna go straight to the marketplace action?",
-  noArticles = false
+  onlyMarketLinks = false
 }) => {
   const {palette} = useTheme()
   return (
@@ -31,11 +31,17 @@ const QuickLinks: FC<QuickLinksProps> = ({
         <StyledLink title="SNxEV3" href={SNXEV3_SECONDARY_LINK} />
         <StyledLink title="Tune Out" href={TUNE_OUT_SECONDARY_LINK} />
 
-        {!noArticles && (
+        {!onlyMarketLinks && (
           <>
-            <br/>
+            <br />
             <Typography variant="h5">
-              How about an article for your reading pleasure?
+              Or join me on Discord and Twitter to stay informed?
+            </Typography>
+            <StyledLink title="Discord" href={DISCORD_LINK} />
+            <StyledLink title="Twitter" href={TWITTER_LINK} />
+            <br />
+            <Typography variant="h5">
+              Maybe an article for your reading pleasure?
             </Typography>
             <StyledLink title="Pondering the New Paradigm of Generative Art" href={MEDIUM_MODEL_IS_ART_PART1_LINK} />
             <StyledLink title="The Making of “EV3: Genesis”" href={MEDIUM_MODEL_IS_ART_PART2_LINK} />

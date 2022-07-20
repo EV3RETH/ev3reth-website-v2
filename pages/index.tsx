@@ -37,20 +37,17 @@ const Home: NextPage = () => {
             onLoadingComplete={() => setLogoLoaded(true)}
           />
         </Box>
+        
         <Typography variant="h3" position="relative" zIndex={1} textAlign="center"
           sx={getGradientTextStyle(`linear-gradient(90deg, ${palette.secondary.main} 10%, #FFF 90%)`)}>
           Machine Learning Artist and Composer
         </Typography>
+
         <Box mt={8} gap={3} display="flex" justifyContent="center" flexWrap="wrap">
-          <Button color="secondary" variant="contained" href={DISCORD_LINK} target="_blank" rel="noreferrer">
-            Join Discord
-          </Button>
-          <Button color="secondary" variant="outlined" onClick={()=>setQuickLinksOpen(true)}>
+          <Button color="secondary" variant="contained" onClick={()=>setQuickLinksOpen(true)}>
             Quick Links
-          </Button>
-          
+          </Button>          
           <QuickLinks open={quickLinksOpen} onClose={() => setQuickLinksOpen(false)} />
-          
         </Box>
       </BannerWrapper>
 
