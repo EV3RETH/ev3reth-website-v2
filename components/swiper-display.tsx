@@ -15,12 +15,12 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import LoadingSkrim from './loading-skrim';
-import { SMALL_LOGO_LINK } from '../utils/links';
 export interface SwiperDisplayItem {
   url: string;
   hiResUrl?: string;
   label?: string;
   isVideo?: boolean;
+  thumbnail?: string
 }
 interface SwiperDisplayProps {
   items: Array<SwiperDisplayItem>;
@@ -134,14 +134,14 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, p
   } 
 
   const displayElement = (isActive: boolean, item: SwiperDisplayItem) => {
-    const { url, hiResUrl, label, isVideo } = item;
+    const { url, hiResUrl, label, isVideo, thumbnail } = item;
 
     const handleExpand = () => {
       setModalImage(hiResUrl || url)
     }
     
     const element = isVideo
-      ? <VideoPlayer url={url} isSmall isActive={isActive} placeholderHeight={placeholderHeight * phMultiplier} />
+      ? <VideoPlayer url={url} isSmall isActive={isActive} placeholderHeight={placeholderHeight * phMultiplier} thumbnail={thumbnail} />
       : <Box width="100%" display="flex" justifyContent="center" sx={imageSx} >
           <Fab color="secondary" size="small" sx={expandSx} onClick={handleExpand} >
             <OpenInFullIcon fontSize="small" />
@@ -214,7 +214,7 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, p
         }
       >
         <Box position="relative" width="100%" height="100%">
-          {!modalImageLoaded && <LoadingSkrim />}
+          {!modalImageLoaded && <LoadingSkrim title="4k images may take time to load"/>}
           {modalImage && (
             <Image
               className="prevent-right-click"

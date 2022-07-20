@@ -8,3 +8,4 @@ export const TUNE_OUT_ARTICLE_LINK = "https://paras.id/publication/tune-out-6216
 export const TUNE_OUT_SECONDARY_LINK = "https://paras.id/collection/tune-out-by-ev3rethnear"
 export const MAIN_TITLE_LINK = "https://ev3reth.s3.us-west-2.amazonaws.com/misc/EV3RETH-black.png"
 export const SMALL_LOGO_LINK = "https://ev3reth.s3.us-west-2.amazonaws.com/misc/logo-100.png"
+export const PARAS_COLLECTIONS = "https://paras.id/ev3reth.near/collections"

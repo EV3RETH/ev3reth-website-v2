@@ -27,19 +27,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const containerRef = useRef()
   const containerVisible = useElementObserver(containerRef, "0px")
-
-  useEffect(() => {
-    // if IOS set to muted for breif second when autoplay set, but pause hasnt been triggered
-    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-      setIsMuted(true)
-    }
-  }, [])
   
   useEffect(() => {
-    // safeguard for autoplaying on ios
-    videoRef.current?.pause()
-    setIsPlaying(false)
-    setIsMuted(false)
+    if (videoRef.current) {
+      videoRef.current.volume = 0.5
+    }
   }, [mounted])
 
   useEffect(() => {
@@ -159,7 +151,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
         </Box>
       )}
       {mounted && <video
-        autoPlay={/iPad|iPhone|iPod/.test(navigator.userAgent)} //loads in data for safari instead of waiting for user touch
         loop
         playsInline
         disablePictureInPicture

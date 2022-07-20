@@ -18,6 +18,7 @@ interface DisplayListItem extends SwiperDisplayItem {
 export const tuneOutDisplayItems: Array<DisplayListItem> = [
   {
     url: 'https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH1+-+The+Endless.mp4',
+    thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-endless-thumbnail.jpg",
     label: 'CH1 - The Endless',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253374/253374:1",
@@ -25,6 +26,7 @@ export const tuneOutDisplayItems: Array<DisplayListItem> = [
   },
   {
     url: 'https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH2+-+The+Expanse.mp4',
+    thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-expanse-thumbnail.jpg",
     label: 'CH2 - The Expanse',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253392",
@@ -32,6 +34,7 @@ export const tuneOutDisplayItems: Array<DisplayListItem> = [
   },
   {
     url: 'https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH3+-+The+Serene.mp4',
+    thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-serene-thumbnail.jpg",
     label: 'CH3 - The Serene',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253401",
@@ -39,6 +42,7 @@ export const tuneOutDisplayItems: Array<DisplayListItem> = [
   },
   {
     url: 'https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH4+-+The+Disturbed.mp4',
+    thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-disturbed-thumbnail.jpg",
     label: 'CH4 - The Disturbed',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253415/253415:1",
@@ -46,6 +50,7 @@ export const tuneOutDisplayItems: Array<DisplayListItem> = [
   },
   {
     url: 'https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH5+-+The+Traveler.mp4',
+    thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-traveler-thumbnail.jpg",
     label: 'CH5 - The Traveler',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253421",
@@ -53,6 +58,7 @@ export const tuneOutDisplayItems: Array<DisplayListItem> = [
   },
   {
     url: 'https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH6+-+The+Mystic.mp4',
+    thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-mystic-thumbnail.jpg",
     label: 'CH6 - The Mystic',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253461",
@@ -77,18 +83,19 @@ const TuneOut: NextPage = () => {
           Click <a href={TUNE_OUT_ARTICLE_LINK} target="_blank" rel="noreferrer">here</a> to read the full article on Tune Out.
         </Typography>
 
-        <Box mt={4} gap={2}>
-          <Button color="secondary" variant="contained" sx={{ mr: 2, mt: 2 }} href={DISCORD_LINK} target="_blank" rel="noreferrer">
+        <Box mt={3}>
+          <Button color="secondary" variant="contained" sx={{ mr: 3, mt: 3 }} href={DISCORD_LINK} target="_blank" rel="noreferrer">
             Join Discord
           </Button>
-          <Button color="secondary" variant="outlined" sx={{ mt: 2 }} href={TUNE_OUT_SECONDARY_LINK} target="_blank" rel="noreferrer">
+          <Button color="secondary" variant="outlined" sx={{ mt: 3 }} href={TUNE_OUT_SECONDARY_LINK} target="_blank" rel="noreferrer">
             Visit Secondary Market
           </Button>
         </Box>
 
       </BannerWrapper>
       {tuneOutDisplayItems.map(({
-        url, label, marketUrl, tagText = "Available by auction soon"}, index) => {
+        url, label, marketUrl, tagText = "Available by auction soon", thumbnail
+      }, index) => {
         const isOdd = !!(index % 2)
         return <BigDisplay
           key={label}
@@ -100,6 +107,7 @@ const TuneOut: NextPage = () => {
           blackBg={isOdd}
           videoSrc={url}
           placeholderHeight={394}
+          videoThumbnail={thumbnail}
         />
       })}
     </Box>

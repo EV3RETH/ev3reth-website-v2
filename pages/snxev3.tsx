@@ -5,7 +5,6 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import SwiperDisplay, { SwiperDisplayItem } from '../components/swiper-display';
 import SvgCurve from '../components/svgCurve';
-import { maxDisplayWidth } from '../styles/theme';
 import { SNXEV3_SECONDARY_LINK } from '../utils/links';
 
 const snxItems: Array<SwiperDisplayItem> = Array.from(Array(30).keys()).map(i => ({
@@ -22,7 +21,7 @@ const TuneOut: NextPage = () => {
           SNxEV3
         </Typography>
         <Typography variant="h4" mb={4}>
-          Available on secondary markets.
+          Available on secondary market.
         </Typography>
         <Typography variant="h6">
           Thirty unique pieces generated from a machine learning algorithm trained by EV3RETH.

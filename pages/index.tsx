@@ -1,19 +1,22 @@
 import { useState } from 'react';
 import type { NextPage } from 'next'
 import Image from 'next/image';
-import { Typography, Box, List, Hidden } from "@mui/material"
+import { Typography, Box, List, Hidden, Button } from "@mui/material"
 import { SxProps, Theme, useTheme } from "@mui/material/styles"
 import BigDisplay from '../components/big-display';
 import BannerWrapper from '../components/banner-wrapper'
 import SwiperDisplay from '../components/swiper-display';
 import { tuneOutDisplayItems } from './tune-out';
 import titleBackup from '../public/EV3RETH-black.png'
-import { MAIN_TITLE_LINK, MEDIUM_MODEL_IS_ART_PART1_LINK, MEDIUM_MODEL_IS_ART_PART2_LINK } from '../utils/links';
+import { DISCORD_LINK, MAIN_TITLE_LINK, MEDIUM_MODEL_IS_ART_PART1_LINK, MEDIUM_MODEL_IS_ART_PART2_LINK } from '../utils/links';
 import SvgCurve from '../components/svgCurve';
 import { getGradientTextStyle, maxDisplayWidth } from '../styles/theme';
+import QuickLinks from '../components/quick-links';
+import Modal from '../components/modal';
 
 const Home: NextPage = () => {
   const [logoLoaded, setLogoLoaded] = useState(false)
+  const [quickLinksOpen, setQuickLinksOpen] = useState(false)
   const { typography, palette } = useTheme()
   const logoSx: SxProps<Theme>  = {
     transition: "filter 2s",
@@ -24,8 +27,7 @@ const Home: NextPage = () => {
   return (
     <Box component="main">
       <BannerWrapper>
-        <Box maxWidth={1024} mx="auto" mb={10} sx={logoSx}>
-          {/* TODO: add darkened EV#REHT typography till image is laoded */}
+        <Box maxWidth={1024} mx="auto" mt={6} mb={4} sx={logoSx}>
           <Image
             height={324}
             width={1937}
@@ -39,12 +41,24 @@ const Home: NextPage = () => {
           sx={getGradientTextStyle(`linear-gradient(90deg, ${palette.secondary.main} 10%, #FFF 90%)`)}>
           Machine Learning Artist and Composer
         </Typography>
+        <Box mt={8} gap={3} display="flex" justifyContent="center" flexWrap="wrap">
+          <Button color="secondary" variant="contained" href={DISCORD_LINK} target="_blank" rel="noreferrer">
+            Join Discord
+          </Button>
+          <Button color="secondary" variant="outlined" onClick={()=>setQuickLinksOpen(true)}>
+            Quick Links
+          </Button>
+          
+          <QuickLinks open={quickLinksOpen} onClose={() => setQuickLinksOpen(false)} />
+          
+        </Box>
       </BannerWrapper>
 
       <BigDisplay
         title="EV3: Genesis"
         tag="Weekly Auctions"
         videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Genesis-final/Genesis-promo.mp4"
+        videoThumbnail='https://ev3reth.s3.us-west-2.amazonaws.com/Genesis-final/genesis-promo-thumbnail.jpg'
         marketText="Learn More"
         marketLink="/genesis"
       />
@@ -58,12 +72,6 @@ const Home: NextPage = () => {
             >
                 I am driven by a deep passion for exploration
             </Typography>
-
-            {/* <Hidden mdDown>
-              <Typography variant="h5" mb={2}>
-                I strive to create new mediums of art by diving head first into the latest technology and making it my own:
-              </Typography>
-            </Hidden> */}
             <Typography variant="h5">
               ❖ Training and manipulating my own machine learning models
               <br />

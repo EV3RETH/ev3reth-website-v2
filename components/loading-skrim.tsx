@@ -14,7 +14,6 @@ const pulse = keyframes`
 `;
 
 const LoadingSkrim: FC<{ title?: string }> = ({ title = "" }) => {
-  const {palette} = useTheme()
   return (
     <Stack
       height="100%"
@@ -22,11 +21,12 @@ const LoadingSkrim: FC<{ title?: string }> = ({ title = "" }) => {
       spacing={5}
       justifyContent="center"
       alignItems="center"
-      sx={{ animation: `${pulse} 2s infinite alternate ease-in` }}
     >
       <Typography variant="h4" color="secondary">{title}</Typography>
 
-      <Image src={logoIcon} alt="" width={100} height={100} />
+      <Box sx={{ animation: `${pulse} 2s infinite alternate ease-in` }}>
+        <Image src={logoIcon} alt="" width={100} height={100} />
+      </Box>
 
       <LinearProgress sx={{width: "50%"}}/>
     </Stack>

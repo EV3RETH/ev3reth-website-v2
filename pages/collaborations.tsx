@@ -36,6 +36,7 @@ const Collaborations: NextPage = () => {
         marketText="View on Paras"
         marketLink="https://paras.id/token/x.paras.near::188803"
         videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/collaborations/SUMMERSUN.mp4"
+        videoThumbnail='https://ev3reth.s3.us-west-2.amazonaws.com/collaborations/summersun-thumbnail.png'
         placeholderHeight={800}
       />
       <SvgCurve color={palette.background.default} flipped/>
@@ -52,6 +53,7 @@ const Collaborations: NextPage = () => {
       </BannerWrapper>
       <BigDisplay
         videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH6+-+The+Mystic.mp4"
+        videoThumbnail='https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-mystic-thumbnail.jpg'
         title="CH6 - The Mystic"
         tag="Owner - jared.near"
         marketText="View on Paras"

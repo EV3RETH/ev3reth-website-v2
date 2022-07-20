@@ -6,6 +6,8 @@ import SvgCurve from "./svgCurve"
 interface ModalProps {
   open: boolean;
   onClose: () => void;
+  small?: boolean;
+  whiteBg?: boolean;
   children: JSX.Element;
   footer?: JSX.Element;
 }
@@ -19,8 +21,9 @@ const Transition = forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const Modal: React.FC<ModalProps> = ({open, onClose, children, footer }) => {
+const Modal: React.FC<ModalProps> = ({open, onClose, children, footer, small, whiteBg }) => {
   const { palette } = useTheme()
+  const color = whiteBg ? palette.background.default : palette.primary.main;
   return (
     <Dialog
       open={open}
@@ -29,22 +32,23 @@ const Modal: React.FC<ModalProps> = ({open, onClose, children, footer }) => {
       PaperProps={{
         square: true,
         sx: {
-          background: palette.primary.main,
+          background: color,
           overflow: "visible",
           margin: 1,
-          width: 1024,
-          height: 1024,
-          maxHeight: "min(100vw, 80vh)",
+          borderRadius: { xs: 4, lg: 6 },
+          width: small ? "initial" : 1024,
+          height: small ? "initial" : 1024,
+          maxHeight: small ? "initial" : "min(100vw, 80vh)",
         }
       }}
       maxWidth="lg"
     >
       <DialogContent sx={{ p: { xs: 2, md: 4 } }} >
-        <Box width="100%" position="absolute" top="1px" left="0" zIndex={0} sx={{ transform: "rotate(180deg)" }}>
-          <SvgCurve flipped />
+        <Box width="94%" position="absolute" top={{ xs: "1px", lg:"-1px"}} left="3%" zIndex={0} sx={{ transform: "rotate(180deg)" }}>
+          <SvgCurve flipped color={color} />
         </Box>
-        <Box width="100%" position="absolute" bottom="-1px" left="0" zIndex={0}>
-          <SvgCurve flipped />
+        <Box width="94%" position="absolute" bottom={{ xs: "1px", lg: "-1px" }} left="3%" zIndex={0}>
+          <SvgCurve flipped color={color} />
         </Box>
         {children}
       </DialogContent>

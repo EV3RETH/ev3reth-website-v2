@@ -9,7 +9,7 @@ const BannerWrapper: React.FC<{ blackBg?: boolean, isBody?: boolean }> = ({ chil
   
   const py = isBody
     ? { xs: 4, lg: 8 }
-    : { xs: 12, lg: 18 }
+    : { xs: 6, lg: 10 }
   return (
     <Box px={px} py={py} textAlign={{ xs: "left", md: "center"}} sx={bgSx} >
       {children}
