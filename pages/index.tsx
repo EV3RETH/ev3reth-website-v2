@@ -12,13 +12,12 @@ import { DISCORD_LINK, MAIN_TITLE_LINK, MEDIUM_MODEL_IS_ART_PART1_LINK, MEDIUM_M
 import SvgCurve from '../components/svgCurve';
 import { getGradientTextStyle, maxDisplayWidth } from '../styles/theme';
 import QuickLinks from '../components/quick-links';
-import Modal from '../components/modal';
 
 const Home: NextPage = () => {
   const [logoLoaded, setLogoLoaded] = useState(false)
   const [quickLinksOpen, setQuickLinksOpen] = useState(false)
   const { typography, palette } = useTheme()
-  const logoSx: SxProps<Theme>  = {
+  const logoSx: SxProps<Theme> = {
     transition: "filter 2s",
     filter: logoLoaded ? "blur(0px) brightness(1)" : "blur(8px) brightness(0.4)",
     ...typography.h1, //for alt text fallback
@@ -37,7 +36,7 @@ const Home: NextPage = () => {
             onLoadingComplete={() => setLogoLoaded(true)}
           />
         </Box>
-        
+
         <Typography variant="h3" position="relative" zIndex={1} textAlign="center"
           sx={getGradientTextStyle(`linear-gradient(90deg, ${palette.secondary.main} 10%, #FFF 90%)`)}>
           Machine Learning Artist and Composer

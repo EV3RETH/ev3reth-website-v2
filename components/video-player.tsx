@@ -3,7 +3,7 @@ import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import { Box, Fab, Button, Skeleton, useTheme, SxProps, Theme, useMediaQuery } from "@mui/material";
+import { Box, Fab, Button, useTheme, SxProps, Theme, useMediaQuery } from "@mui/material";
 import useElementObserver from "../hooks/useElementObserver";
 import LoadingSkrim from "./loading-skrim";
 
@@ -27,6 +27,17 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const containerRef = useRef()
   const containerVisible = useElementObserver(containerRef, "0px")
+
+  useEffect(() => {
+    const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent)
+    if (isIos) setIsMuted(true)
+
+    if (isIos && videoRef.current) {
+      setIsPlaying(false)
+      videoRef.current.pause()
+      setIsMuted(false)
+    }
+  }, [mounted])
   
   useEffect(() => {
     if (videoRef.current) {
@@ -144,14 +155,13 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
           {mutedUnmuted}
         </Fab>
       </Box>
-
       {!loaded && (
         <Box width="100%" height={placeholderHeight}>
           <LoadingSkrim />
         </Box>
       )}
-      
       {mounted && <video
+        autoPlay={/iPad|iPhone|iPod/.test(navigator.userAgent)}
         loop
         playsInline
         disablePictureInPicture
