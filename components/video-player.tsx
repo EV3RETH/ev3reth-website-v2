@@ -1,9 +1,9 @@
-import { useEffect,  useRef,  useState } from "react";
+import { CSSProperties, useEffect,  useRef,  useState } from "react";
 import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import { Box, Fab, Button, useTheme, SxProps, Theme, useMediaQuery } from "@mui/material";
+import { Box, Fab, Button, useTheme, SxProps, Theme, useMediaQuery, makeStyles, Fade } from "@mui/material";
 import useElementObserver from "../hooks/useElementObserver";
 import LoadingSkrim from "./loading-skrim";
 
@@ -21,23 +21,13 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
   const [showingControls, setShowingControls] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [loaded, setLoaded] = useState(false)
+  const [fullyLoaded, setFullyLoaded] = useState(false)
 
   const { breakpoints, palette } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down("sm"))
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const containerRef = useRef()
   const containerVisible = useElementObserver(containerRef, "0px")
-
-  useEffect(() => {
-    const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent)
-    if (isIos) setIsMuted(true)
-
-    if (isIos && videoRef.current) {
-      setIsPlaying(false)
-      videoRef.current.pause()
-      setIsMuted(false)
-    }
-  }, [mounted])
   
   useEffect(() => {
     if (videoRef.current) {
@@ -148,10 +138,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
     <Box position="relative" sx={videoSx} width={playerWidth} margin={isSmall ? "auto" : "inherit"} ref={containerRef}>
       <Box sx={controlsSx} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseOut}>
         <Button onClick={handleControlsClick} variant="text" sx={controlScrimSx} disabled={!isActive}/>
-        <Fab color="secondary" onClick={handlePlayClick} sx={buttonSx} size={size} disabled={!isActive} >
+        <Fab color="secondary" onClick={handlePlayClick} sx={buttonSx} size={size} disabled={!isActive || !loaded} >
           {playPause}
         </Fab>
-        <Fab color="secondary" onClick={handleMuteClick} sx={buttonSx} size={size} disabled={!isActive} >
+        <Fab color="secondary" onClick={handleMuteClick} sx={buttonSx} size={size} disabled={!isActive || !loaded} >
           {mutedUnmuted}
         </Fab>
       </Box>
@@ -160,20 +150,27 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
           <LoadingSkrim />
         </Box>
       )}
-      {mounted && <video
-        autoPlay={/iPad|iPhone|iPod/.test(navigator.userAgent)}
-        loop
-        playsInline
-        disablePictureInPicture
-        height="auto"
-        width="100%"
-        poster={thumbnail}
-        ref={videoRef}
-        muted={isMuted}
-        src={url}
-        onLoadedData={() => setLoaded(true)}
-        style={{ display: loaded ? "block" : "none" }}
-      />}      
+      {mounted && 
+        <video
+          loop
+          playsInline
+          disablePictureInPicture
+          height="auto"
+          width="100%"
+          poster={thumbnail}
+          ref={videoRef}
+          muted={isMuted}
+          src={url} //+ "#t=0.001" (skips first millisecond and acts as thumbnail)
+          onLoadedMetadata={() => setLoaded(true)}
+          style={{
+            display: "block",
+            transition: "3s",
+            position: loaded ? "static" : "fixed",
+            bottom: loaded ? "inherit" : "150vh",
+            opacity: loaded ? 1 : 0,
+          }}
+        />
+      }      
     </Box>
   )
 }

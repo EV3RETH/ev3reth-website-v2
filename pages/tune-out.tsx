@@ -18,7 +18,7 @@ interface DisplayListItem extends SwiperDisplayItem {
 export const tuneOutDisplayItems: Array<DisplayListItem> = [
   {
     url: 'https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH1+-+The+Endless.mp4',
-    thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-endless-thumbnail.jpg",
+    thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/The-Endless-thumbnail.png",
     label: 'CH1 - The Endless',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253374/253374:1",
