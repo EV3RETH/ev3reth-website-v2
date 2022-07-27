@@ -17,6 +17,7 @@ import Image from 'next/image';
 import { colors, Hidden, Tab, Tabs, useMediaQuery } from '@mui/material';
 import logoIconBackup from '../public/logo-100.png'
 import { DISCORD_LINK, TWITTER_LINK, SMALL_LOGO_LINK } from '../utils/links';
+import useWallet from '../hooks/useWallet';
 
 const pages = [
   {
@@ -59,7 +60,9 @@ const Navigation: React.FC = () => {
   const { palette, typography, breakpoints } = useTheme()
   const isTablet = useMediaQuery(breakpoints.down("md"))
   const router = useRouter()
-  const {pathname} = router
+  const { pathname } = router
+  const wallet = useWallet()
+
 
   useEffect(() => {
     pages.forEach((page, i) => {
@@ -86,8 +89,23 @@ const Navigation: React.FC = () => {
     handleNavClick("/")
   }
 
+  console.log("🚀 ~ file: navigation.tsx ~ line 97 ~ handleWalletConnection ~ wallet.isSignedIn()", wallet.isSignedIn)
+  const handleWalletConnection = async () => {
+    try {
+      if (!wallet) throw new Error("No Wallet Connection Found")
+      
+      if (wallet.isSignedIn) {
+        wallet.signOut()
+      } else {
+        await wallet.signIn()
+      }
+    } catch (e) {
+      alert(e)
+    }
+  }
+
   const displayTabs = () => (
-    <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: "flex-end", alignItems: "center" }}>
+    <Box sx={{ display: 'flex', justifyContent: "flex-end", alignItems: "center" }}>
       <Tabs variant="scrollable" value={tab} indicatorColor="secondary" textColor="inherit"
         TabIndicatorProps={{
           style: {
@@ -114,7 +132,7 @@ const Navigation: React.FC = () => {
   )
 
   const displayMenu = () => (
-    <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: "flex-end" }}>
+    <Box sx={{ display: 'flex', justifyContent: "flex-end" }}>
       <IconButton
         size="large"
         aria-label="menu icon"
@@ -193,12 +211,15 @@ const Navigation: React.FC = () => {
                   <Image width="35px" height="35px" src={SMALL_LOGO_LINK} alt="EV3RETH" priority/>
                 </Button>
               </Grid>
-              <Grid item xs={10}>
-                <Hidden mdUp>
-                  {displayMenu()}
-                </Hidden>
+              <Grid item xs={10} display="flex" alignItems="center" justifyContent="flex-end" gap={4}>
                 <Hidden mdDown>
                   {displayTabs()}
+                </Hidden>
+                <Button variant="contained" color="secondary" onClick={handleWalletConnection} sx={{minWidth: 160}}>
+                  {wallet.isSignedIn ? "Disconnect" : "Connect Wallet"}
+                </Button>
+                <Hidden mdUp>
+                  {displayMenu()}
                 </Hidden>
               </Grid>
             </Grid>

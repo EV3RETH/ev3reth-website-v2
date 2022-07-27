@@ -40,8 +40,8 @@ const Collaborations: NextPage = () => {
         placeholderHeight={800}
       />
       <SvgCurve color={palette.background.default} flipped/>
-      <BannerWrapper blackBg>
-        <Typography variant="h2" mb={1} textAlign="center">
+      <BannerWrapper blackBg >
+        <Typography variant="h2" mb={1} mt={4} textAlign="center">
           GDM
         </Typography>
         <Typography variant="h5" mb={1}>

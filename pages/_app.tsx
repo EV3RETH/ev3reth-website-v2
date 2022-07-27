@@ -6,20 +6,23 @@ import Head from 'next/head'
 import theme from '../styles/theme'
 import Navigation from '../components/navigation';
 import Footer from '../components/footer';
+import GlobalProvider from '../context/globalProvider';
 
 
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Head>
-        <title>EV3RETH</title>
-      </Head>
-      <Navigation />
-      <Component {...pageProps} />
-      <Footer />
-    </ThemeProvider>
+    <GlobalProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Head>
+          <title>EV3RETH</title>
+        </Head>
+        <Navigation />
+        <Component {...pageProps} />
+        <Footer />
+      </ThemeProvider>
+    </GlobalProvider>
   )
 }
 
