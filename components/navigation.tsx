@@ -17,7 +17,7 @@ import Image from 'next/image';
 import { colors, Hidden, Tab, Tabs, useMediaQuery } from '@mui/material';
 import logoIconBackup from '../public/logo-100.png'
 import { DISCORD_LINK, TWITTER_LINK, SMALL_LOGO_LINK } from '../utils/links';
-import useWallet from '../hooks/useWallet';
+import useWalletAuth from '../hooks/useWallet';
 
 const pages = [
   {
@@ -61,7 +61,7 @@ const Navigation: React.FC = () => {
   const isTablet = useMediaQuery(breakpoints.down("md"))
   const router = useRouter()
   const { pathname } = router
-  const wallet = useWallet()
+  const wallet = useWalletAuth()
 
 
   useEffect(() => {
@@ -89,7 +89,6 @@ const Navigation: React.FC = () => {
     handleNavClick("/")
   }
 
-  console.log("🚀 ~ file: navigation.tsx ~ line 97 ~ handleWalletConnection ~ wallet.isSignedIn()", wallet.isSignedIn)
   const handleWalletConnection = async () => {
     try {
       if (!wallet) throw new Error("No Wallet Connection Found")
@@ -105,7 +104,7 @@ const Navigation: React.FC = () => {
   }
 
   const displayTabs = () => (
-    <Box sx={{ display: 'flex', justifyContent: "flex-end", alignItems: "center" }}>
+    <Box sx={{ display: 'flex', justifyContent: "flex-end", alignItems: "center", mr: 2 }}>
       <Tabs variant="scrollable" value={tab} indicatorColor="secondary" textColor="inherit"
         TabIndicatorProps={{
           style: {
@@ -211,12 +210,12 @@ const Navigation: React.FC = () => {
                   <Image width="35px" height="35px" src={SMALL_LOGO_LINK} alt="EV3RETH" priority/>
                 </Button>
               </Grid>
-              <Grid item xs={10} display="flex" alignItems="center" justifyContent="flex-end" gap={4}>
+              <Grid item xs={10} display="flex" alignItems="center" justifyContent="flex-end" gap={2}>
                 <Hidden mdDown>
                   {displayTabs()}
                 </Hidden>
                 <Button variant="contained" color="secondary" onClick={handleWalletConnection} sx={{minWidth: 160}}>
-                  {wallet.isSignedIn ? "Disconnect" : "Connect Wallet"}
+                  {wallet?.isSignedIn ? "Disconnect" : "Connect Wallet"}
                 </Button>
                 <Hidden mdUp>
                   {displayMenu()}

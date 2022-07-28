@@ -36,8 +36,9 @@ interface Wallet {
   signIn: () => Promise<void>
   signOut: () => void;
   isSignedIn: boolean;
+  accountId: string;
 }
-const useWallet = (): Wallet => {
+const useWalletAuth = (): Wallet | null => {
   const [isSignedIn, setIsSignedIn] = useState(false)
   const { state } = useContext(GlobalContext)
   const router = useRouter()
@@ -47,14 +48,7 @@ const useWallet = (): Wallet => {
     setIsSignedIn(!!wallet?.isSignedIn())
   }, [wallet])
 
-
-  if (!wallet) {
-    return {
-      signIn: () => new Promise((res, rej) => rej("No Wallet Connection")),
-      signOut: () => null,
-      isSignedIn,
-    }
-  }
+  if (!wallet) return null
 
   const signIn = async () => {
     try {
@@ -76,12 +70,15 @@ const useWallet = (): Wallet => {
     setIsSignedIn(false)
     router.replace(router.pathname) //gets rid of the url params near browser wallet sets
   }
+  // const account = wallet.account()
+  const accountId = wallet.getAccountId()
   return {
     signIn,
     signOut,
-    isSignedIn
+    isSignedIn,
+    accountId
   }
 
 }
 
-export default useWallet;
+export default useWalletAuth;

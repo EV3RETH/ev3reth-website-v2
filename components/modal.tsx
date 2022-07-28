@@ -38,7 +38,7 @@ const Modal: React.FC<ModalProps> = ({open, onClose, children, footer, small, wh
           borderRadius: { xs: 4, lg: 6 },
           width: small ? "initial" : 1024,
           height: small ? "initial" : 1024,
-          maxHeight: small ? "initial" : "min(100vw, 80vh)",
+          maxHeight: small ? "80vh" : "min(100vw, 80vh)",
         }
       }}
       maxWidth="lg"
