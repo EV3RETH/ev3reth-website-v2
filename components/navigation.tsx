@@ -214,9 +214,9 @@ const Navigation: React.FC = () => {
                 <Hidden mdDown>
                   {displayTabs()}
                 </Hidden>
-                {/* <Button variant="contained" color="secondary" onClick={handleWalletConnection} sx={{minWidth: 160}}>
+                <Button variant="contained" color="secondary" onClick={handleWalletConnection} sx={{minWidth: 160}}>
                   {wallet?.isSignedIn ? "Disconnect" : "Connect Wallet"}
-                </Button> */}
+                </Button>
                 <Hidden mdUp>
                   {displayMenu()}
                 </Hidden>
