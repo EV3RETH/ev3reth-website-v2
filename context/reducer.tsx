@@ -1,5 +1,5 @@
 import { Action, GlobalState } from "./globalProvider";
-import { SET_WALLET } from "./actions";
+import { SET_NFTS, SET_WALLET } from "./actions";
 
 const reducer = (state: GlobalState, action: Action): GlobalState => {
   const { type, payload } = action;
@@ -10,6 +10,11 @@ const reducer = (state: GlobalState, action: Action): GlobalState => {
         ...state,
         wallet: payload
       };
+    case SET_NFTS:
+      return {
+        ...state,
+        nfts: payload
+      }
     default:
       return state;
   }

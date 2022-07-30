@@ -43,7 +43,13 @@ const Home: NextPage = () => {
         </Typography>
 
         <Box mt={8} gap={3} display="flex" justifyContent="center" flexWrap="wrap">
-          <Button color="secondary" variant="contained" onClick={()=>setQuickLinksOpen(true)}>
+          <Button color="secondary" variant="contained" onClick={() => setQuickLinksOpen(true)}
+            // sx={{
+            //   backgroundImage: 'url("/seed0070.png")',
+            //   backgroundSize: "cover",
+            //   backgroundRepeat: "no-repeat"
+            // }}
+          >
             Quick Links
           </Button>          
           <QuickLinks open={quickLinksOpen} onClose={() => setQuickLinksOpen(false)} />
