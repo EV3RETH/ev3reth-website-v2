@@ -43,17 +43,17 @@ const GlobalProvider = ({ children }: ProviderProps) => {
   const isTestnet = router.query?.network === "testnet";
   const network = isTestnet ? "testnet" : "mainnet";
 
-  // useEffect(() => {
-  //   (async () => {
-  //     //Load wallet and set in state
-  //     const wallet = await getWalletConnection(network)
-  //     dispatch(setWallet(wallet))
+  useEffect(() => {
+    (async () => {
+      //Load wallet and set in state
+      const wallet = await getWalletConnection(network)
+      dispatch(setWallet(wallet))
 
-  //     //Fetch owned NFTs and set in state
-  //     const nfts = await getAllEv3rethNfts(wallet)
-  //     dispatch(setNfts(nfts))
-  //   })()
-  // }, [network])
+      //Fetch owned NFTs and set in state
+      const nfts = await getAllEv3rethNfts(wallet)
+      dispatch(setNfts(nfts))
+    })()
+  }, [network])
 
   return (
     <GlobalContext.Provider

@@ -109,10 +109,10 @@ export const getContractNfts = async (
       const isVideo = nft.metadata.mime_type?.includes("video") || nft.metadata.media?.endsWith(".mp4")
       const type = isVideo ? "video" : "image"
       const baseContent = `${contractMetadata.base_uri}${nft.metadata.media}`
-      // const content: Content = {
-      //   normal: baseContent,
-      //   type
-      // }
+      const content: Content = {
+        normal: baseContent,
+        type
+      }
 
       return mungeToken({
         tokenResponse: nft,
@@ -181,7 +181,7 @@ export const getAllNfts = async (wallet: WalletConnection) => {
 
 const ev3rethParasCollectionIds = ["tune-out-by-ev3rethnear", "explorations-by-ev3rethnear", "cafe-abstracto-by-ev3rethnear", "danil-x-ev3reth-by-ev3rethnear"]
 
-export const getParasNfts = async (props: { accountId: string, collectionId?: string, limit?: number, page?: number }): Token[] => {
+export const getParasNfts = async (props: { accountId: string, collectionId?: string, limit?: number, page?: number }) => {
   const { accountId, collectionId, limit = baseLimit, page = 1 } = props
   try {
     const skip = (page - 1) * limit;
@@ -195,10 +195,10 @@ export const getParasNfts = async (props: { accountId: string, collectionId?: st
     return nfts.map(nft => {
       const fullMedia = `https://ipfs.fleek.co/ipfs/${nft.metadata.media}`
       const type = nft.metadata.mime_type?.includes("video") ? "video" : "image"
-      // const content: Content = {
-      //   normal: fullMedia,
-      //   type
-      // }
+      const content: Content = {
+        normal: fullMedia,
+        type
+      }
 
       //use Content sorting function
       return mungeToken({
