@@ -87,7 +87,7 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
               {title}
             </Typography>
 
-            <Typography variant="h5">
+            <Typography variant="h5" fontStyle="italic">
               {tag}
             </Typography>
             

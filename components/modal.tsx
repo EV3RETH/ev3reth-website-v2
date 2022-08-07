@@ -46,10 +46,10 @@ const Modal: React.FC<ModalProps> = ({open, onClose, children, footer, small, wh
       <DialogContent sx={{
         p: { xs: 2, md: 4 }
       }} >
-        <Box width="94%" position="absolute" top={{ xs: "2px", lg:"-1px"}} left="3%" zIndex={0} sx={{ transform: "rotate(180deg)" }}>
+        <Box width="94%" position="absolute" top={2} left="3%" zIndex={0} sx={{ transform: "rotate(180deg)" }}>
           <SvgCurve flipped color={color} />
         </Box>
-        <Box width="94%" position="absolute" bottom={{ xs: "2px", lg: "-1px" }} left="3%" zIndex={0}>
+        <Box width="94%" position="absolute" bottom={2} left="3%" zIndex={0}>
           <SvgCurve flipped color={color} />
         </Box>
         {children}

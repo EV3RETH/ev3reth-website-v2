@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 import { alpha, Box, Button, CircularProgress, Divider, Fade, Stack, Typography, useTheme } from "@mui/material"
 import { NextPage } from "next"
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
 import SwiperDisplay, { SwiperDisplayItem } from "../components/swiper-display"
 import { setNfts } from "../context/actions"
 import { useGlobalContext } from "../context/globalProvider"
@@ -21,7 +19,6 @@ const HolderGallery: NextPage = () => {
   const { state, dispatch } = useGlobalContext()
   const { wallet, nfts } = state
 
-  const [displayRows, setDisplayRows] = useState(0)
   const [quickLinksOpen, setQuickLinksOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -52,37 +49,17 @@ const HolderGallery: NextPage = () => {
   }
   
   const displayNfts = useMemo(() => {
-    const fullList: SwiperDisplayItem[][] = [[]]
-    let i = 0
-    nfts?.forEach(nft => {
-      const displayNft = {
+    return nfts?.map(nft => {
+      return {
         url: nft.content.normal,
         hiResUrl: nft.content.hiRes,
         label: nft.title || "",
-        isVideo: nft.content.type === "video"
-      }
-
-      if (fullList[i].length < 11) {
-        fullList[i].push(displayNft)
-      } else {
-        fullList.push([displayNft])
-        i++
+        isVideo: nft.content.type === "video",
+        contractId: nft.contractId,
+        tokenId: nft.tokenId
       }
     }) 
-    return fullList
   }, [nfts])
-
-  const displayTruncated = () => displayNfts.map((row, i) => {
-    if (i > displayRows) return null
-    return (
-      <Fade in={true} timeout={2000} key={"swiper-row-" + i}>
-        <Box>
-          <SwiperDisplay items={row} />
-          <Divider />
-        </Box>
-      </Fade>
-    )
-  })
 
   return (
     <Box component="main">
@@ -98,26 +75,19 @@ const HolderGallery: NextPage = () => {
             {wallet.getAccountId().replace(".near", "")}
           </Typography>
           : (
-          <Button color="secondary" variant="contained" sx={{ mt: 3 }} onClick={handleConnect}>
+          <Button color="secondary" variant="contained" onClick={handleConnect}>
             Connect Wallet
           </Button>
         )}
       </BannerWrapper>
       <SvgCurve />
-      {!!displayRows && (
-        <Box pt={5} display="flex" justifyContent="center" sx={{ backgroundColor: alpha(palette.primary.main, 0.2) }}>
-          <Button variant="outlined" startIcon={<RemoveIcon />} onClick={() => setDisplayRows(prev => prev - 1)} disabled={displayRows === 0}>
-            Display Less
-          </Button>
-        </Box>
-      )}
 
       {loading || (wallet?.isSignedIn() && !nfts)
         ? <Stack alignItems="center" justifyContent="center" height={550}>
           <CircularProgress />
         </Stack>
-        : displayNfts[0].length
-          ? displayTruncated()
+        : displayNfts?.length
+          ? <SwiperDisplay items={displayNfts} />
           : (
             <Fade in={true} timeout={1000}>
               <Box position="relative">
@@ -129,7 +99,7 @@ const HolderGallery: NextPage = () => {
                       </Typography>
                       : <Stack alignItems="center" spacing={3}>
                         <Typography color="white" maxWidth="400px">
-                          Looks like you don&apos;t have any EV3RETH NFTs in this wallet. Check out these secondary market places or join my discord for info on the latest auctions.
+                          It looks like you don&apos;t have any EV3RETH NFTs in this wallet. Check out the secondary market or join my discord for info on the latest auctions.
                         </Typography>
                         <Button color="secondary" variant="contained" onClick={() => setQuickLinksOpen(true)}>
                           Secondary Market Links
@@ -144,20 +114,11 @@ const HolderGallery: NextPage = () => {
           )
       }
 
-      <Divider />
-      {(wallet?.isSignedIn() && displayNfts.length > displayRows + 1) && (
-        <Box py={3} display="flex" justifyContent="center" sx={{ backgroundColor: alpha(palette.primary.main, 0.2) }}>
-          <Button
-            variant="outlined" startIcon={<AddIcon />} onClick={() => setDisplayRows(prev => prev + 1)} disabled={displayRows > displayNfts.length}>
-            Display More
-          </Button>
-        </Box>
-      )}
-
       <QuickLinks
         onlyMarketLinks
         open={quickLinksOpen}
-        onClose={() => setQuickLinksOpen(false)} />
+        onClose={() => setQuickLinksOpen(false)}
+      />
     </Box>
   )
 }

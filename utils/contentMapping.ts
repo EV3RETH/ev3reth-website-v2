@@ -1,7 +1,7 @@
-import { Content } from "../hooks/useContract"
+import { Content, truncateOwnerId } from "../hooks/useContract"
 
 type ContentMap = { [key: number]: Content }
-export const genesisIds = [33, 32, 31, 30, 29, 28, 27]
+export const genesisIds = [33, 32, 31, 30, 29, 28, 27, 26]
 export const snxev3Ids = Array.from(Array(30).keys())
 const CONTENT: {[key: string]: ContentMap} = {
   "mint.snxev3.near": snxev3Ids.reduce((acc: ContentMap, id) => {
@@ -71,7 +71,7 @@ export const OWNERS: OwnerMap = {
   }
 }
 
-export const getOwnerText = (owners: OwnerMap, contractMappingId?: string, tokenId?: number ) => {
+export const getOwnerText = (owners: OwnerMap, contractMappingId?: string, tokenId?: number, prefix = " ❖ ", suffix = "") => {
   const owner = (contractMappingId && tokenId !== undefined) ? owners[contractMappingId][tokenId] : null
-  return  owner ? ` ❖ ${owner}` : ""
+  return  owner ? `${prefix}${truncateOwnerId(owner)}${suffix}` : ""
 }

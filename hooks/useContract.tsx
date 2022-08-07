@@ -288,7 +288,7 @@ export const getAllEv3rethParasNfts = async (accountId: string) => {
   return nfts
 }
 
-const truncateOwnerId = (ownerID: string) => {
+export const truncateOwnerId = (ownerID: string) => {
   const owner = ownerID.replace(".near", "")
   if (ownerID.length < 20) return owner;
 
@@ -316,7 +316,7 @@ const getContractOwners = async (wallet: WalletConnection, contractId: string) =
     })
 
     return nfts.reduce((acc: OwnerItem, nft) => {
-      acc[nft.token_id] = truncateOwnerId(nft.owner_id)
+      acc[nft.token_id] = nft.owner_id
       return acc
     }, {})
   } catch (e) {
@@ -337,7 +337,7 @@ const getParasOwners = async (collectionId: string) => {
 
     return nfts.reduce((acc: OwnerItem, nft) => {
       if (!nft.token_series_id) return acc;
-      acc[nft.token_series_id] = truncateOwnerId(nft.owner_id)
+      acc[nft.token_series_id] = nft.owner_id
       return acc
     }, {})
   } catch (e) {
@@ -348,10 +348,8 @@ const getParasOwners = async (collectionId: string) => {
 
 export const getAllDisplayOwners = async (wallet: WalletConnection) => {
   const owners = OWNERS
-  console.log("🚀 ~ file: useContract.tsx ~ line 342 ~ getAllDisplayOwners ~ owners STARTED")
   
   await Promise.allSettled(ev3rethContracts.map(async (id) => {
-    console.log("🚀 ~id", id)
     const contractOwners = await getContractOwners(wallet, id)
     if (contractOwners) {
       OWNERS[id] = contractOwners

@@ -7,6 +7,8 @@ import SwiperDisplay, { SwiperDisplayItem } from '../components/swiper-display';
 import SvgCurve from '../components/svgCurve';
 import { SNXEV3_SECONDARY_LINK } from '../utils/links';
 import CONTENT, { snxev3Ids } from '../utils/contentMapping';
+import { useMemo } from 'react';
+import { alpha, useTheme } from '@mui/material';
 
 const snxMappingId = "mint.snxev3.near"
 

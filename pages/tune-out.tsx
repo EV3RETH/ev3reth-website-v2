@@ -104,7 +104,7 @@ const TuneOut: NextPage = () => {
         url, label, marketUrl, tagText = "Available by auction soon", thumbnail, tokenId
       }, index) => {
         const isOdd = !!(index % 2)
-        const tag = getOwnerText(owners, tuneOutMappingId, tokenId) || tagText
+        const tag = getOwnerText(owners, tuneOutMappingId, tokenId, "") || tagText
         return <BigDisplay
           key={label}
           title={label}

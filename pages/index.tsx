@@ -53,7 +53,7 @@ const Home: NextPage = () => {
             //   backgroundRepeat: "no-repeat"
             // }}
             >
-              Holder Gallery
+              Your Gallery
             </Button> 
           </Link>
           <Button color="secondary" variant="outlined" onClick={() => setQuickLinksOpen(true)}>
