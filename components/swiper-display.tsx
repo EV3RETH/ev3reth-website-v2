@@ -181,12 +181,19 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, v
       </Box>
 
     const ownerText = getOwnerText(owners, contractMappingId, tokenId)
+
+    const showTop = isMobile && isVideo
     
     return (
       <Stack>
         {element}
         {label && (
-          <Box position="absolute" bottom={spacing(1)} width="100%" display="flex" justifyContent="center">
+          <Box position="absolute"
+            top={showTop ? spacing(2) : "inherit"}
+            bottom={!showTop ? spacing(1) : "inherit"}
+            width="100%"
+            display="flex"
+            justifyContent="center">
             <Typography
               px={2}
               borderRadius={1}
@@ -252,12 +259,6 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, v
               background: palette.primary.main,
               borderRadius: 3
             }}
-            // sx={{
-            //   justifyContent: "center",
-            //   pb: 2,
-            //   pt: 0,
-            //   mt: -1
-            // }}
           >
             {wallet?.getAccountId() !== modalNftOwner
               ? <Tooltip placement="top"
