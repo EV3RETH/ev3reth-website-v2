@@ -1,7 +1,8 @@
 import Box from "@mui/material/Box"
+import { ReactNode } from "react"
 import { blackBgSx, whiteBgSx } from "../styles/theme"
 
-const BannerWrapper: React.FC<{ blackBg?: boolean, isBody?: boolean }> = ({ children, blackBg = true, isBody = false }) => {
+const BannerWrapper: React.FC<{ blackBg?: boolean, isBody?: boolean, children: ReactNode }> = ({ children, blackBg = true, isBody = false }) => {
   const bgSx = blackBg ? blackBgSx : whiteBgSx
   const px = isBody 
     ? { xs: 4, xl: 16 }

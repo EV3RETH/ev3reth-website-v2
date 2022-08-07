@@ -1,12 +1,15 @@
-//set up contract, return nfts
+//https://nomicon.io/Standards/Tokens/NonFungibleToken/Core
 
+import { Token } from "@mui/icons-material";
 import { Contract, WalletConnection } from "near-api-js";
+import CONTENT, { OwnerItem, OWNERS } from "../utils/contentMapping";
 
 export interface Content {
   type: "video" | "image"
   normal: string;
-  hires?: string;
-  thumbnail?: string; //for videos
+  hiRes?: string;
+  /**for videos*/
+  thumbnail?: string; 
 }
 export interface Token {
   tokenId: number;
@@ -15,13 +18,17 @@ export interface Token {
   title: string | null;
   contractId: string;
   contractName: string;
-  content: Content; //contract.nft_metadata().base_uri + nft.metadata.media OR from hosted content mapping
+  content: Content; 
+  isParasToken?: boolean;
 }
 
 interface TokenResponse {
   token_id: number;
   owner_id: string;
-  contract_id?: string; //paras only
+  /**Paras tokens only*/
+  contract_id?: string;
+  /**Paras tokens only*/
+  token_series_id?: number;
   metadata: {
     title: string | null; // ex. "Arch Nemesis: Mail Carrier" or "Parcel #5055"
     description: string | null; // free-form description
@@ -35,8 +42,11 @@ interface TokenResponse {
     extra: string | null; // anything extra the NFT wants to store on-chain. Can be stringified JSON.
     reference: string | null; // URL to an off-chain JSON file with more info.
     reference_hash: string | null;
-    collection?: string //Paras only
-    collection_id?: string //Paras only
+    /**Paras tokens only*/
+    collection?: string
+    /**Paras tokens only*/
+    collection_id?: string
+    /**Paras tokens only*/
     mime_type?: "video/mp4" | "image/png" | "image/gif" | "image/jpeg"
   }
 }
@@ -52,10 +62,14 @@ interface NftsContract extends Contract {
     symbol: string, 
     icon: string | null, // Data URL
     base_uri: string | null, // Centralized gateway known to have reliable access to decentralized storage assets referenced by `reference` or `media` URLs
-  }>
+  }>,
+  nft_tokens: (props: {
+    from_index: string | null, // default: "0"
+    limit: number | null, // default: unlimited (could fail due to gas limit)
+  }) => Promise<TokenResponse[]>
 }
 
-const baseLimit = 50
+const baseLimit = 33
 
 const ev3rethContracts = ["ev3.neartopia.near", "mint.snxev3.near"]
 
@@ -64,55 +78,81 @@ interface MungeTokenProps {
   contractId: string;
   contractName: string;
   content: Content;
+  isParasToken?: boolean;
 }
-const mungeToken = ({ tokenResponse, contractId, contractName, content }: MungeTokenProps): Token => {
+const mungeToken = ({ tokenResponse, contractId, contractName, content, isParasToken }: MungeTokenProps): Token => {
+  const tokenId = (isParasToken && tokenResponse?.token_series_id) || tokenResponse.token_id; //use token_series_id for paras tokens
+
+  const titleWithoutParasEditionLabel = () => {
+    if (!tokenResponse.metadata.title) return null
+    const index = tokenResponse.metadata.title?.lastIndexOf("#")
+    return tokenResponse.metadata.title?.slice(0, index)
+  }
+  const title = !isParasToken ? tokenResponse.metadata.title : titleWithoutParasEditionLabel()
   return {
-    tokenId: tokenResponse.token_id,
     ownerId: tokenResponse.owner_id,
     description: tokenResponse.metadata.description,
-    title: tokenResponse.metadata.title,
+    title,
+    tokenId,
     contractId,
     contractName,
-    content
+    content,
+    isParasToken
+  }
+}
+
+const getBaseContent = (metadata: TokenResponse["metadata"], baseUri: string | null): Content => {
+  const isVideo = metadata.mime_type?.includes("video") || metadata.media?.endsWith(".mp4")
+  const type = isVideo ? "video" : "image"
+  const baseContent = `${baseUri}${metadata.media}`
+  return {
+    normal: baseContent,
+    type
   }
 }
 
 export const getContractNfts = async (
   wallet: WalletConnection,
   contractId: string,
-  limit: number = baseLimit
+  limit: number = baseLimit,
+  getAll?: boolean
 ): Promise<Token[]> => {
   try {
     const contract: NftsContract = new Contract(
       wallet.account(),
       contractId,
       {
-        viewMethods: ['nft_tokens_for_owner', 'nft_metadata'],
+        viewMethods: ['nft_tokens_for_owner', 'nft_metadata', 'nft_tokens'],
         changeMethods: []
       }
     ) as any
 
     if (!contract) throw new Error("Could not initialize Contract")
+
+    let nfts;
+
+    if (getAll) {
+      nfts = await contract.nft_tokens({
+        from_index: "0",
+        limit: null
+      })
+    } else {
+      nfts = await contract.nft_tokens_for_owner({
+        account_id: wallet.getAccountId(),
+        from_index: "0",
+        limit
+      })
+    }
     
-    const nfts = await contract.nft_tokens_for_owner({
-      account_id: wallet.getAccountId(),
-      from_index: "0",
-      limit
-    })
 
     const contractMetadata = await contract.nft_metadata()
-
-    //TODO make function to get Sort content and put in the paras function
-    //make hosted content mapping
-    
+        
     return nfts.map(nft => {
-      const isVideo = nft.metadata.mime_type?.includes("video") || nft.metadata.media?.endsWith(".mp4")
-      const type = isVideo ? "video" : "image"
-      const baseContent = `${contractMetadata.base_uri}${nft.metadata.media}`
-      // const content: Content = {
-      //   normal: baseContent,
-      //   type
-      // }
+      
+      const mediaIsFullURL = nft.metadata.media?.includes("http")
+      const base = mediaIsFullURL ? "" : contractMetadata.base_uri
+      const proxyBase = "https://res.cloudinary.com/demo/image/fetch/" + base
+      const content = CONTENT[contract.contractId]?.[nft.token_id] || getBaseContent(nft.metadata, proxyBase)
 
       return mungeToken({
         tokenResponse: nft,
@@ -128,9 +168,11 @@ export const getContractNfts = async (
   }
 }
 
-export const getAllEv3rethNfts = async (wallet: WalletConnection) => {
+
+export const getAllEv3rethNftsByOwner = async (wallet: WalletConnection) => {
   let nfts: Token[] = []
- 
+  if (!wallet.getAccountId()) return nfts
+  
   await Promise.allSettled(ev3rethContracts.map(async (contractId) => {
     const contractNfts = await getContractNfts(wallet, contractId)
     if (contractNfts.length) {
@@ -147,15 +189,35 @@ export const getAllEv3rethNfts = async (wallet: WalletConnection) => {
   return nfts
 }
 
+export const getAllEv3rethNfts = async (wallet: WalletConnection) => {
+  let nfts: Token[] = []
+  if (!wallet.getAccountId()) return nfts
+
+  await Promise.allSettled(ev3rethContracts.map(async (contractId) => {
+    const contractNfts = await getContractNfts(wallet, contractId)
+    if (contractNfts.length) {
+      nfts = [...nfts, ...contractNfts]
+    }
+  }))
+
+  const parasCollections = await getAllEv3rethParasNfts(wallet.getAccountId())
+
+  if (parasCollections.length) {
+    nfts = [...nfts, ...parasCollections]
+  }
+
+  return nfts
+}
+
+
 export const getAllNfts = async (wallet: WalletConnection) => {
   let nfts: Token[] = []
   try {
     const collections = await fetch(`https://api.kitwallet.app/account/${wallet.getAccountId()}/likelyNFTs`)
       .then(res => res.json() as Promise<string[]>)
     
-    console.time("get NFTs")
     await Promise.allSettled(collections.map(async (contractId) => {
-      if (contractId === "x.paras.near") return;
+      if (contractId === "x.paras.near" || contractId === "nearnautsnft.near") return;
       if (ev3rethContracts.includes(contractId)) return;
   
       const contractNfts = await getContractNfts(wallet, contractId)
@@ -163,7 +225,6 @@ export const getAllNfts = async (wallet: WalletConnection) => {
         nfts = [...nfts, ...contractNfts]
       }
     }))
-    console.timeEnd("get NFTs")
     
     const parasCollections = await getParasNfts({ accountId: wallet.getAccountId() })
     if (parasCollections.length) {
@@ -181,7 +242,7 @@ export const getAllNfts = async (wallet: WalletConnection) => {
 
 const ev3rethParasCollectionIds = ["tune-out-by-ev3rethnear", "explorations-by-ev3rethnear", "cafe-abstracto-by-ev3rethnear", "danil-x-ev3reth-by-ev3rethnear"]
 
-export const getParasNfts = async (props: { accountId: string, collectionId?: string, limit?: number, page?: number }): Token[] => {
+export const getParasNfts = async (props: { accountId: string, collectionId?: string, limit?: number, page?: number }) => {
   const { accountId, collectionId, limit = baseLimit, page = 1 } = props
   try {
     const skip = (page - 1) * limit;
@@ -193,18 +254,18 @@ export const getParasNfts = async (props: { accountId: string, collectionId?: st
       .then(res => res.data.results)
       
     return nfts.map(nft => {
-      const fullMedia = `https://ipfs.fleek.co/ipfs/${nft.metadata.media}`
-      const type = nft.metadata.mime_type?.includes("video") ? "video" : "image"
-      // const content: Content = {
-      //   normal: fullMedia,
-      //   type
-      // }
+      //"https://ipfs.fleek.co/ipfs/"
+      //"https://gateway.ipfs.io/ipfs/"
+      const baseUri = "https://ipfs.fleek.co/ipfs/"
+      const hasKeys = Boolean(nft.token_series_id && nft.metadata.collection_id)
+      const content = (hasKeys && CONTENT[nft.metadata.collection_id!]?.[nft.token_series_id!]) || getBaseContent(nft.metadata, baseUri)
 
       //use Content sorting function
       return mungeToken({
         tokenResponse: nft,
-        contractId: nft.contract_id || "x.paras.near",
+        contractId: nft.metadata.collection_id || "x.paras.near",
         contractName: nft.metadata.collection || "Paras",
+        isParasToken: true,
         content
       })
     })
@@ -225,4 +286,84 @@ export const getAllEv3rethParasNfts = async (accountId: string) => {
   }))
 
   return nfts
+}
+
+const truncateOwnerId = (ownerID: string) => {
+  const owner = ownerID.replace(".near", "")
+  if (ownerID.length < 20) return owner;
+
+  const begin = owner.slice(0, 4)
+  const end = owner.slice(owner.length - 4)
+  return `${begin}...${end}`
+}
+
+const getContractOwners = async (wallet: WalletConnection, contractId: string) => {
+  try {
+    const contract: NftsContract = new Contract(
+      wallet.account(),
+      contractId,
+      {
+        viewMethods: ['nft_tokens'],
+        changeMethods: []
+      }
+    ) as any
+
+    if (!contract) throw new Error("Could not initialize Contract")
+
+    const nfts = await contract.nft_tokens({
+      from_index: "0",
+      limit: null
+    })
+
+    return nfts.reduce((acc: OwnerItem, nft) => {
+      acc[nft.token_id] = truncateOwnerId(nft.owner_id)
+      return acc
+    }, {})
+  } catch (e) {
+    console.log("Error getting contract owners", e)
+    return null
+  }
+}
+
+const getParasOwners = async (collectionId: string) => {
+  try {
+    const url = `https://api-v2-mainnet.paras.id/token?collection_id=${collectionId}&__limit=33`
+
+    const nfts: TokenResponse[] = await fetch(url)
+      .then(res => res.json())
+      .then(res => res.data.results)
+    
+    if(!nfts) return null
+
+    return nfts.reduce((acc: OwnerItem, nft) => {
+      if (!nft.token_series_id) return acc;
+      acc[nft.token_series_id] = truncateOwnerId(nft.owner_id)
+      return acc
+    }, {})
+  } catch (e) {
+    console.log("Error getting paras contract owners", e)
+    return null
+  }
+}
+
+export const getAllDisplayOwners = async (wallet: WalletConnection) => {
+  const owners = OWNERS
+  console.log("🚀 ~ file: useContract.tsx ~ line 342 ~ getAllDisplayOwners ~ owners STARTED")
+  
+  await Promise.allSettled(ev3rethContracts.map(async (id) => {
+    console.log("🚀 ~id", id)
+    const contractOwners = await getContractOwners(wallet, id)
+    if (contractOwners) {
+      OWNERS[id] = contractOwners
+    }
+  }))
+
+  const tuneOutId = "tune-out-by-ev3rethnear"
+  const parasOwners = await getParasOwners(tuneOutId)
+
+  if (parasOwners) {
+    OWNERS[tuneOutId] = parasOwners
+  }
+
+  return owners
 }

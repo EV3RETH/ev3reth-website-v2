@@ -7,6 +7,8 @@ import Navigation, { DiscordLink, Ev3rethTwitterLink } from "../components/navig
 import { SwiperDisplayItem } from "../components/swiper-display";
 import { DISCORD_LINK, TUNE_OUT_ARTICLE_LINK, TUNE_OUT_SECONDARY_LINK } from "../utils/links";
 import { Button } from "@mui/material";
+import CONTENT, { getOwnerText } from "../utils/contentMapping";
+import { useGlobalContext } from "../context/globalProvider";
 
 
 interface DisplayListItem extends SwiperDisplayItem {
@@ -15,58 +17,63 @@ interface DisplayListItem extends SwiperDisplayItem {
   tagText?: string;
 }
 
+export const tuneOutMappingId = "tune-out-by-ev3rethnear"
+
 export const tuneOutDisplayItems: Array<DisplayListItem> = [
   {
-    url: 'https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH1+-+The+Endless.mp4',
-    thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/The-Endless-thumbnail.png",
+    url: CONTENT[tuneOutMappingId][253374].normal,
+    // thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/The-Endless-thumbnail.png",
     label: 'CH1 - The Endless',
     isVideo: true,
-    marketUrl: "https://paras.id/token/x.paras.near::253374/253374:1",
-    tagText: "Owner - supah.near"
+    marketUrl: "https://paras.id/token/x.paras.near::253374",
+    tokenId: 253374
   },
   {
-    url: 'https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH2+-+The+Expanse.mp4',
-    thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-expanse-thumbnail.jpg",
+    url: CONTENT[tuneOutMappingId][253392].normal,
+    // thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-expanse-thumbnail.jpg",
     label: 'CH2 - The Expanse',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253392",
-    tagText: "Owner - echobase.near"
+    tokenId: 253392
   },
   {
-    url: 'https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH3+-+The+Serene.mp4',
-    thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-serene-thumbnail.jpg",
+    url: CONTENT[tuneOutMappingId][253401].normal,
+    // thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-serene-thumbnail.jpg",
     label: 'CH3 - The Serene',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253401",
-    tagText: "Owner - bennybrown.near"
+    tokenId: 253401
   },
   {
-    url: 'https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH4+-+The+Disturbed.mp4',
-    thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-disturbed-thumbnail.png",
+    url: CONTENT[tuneOutMappingId][253415].normal,
+    // thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-disturbed-thumbnail.png",
     label: 'CH4 - The Disturbed',
     isVideo: true,
-    marketUrl: "https://paras.id/token/x.paras.near::253415/253415:1",
-    tagText: "Owner - steveospirals.near"
+    marketUrl: "https://paras.id/token/x.paras.near::253415",
+    tokenId: 253415
   },
   {
-    url: 'https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH5+-+The+Traveler.mp4',
-    thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-traveler-thumbnail.jpg",
+    url: CONTENT[tuneOutMappingId][253421].normal,
+    // thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-traveler-thumbnail.jpg",
     label: 'CH5 - The Traveler',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253421",
-    tagText: "Owner - yupig.near"
+    tokenId: 253421
   },
   {
-    url: 'https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH6+-+The+Mystic.mp4',
-    thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-mystic-thumbnail.jpg",
+    url: CONTENT[tuneOutMappingId][253461].normal,
+    // thumbnail: "https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-mystic-thumbnail.jpg",
     label: 'CH6 - The Mystic',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253461",
-    tagText: "Owner - jared.near"
+    tokenId: 253461
   }
 ]
 
 const TuneOut: NextPage = () => {
+
+  const { state } = useGlobalContext()
+  const owners = state.owners
   return (
     <Box component="main">
       <BannerWrapper>
@@ -94,19 +101,20 @@ const TuneOut: NextPage = () => {
 
       </BannerWrapper>
       {tuneOutDisplayItems.map(({
-        url, label, marketUrl, tagText = "Available by auction soon", thumbnail
+        url, label, marketUrl, tagText = "Available by auction soon", thumbnail, tokenId
       }, index) => {
         const isOdd = !!(index % 2)
+        const tag = getOwnerText(owners, tuneOutMappingId, tokenId) || tagText
         return <BigDisplay
           key={label}
           title={label}
-          tag={tagText}
+          tag={tag}
           marketText="View on Secondary"
           marketLink={marketUrl}
           reverseDisplay={isOdd}
           blackBg={isOdd}
           videoSrc={url}
-          placeholderHeight={394}
+          videoHeightRatio={"56.25%"}
           videoThumbnail={thumbnail}
         />
       })}

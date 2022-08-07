@@ -23,8 +23,8 @@ const QuickLinks: FC<QuickLinksProps> = ({
       open={open}
       onClose={onClose}
     >
-      <Stack textAlign="center" spacing={2}>
-        <Typography variant="h4" py={2}>
+      <Stack spacing={2} p={2} textAlign={{xs: "left", md: "center"}}>
+        <Typography variant="h4">
           {title}
         </Typography>
         <StyledLink title="EV3: Genesis" href={EVE_GENESIS_SECONDARY_LINK} />

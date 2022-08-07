@@ -6,11 +6,15 @@ import Button from "@mui/material/Button";
 import SwiperDisplay, { SwiperDisplayItem } from '../components/swiper-display';
 import SvgCurve from '../components/svgCurve';
 import { SNXEV3_SECONDARY_LINK } from '../utils/links';
+import CONTENT, { snxev3Ids } from '../utils/contentMapping';
 
-const snxItems: Array<SwiperDisplayItem> = Array.from(Array(30).keys()).map(i => ({
-  url: `https://ev3reth.s3.us-west-2.amazonaws.com/SNxEV3-images/SNxEV3-${i}.png`,
-  hiResUrl: `https://ev3reth.s3.us-west-2.amazonaws.com/SNxEV3-upres-images/SNxEV3-${i}-4k.png`,
-  label: `SNxEV3-${i}`
+const snxMappingId = "mint.snxev3.near"
+
+export const snxItems: Array<SwiperDisplayItem> = snxev3Ids.map(id => ({
+  url: CONTENT[snxMappingId][id].normal,
+  hiResUrl: CONTENT[snxMappingId][id].hiRes,
+  label: `SNxEV3-${id}`,
+  tokenId: id
 }))
 
 const TuneOut: NextPage = () => {
@@ -34,7 +38,7 @@ const TuneOut: NextPage = () => {
         </Button>
       </BannerWrapper>
       <SvgCurve />
-      <SwiperDisplay items={snxItems} />
+      <SwiperDisplay items={snxItems} contractMappingId={snxMappingId} />
     </Box>
   )
 }

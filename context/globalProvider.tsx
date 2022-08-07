@@ -1,14 +1,16 @@
 import { useRouter } from "next/router";
-import { ReactNode, createContext, Dispatch, useReducer, useEffect } from "react";
+import { ReactNode, createContext, Dispatch, useReducer, useEffect, useContext } from "react";
 import { WalletConnection, Contract } from 'near-api-js'
-import { setNfts, setWallet} from "./actions";
+import { setNfts, setOwners, setWallet} from "./actions";
 import reducer from "./reducer";
 import { getWalletConnection } from "../hooks/useWallet";
-import { getAllEv3rethNfts, getAllNfts, getParasNfts, Token } from "../hooks/useContract";
+import { getAllDisplayOwners, Token } from "../hooks/useContract";
+import { OwnerMap, OWNERS } from "../utils/contentMapping";
 
 export interface GlobalState {
   wallet: WalletConnection | null;
-  nfts: Token[];
+  nfts: Token[] | null;
+  owners: OwnerMap
 }
 
 export interface Action {
@@ -27,7 +29,8 @@ interface ProviderProps {
 
 const initState: GlobalState = {
   wallet: null,
-  nfts: []
+  nfts: null,
+  owners: OWNERS
 }
 
 const initContext: InitContext = {
@@ -37,23 +40,24 @@ const initContext: InitContext = {
 
 export const GlobalContext = createContext(initContext);
 
+export const useGlobalContext = () => useContext(GlobalContext)
+
 const GlobalProvider = ({ children }: ProviderProps) => {
   const [state, dispatch] = useReducer(reducer, initState)
   const router = useRouter()
   const isTestnet = router.query?.network === "testnet";
   const network = isTestnet ? "testnet" : "mainnet";
 
-  // useEffect(() => {
-  //   (async () => {
-  //     //Load wallet and set in state
-  //     const wallet = await getWalletConnection(network)
-  //     dispatch(setWallet(wallet))
+  useEffect(() => {
+    (async () => {
+      //Load wallet and set in state
+      const wallet = await getWalletConnection(network)
+      dispatch(setWallet(wallet))
 
-  //     //Fetch owned NFTs and set in state
-  //     const nfts = await getAllEv3rethNfts(wallet)
-  //     dispatch(setNfts(nfts))
-  //   })()
-  // }, [network])
+      const owners = await getAllDisplayOwners(wallet)
+      dispatch(setOwners(owners))
+    })()
+  }, [network])
 
   return (
     <GlobalContext.Provider

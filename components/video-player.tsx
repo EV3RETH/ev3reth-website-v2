@@ -11,17 +11,16 @@ interface VideoPlayerProps {
   url: string;
   isSmall?: boolean;
   isActive?: boolean;
-  placeholderHeight?: number;
+  heightRatio?: string;
   thumbnail?: string;
 }
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActive = true, placeholderHeight = 700, thumbnail }) => {
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActive = true, heightRatio = "100%", thumbnail }) => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
   const [showingControls, setShowingControls] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [loaded, setLoaded] = useState(false)
-  const [fullyLoaded, setFullyLoaded] = useState(false)
 
   const { breakpoints, palette } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down("sm"))
@@ -77,7 +76,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
     width: "100%",
     height: "100%",
     p: controlsPadding,
-    zIndex: 1,
+    zIndex: 2,
     display: "flex",
     justifyContent: "space-between",
     alignItems: "flex-end",
@@ -135,7 +134,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
   }
 
   return (
-    <Box position="relative" sx={videoSx} width={playerWidth} margin={isSmall ? "auto" : "inherit"} ref={containerRef}>
+    <Box position="relative" sx={videoSx} width={playerWidth} margin={isSmall ? "auto" : "inherit"} ref={containerRef} borderRadius={2} overflow="hidden">
       <Box sx={controlsSx} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseOut}>
         <Button onClick={handleControlsClick} variant="text" sx={controlScrimSx} disabled={!isActive}/>
         <Fab color="secondary" onClick={handlePlayClick} sx={buttonSx} size={size} disabled={!isActive || !loaded} >
@@ -146,7 +145,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
         </Fab>
       </Box>
       {!loaded && (
-        <Box width="100%" height={placeholderHeight}>
+        <Box width="100%" paddingBottom={heightRatio}>
           <LoadingSkrim />
         </Box>
       )}
@@ -160,7 +159,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
           poster={thumbnail}
           ref={videoRef}
           muted={isMuted}
-          src={url} //+ "#t=0.001" (skips first millisecond and acts as thumbnail)
+          src={url + (thumbnail ? "" : "#t=0.001")} //"#t=0.001" (skips first millisecond and acts as thumbnail)
           onLoadedMetadata={() => setLoaded(true)}
           style={{
             display: "block",

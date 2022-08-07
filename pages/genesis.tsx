@@ -3,12 +3,15 @@ import type { NextPage } from 'next';
 import BannerWrapper from '../components/banner-wrapper';
 import SvgCurve from '../components/svgCurve';
 import SwiperDisplay, { SwiperDisplayItem } from '../components/swiper-display';
+import CONTENT, { genesisIds } from '../utils/contentMapping';
 import { DISCORD_LINK, EVE_GENESIS_SECONDARY_LINK, MEDIUM_MODEL_IS_ART_PART2_LINK } from '../utils/links';
 
-const genesisItems: Array<SwiperDisplayItem> = [33, 32, 31, 30, 29, 28].map(i => ({
-  url: `https://ev3reth.s3.us-west-2.amazonaws.com/Genesis-final/EV3_+Genesis-${i}.png`,
-  hiResUrl: `https://ev3reth.s3.us-west-2.amazonaws.com/EV3-Genesis-upres/EV3_+Genesis-${i}-4k.png`,
-  label: `EV3: Genesis-${i}`
+const genesisMappingId = "ev3.neartopia.near"
+export const genesisItems: Array<SwiperDisplayItem> = genesisIds.map(id => ({
+  url: CONTENT[genesisMappingId][id].normal,
+  hiResUrl: CONTENT[genesisMappingId][id].hiRes,
+  label: `EV3: Genesis-${id}`,
+  tokenId: id
 }))
 
 const TuneOut: NextPage = () => { 
@@ -38,7 +41,7 @@ const TuneOut: NextPage = () => {
         </Box>
       </BannerWrapper>
       <SvgCurve />
-      <SwiperDisplay items={genesisItems} />
+      <SwiperDisplay items={genesisItems} contractMappingId={genesisMappingId} />
     </Box>
   )
 }
