@@ -148,7 +148,6 @@ export const getContractNfts = async (
     const contractMetadata = await contract.nft_metadata()
         
     return nfts.map(nft => {
-      
       const mediaIsFullURL = nft.metadata.media?.includes("http")
       const base = mediaIsFullURL ? "" : contractMetadata.base_uri
       const proxyBase = "https://res.cloudinary.com/demo/image/fetch/" + base
