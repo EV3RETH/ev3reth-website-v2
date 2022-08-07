@@ -210,7 +210,7 @@ const Navigation: React.FC = () => {
         <Container maxWidth="xl">
           <Toolbar disableGutters
             sx={{
-              height: (Boolean(anchorElNav) && isTablet) ? 380 : 60,
+              height: (Boolean(anchorElNav) && isTablet) ? 420 : 60,
               alignItems: "flex-start",
               transition: "height 1s",
               pt: 1

@@ -35,7 +35,7 @@ const Modal: React.FC<ModalProps> = ({open, onClose, children, footer, small, wh
           background: color,
           overflow: "visible",
           margin: 1,
-          borderRadius: { xs: 4, lg: 6 },
+          borderRadius: 3,
           width: small ? "initial" : 1024,
           height: small ? "initial" : 1024,
           maxHeight: small ? "80vh" : "min(100vw, 80vh)",
@@ -46,12 +46,12 @@ const Modal: React.FC<ModalProps> = ({open, onClose, children, footer, small, wh
       <DialogContent sx={{
         p: { xs: 2, md: 4 }
       }} >
-        <Box width="94%" position="absolute" top={2} left="3%" zIndex={0} sx={{ transform: "rotate(180deg)" }}>
+        {/* <Box width="94%" position="absolute" top={2} left="3%" zIndex={0} sx={{ transform: "rotate(180deg)" }}>
           <SvgCurve flipped color={color} />
-        </Box>
-        <Box width="94%" position="absolute" bottom={2} left="3%" zIndex={0}>
+        </Box> */}
+        {/* <Box width="94%" position="absolute" bottom={2} left="3%" zIndex={0}>
           <SvgCurve flipped color={color} />
-        </Box>
+        </Box> */}
         {children}
       </DialogContent>
       {footer}

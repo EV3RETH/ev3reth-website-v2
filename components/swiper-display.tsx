@@ -242,12 +242,28 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, v
         open={modalOpen}
         onClose={handleModalClose}
         footer={
-          <DialogActions sx={{ position: "absolute", bottom: -30, left: "calc(50% - 5rem)", padding: 0 }}>
+          <DialogActions
+            sx={{
+              position: "absolute",
+              bottom: { xs: "-2.5rem", md: "-2rem" },
+              left: "calc(50% - 5.5rem)",
+              px: "1rem",
+              pb: 1.5,
+              background: palette.primary.main,
+              borderRadius: 3
+            }}
+            // sx={{
+            //   justifyContent: "center",
+            //   pb: 2,
+            //   pt: 0,
+            //   mt: -1
+            // }}
+          >
             {wallet?.getAccountId() !== modalNftOwner
               ? <Tooltip placement="top"
                   title="Only the owner of this nft can download the 4k version. Consider checking out the secondary market!"
                 >
-                  <Button color="secondary" variant="outlined" onClick={() => setQuickLinksOpen(true)} sx={{ width: "10rem" }}>
+                <Button color="secondary" variant="outlined" onClick={() => setQuickLinksOpen(true)} sx={{ width: "10rem" }}>
                     Download
                   </Button>
                 </Tooltip>
@@ -260,7 +276,7 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, v
           </DialogActions>
         }
       >
-        <Box position="relative" width="100%" height="100%">
+        <Box position="relative" width="100%" height="100%" >
           {!modalImageLoaded && <LoadingSkrim title="4k images may take time to load"/>}
           {modalImage && (
             <Image
