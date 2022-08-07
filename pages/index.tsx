@@ -6,12 +6,14 @@ import { SxProps, Theme, useTheme } from "@mui/material/styles"
 import BigDisplay from '../components/big-display';
 import BannerWrapper from '../components/banner-wrapper'
 import SwiperDisplay from '../components/swiper-display';
-import { tuneOutDisplayItems } from './tune-out';
+import { tuneOutDisplayItems, tuneOutMappingId } from './tune-out';
 import titleBackup from '../public/EV3RETH-black.png'
 import { DISCORD_LINK, MAIN_TITLE_LINK, MEDIUM_MODEL_IS_ART_PART1_LINK, MEDIUM_MODEL_IS_ART_PART2_LINK } from '../utils/links';
 import SvgCurve from '../components/svgCurve';
 import { getGradientTextStyle, maxDisplayWidth } from '../styles/theme';
 import QuickLinks from '../components/quick-links';
+import Link from 'next/link';
+import { Pages } from '@mui/icons-material';
 
 const Home: NextPage = () => {
   const [logoLoaded, setLogoLoaded] = useState(false)
@@ -43,13 +45,18 @@ const Home: NextPage = () => {
         </Typography>
 
         <Box mt={8} gap={3} display="flex" justifyContent="center" flexWrap="wrap">
-          <Button color="secondary" variant="contained" onClick={() => setQuickLinksOpen(true)}
+          <Link href="/holder-gallery" passHref>
+            <Button color="secondary" variant="contained"
             // sx={{
             //   backgroundImage: 'url("/seed0070.png")',
             //   backgroundSize: "cover",
             //   backgroundRepeat: "no-repeat"
             // }}
-          >
+            >
+              Your Gallery
+            </Button> 
+          </Link>
+          <Button color="secondary" variant="outlined" onClick={() => setQuickLinksOpen(true)}>
             Quick Links
           </Button>          
           <QuickLinks open={quickLinksOpen} onClose={() => setQuickLinksOpen(false)} />
@@ -60,7 +67,7 @@ const Home: NextPage = () => {
         title="EV3: Genesis"
         tag="Weekly Auctions"
         videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Genesis-final/Genesis-promo.mp4"
-        videoThumbnail='https://ev3reth.s3.us-west-2.amazonaws.com/Genesis-final/genesis-promo-thumbnail.jpg'
+        // videoThumbnail='https://ev3reth.s3.us-west-2.amazonaws.com/Genesis-final/genesis-promo-thumbnail.jpg'
         marketText="Learn More"
         marketLink="/genesis"
       />
@@ -104,12 +111,12 @@ const Home: NextPage = () => {
         marketText="Learn More"
         marketLink="/tune-out"
         videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/Tune+out+promo+v3.mp4"
-        placeholderHeight={394}
+        videoHeightRatio={"56.25%"}
         videoThumbnail="https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/tune-out-thumbnail.jpg"
         reverseDisplay
         blackBg
       />
-      <SwiperDisplay items={tuneOutDisplayItems} />
+      <SwiperDisplay items={tuneOutDisplayItems} blackBg contractMappingId={tuneOutMappingId} />
     
     </Box>
   )

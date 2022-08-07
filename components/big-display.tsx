@@ -7,6 +7,7 @@ import { blackBgSx, maxDisplayWidth, whiteBgSx } from "../styles/theme";
 import SvgCurve from "./svgCurve";
 import base64Shimmer from "../utils/svgShimmer";
 import Link from "next/link";
+import BetterImage from "./better-image";
 interface BigDisplayProps {
   title: string;
   tag: string;
@@ -16,7 +17,7 @@ interface BigDisplayProps {
   imgSrc?: string;
   blackBg?: boolean;
   reverseDisplay?: boolean;
-  placeholderHeight?: number;
+  videoHeightRatio?: string;
   videoThumbnail?: string;
 };
 
@@ -29,7 +30,7 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
   videoSrc,
   blackBg = false,
   reverseDisplay = false,
-  placeholderHeight = 700,
+  videoHeightRatio = "100%",
   videoThumbnail
 }) => {
   const { breakpoints, palette } = useTheme()
@@ -38,7 +39,6 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
 
   const bgSx = blackBg ? blackBgSx : whiteBgSx;
   const topPad = { xs: 0, lg: 6 }
-  const phMultiplier = isMobile ? 0.5 : 1
   const isNavLink = marketLink[0] === "/"
  
   const displayElement = () => {
@@ -48,8 +48,8 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
         ? "flex-start"
         : "flex-end";
     let element;
-    if (videoSrc) element = <VideoPlayer url={videoSrc} placeholderHeight={placeholderHeight * phMultiplier} thumbnail={videoThumbnail} />;
-    if (imgSrc) element = <Image src={imgSrc} alt={title} width={700} height={700} placeholder="blur" blurDataURL={base64Shimmer(700, 700)} />;
+    if (videoSrc) element = <VideoPlayer url={videoSrc} heightRatio={videoHeightRatio} thumbnail={videoThumbnail} />;
+    if (imgSrc) element = <BetterImage src={imgSrc} alt={title} width={700} height={700} />;
     return (
       <Grid item xs={12} lg={6} zIndex={2} pt={topPad}>
         <Box
@@ -83,13 +83,14 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
             alignItems="center"
             height="100%"
           >
-            <Typography variant="h5" fontStyle="italic">
-              {tag}
-            </Typography>
-            <Typography variant="h3" noWrap>
+            <Typography variant="h3" noWrap mb={1}>
               {title}
             </Typography>
 
+            <Typography variant="h5" fontStyle="italic">
+              {tag}
+            </Typography>
+            
             <Link
               href={marketLink}
               passHref
@@ -97,7 +98,7 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
               <Button
                 color="secondary"
                 variant="contained"
-                sx={{ mt: 3 }}
+                sx={{ mt: 4 }}
                 target={isNavLink ? "" : "_blank"}
                 rel={isNavLink ? "" : "noreferrer"}
                 href=""

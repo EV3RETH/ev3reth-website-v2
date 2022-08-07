@@ -22,10 +22,7 @@ const SvgCurve: React.FC<curveProps> = ({ color, flipped }) => {
     width: "100%",
     position: "absolute",
     left: 0,
-    marginTop: {
-      xs: "-1px",
-      lg: "-3px",
-    },
+    mt: "-1px",
     transformOrigin: "50% 0",
     transition: "transform 3s",
     transform,

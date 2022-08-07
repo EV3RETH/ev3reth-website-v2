@@ -3,49 +3,61 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCoverflow, Pagination, Navigation } from "swiper";
 import { useTheme, alpha } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { Typography, Box, Fab, Theme, SxProps, DialogActions, Button, CircularProgress } from '@mui/material';
+import { Typography, Box, Fab, Theme, SxProps, DialogActions, Button, CircularProgress, Stack, Tooltip } from '@mui/material';
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import Image from 'next/image';
 import VideoPlayer from './video-player';
 import Modal from './modal';
-import base64Shimmer, { toBase64 } from '../utils/svgShimmer';
 import { maxDisplayWidth } from '../styles/theme';
 import 'swiper/css';
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import LoadingSkrim from './loading-skrim';
+import BetterImage from './better-image';
+import { useGlobalContext } from '../context/globalProvider';
+import { getOwnerText } from '../utils/contentMapping';
+import QuickLinks from './quick-links';
+
 export interface SwiperDisplayItem {
   url: string;
   hiResUrl?: string;
   label?: string;
   isVideo?: boolean;
-  thumbnail?: string
+  thumbnail?: string;
+  tokenId?: number;
+  contractId?: string;
 }
 interface SwiperDisplayProps {
   items: Array<SwiperDisplayItem>;
   blackBg?: boolean;
-  placeholderHeight?: number;
+  videoHeightRation?: string;
+  contractMappingId?: string;
 }
 
-const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, placeholderHeight = 225 }) => {
+const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, videoHeightRation="56.25%", contractMappingId }) => {
+  const { breakpoints, spacing, palette } = useTheme()
+  const { state } = useGlobalContext()
+  
   const [modalImage, setModalImage] = useState<string>()
+  const [modalNftOwner, setModalNftOwner] = useState<string>()
   const [modalImageLoaded, setModalImageLoaded] = useState(false);
   const [downloading, setDownloading] = useState(false)
-  const { breakpoints, spacing, palette } = useTheme()
+  const [quickLinksOpen, setQuickLinksOpen] = useState(false)
+
   const isMobile = useMediaQuery(breakpoints.down("sm"))
   const isTablet = useMediaQuery(breakpoints.down("md"))
   const isDesktop = useMediaQuery(breakpoints.down("lg"))
 
   const modalOpen = Boolean(modalImage)
+  const owners = state.owners
+  const wallet = state.wallet
 
   const slidesPerView = () => {
     if (isTablet) return 1;
     if (isDesktop) return 2;
     return 3
   }
-
-  const phMultiplier = isMobile ? 0.75 : 1
 
   const bgSx = blackBg
     ? { backgroundColor: palette.primary.main }
@@ -77,14 +89,17 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, p
           sm: spacing(5)
         }
       }
+    },
+    "& .swiper-wrapper": {
+      alignItems: "center"
+    },
+    '@-moz-document url-prefix()': {
+      "& .swiper-wrapper": {
+        transformStyle: "flat !important", //fixes coverflow issue in firefox (was covering buttons and intercepting clicks)
+      }
     }
   }
 
-  const imageSx: SxProps<Theme> = {
-    '& span': {
-      boxShadow: "2px 3px 4px rgba(0, 0, 0, 0.5)"
-    }
-  }
   const expandSx: SxProps<Theme> = {
     position: "absolute",
     zIndex: 2,
@@ -106,6 +121,7 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, p
   const handleModalClose = () => {
     setModalImageLoaded(false)
     setModalImage(undefined)
+    setModalNftOwner(undefined)
   }
 
   const download = () => {
@@ -134,42 +150,64 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, p
   } 
 
   const displayElement = (isActive: boolean, item: SwiperDisplayItem) => {
-    const { url, hiResUrl, label, isVideo, thumbnail } = item;
+    const { url, hiResUrl, label, isVideo, thumbnail, tokenId, contractId } = item;
 
     const handleExpand = () => {
       setModalImage(hiResUrl || url)
+      
+      const id = contractMappingId || contractId
+      console.log("🚀 ~ file: swiper-display.tsx ~ line 162 ~ handleExpand ~ id", id, tokenId)
+      console.log("🚀 ~ file: swiper-display.tsx ~ line 167 ~ handleExpand ~ owners", owners)
+     
+
+      if (id && tokenId) {
+        setModalNftOwner(owners[id][tokenId])
+      }
+      
     }
     
     const element = isVideo
-      ? <VideoPlayer url={url} isSmall isActive={isActive} placeholderHeight={placeholderHeight * phMultiplier} thumbnail={thumbnail} />
-      : <Box width="100%" display="flex" justifyContent="center" sx={imageSx} >
-          <Fab color="secondary" size="small" sx={expandSx} onClick={handleExpand} >
-            <OpenInFullIcon fontSize="small" />
+      ? <VideoPlayer url={url} isSmall isActive={isActive} heightRatio={videoHeightRation} thumbnail={thumbnail} />
+      : <Box width="100%" display="flex" justifyContent="center" >
+        {!!hiResUrl && (
+          <Fab color="secondary" size="small" sx={expandSx} onClick={handleExpand}>
+            {/* <OpenInFullIcon fontSize="small" /> */}
+            <Typography variant="h6">
+              4K
+            </Typography>
           </Fab>
-          <Image src={url} alt={label} height="500" width="500" placeholder="blur" blurDataURL={base64Shimmer(500, 500)} />
-        </Box>
+        )}
+        <BetterImage src={url} alt={label} height={500} width={500} placeholderText="Images coming from decentralized metadata may take time to load." />
+      </Box>
+
+    const ownerText = getOwnerText(owners, contractMappingId, tokenId)
     
     return (
-      <Box>
+      <Stack>
         {element}
         {label && (
-          <Box position="absolute" bottom={spacing(1)} width="100%" display="flex" justifyContent="center">
+          <Box position="absolute"
+            bottom={spacing(1)}
+            width="100%"
+            display="flex"
+            justifyContent="center">
             <Typography
-              width={190}
+              px={2}
               borderRadius={1}
               variant='subtitle1'
               align="center"
-              bgcolor="rgba(100, 100, 100, 0.5)"
+              bgcolor="rgba(100, 100, 100, 0.7)"
               color={palette.background.default}
               sx={{
-                opacity: isActive ? 1 : 0.5
+                opacity: isActive ? 1 : 0.5,
+                boxShadow: "2px 2px 4px rgba(0,0,0,0.5)"
               }}
             >
-              {label}
+              {label}{ownerText}
             </Typography>
           </Box>
         )}
-      </Box>
+      </Stack>
     )
   }
 
@@ -187,10 +225,12 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, p
             modifier: 1,
             slideShadows: false,
           }}
+          // focusableElements={"button"}
           grabCursor={true}
-          pagination={isTablet}
+          pagination={true}
           navigation={true}
           modules={[EffectCoverflow, Pagination, Navigation]}
+          initialSlide={1}
         >
           {items.map((item, index) => {
             return (
@@ -206,14 +246,35 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, p
         open={modalOpen}
         onClose={handleModalClose}
         footer={
-          <DialogActions sx={{position: "absolute", bottom: -30, left: "calc(50% - 5rem)", padding: 0 }} >
-            <Button color="secondary" variant="contained" onClick={download} sx={{ width: "10rem" }} disabled={downloading}>
-              {downloading ? <CircularProgress color="inherit" size="1.5rem" /> : "Download"}
-            </Button>
+          <DialogActions
+            sx={{
+              position: "absolute",
+              bottom: { xs: "-2.5rem", md: "-2rem" },
+              left: "calc(50% - 5.5rem)",
+              px: "1rem",
+              pb: 1.5,
+              background: palette.primary.main,
+              borderRadius: 3
+            }}
+          >
+            {wallet?.getAccountId() !== modalNftOwner
+              ? <Tooltip placement="top"
+                  title="Only the owner of this nft can download the 4k version. Consider checking out the secondary market!"
+                >
+                <Button color="secondary" variant="outlined" onClick={() => setQuickLinksOpen(true)} sx={{ width: "10rem" }}>
+                    Download
+                  </Button>
+                </Tooltip>
+              : <Button color="secondary" variant="contained" onClick={download} sx={{ width: "10rem" }} disabled={downloading}>
+                  {downloading ? <CircularProgress color="inherit" size="1.5rem" /> : "Download"}
+                </Button>
+          
+            }
+            
           </DialogActions>
         }
       >
-        <Box position="relative" width="100%" height="100%">
+        <Box position="relative" width="100%" height="100%" >
           {!modalImageLoaded && <LoadingSkrim title="4k images may take time to load"/>}
           {modalImage && (
             <Image
@@ -226,7 +287,12 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, p
             />
           )}
         </Box>
-      </Modal>
+      </Modal >
+      <QuickLinks
+        onlyMarketLinks
+        open={quickLinksOpen}
+        onClose={() => setQuickLinksOpen(false)}
+      />
     </Box>
   )
 }

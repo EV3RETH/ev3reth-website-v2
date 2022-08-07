@@ -7,6 +7,9 @@ import BigDisplay from "../components/big-display";
 import TwitterIcon from '@mui/icons-material/Twitter';
 import SvgCurve from "../components/svgCurve";
 import { useTheme } from "@mui/material";
+import CONTENT, { getOwnerText } from '../utils/contentMapping';
+import { tuneOutMappingId } from './tune-out';
+import { useGlobalContext } from '../context/globalProvider';
 
 
 
@@ -19,7 +22,10 @@ export const TwitterLink = ({url} : {url: string}) => (
 )
 
 const Collaborations: NextPage = () => {
-  const {palette} = useTheme()
+  const { palette } = useTheme()
+  const { state } = useGlobalContext()
+  
+  const owners = state.owners
   return (
     <Box component="main">
       <BannerWrapper>
@@ -32,12 +38,12 @@ const Collaborations: NextPage = () => {
       </BannerWrapper>
       <BigDisplay
         title="S U M M E R S U N / /"
-        tag="Owner - earthshine.near"
+        tag="earthshine"
         marketText="View on Paras"
         marketLink="https://paras.id/token/x.paras.near::188803"
         videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/collaborations/SUMMERSUN.mp4"
         videoThumbnail='https://ev3reth.s3.us-west-2.amazonaws.com/collaborations/summersun-thumbnail.png'
-        placeholderHeight={800}
+        videoHeightRatio={"114.407%"}
       />
       <SvgCurve color={palette.background.default} flipped/>
       <BannerWrapper blackBg >
@@ -52,13 +58,13 @@ const Collaborations: NextPage = () => {
         </Box>
       </BannerWrapper>
       <BigDisplay
-        videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/CH6+-+The+Mystic.mp4"
-        videoThumbnail='https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-mystic-thumbnail.jpg'
+        videoSrc={CONTENT[tuneOutMappingId][253461].normal}
+        // videoThumbnail='https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/the-mystic-thumbnail.jpg'
         title="CH6 - The Mystic"
-        tag="Owner - jared.near"
+        tag={getOwnerText(owners, tuneOutMappingId, 253461, "")}
         marketText="View on Paras"
         marketLink="https://paras.id/token/x.paras.near::253461"
-        placeholderHeight={394}
+        videoHeightRatio={"56.25%"}
       />
 
     </Box>

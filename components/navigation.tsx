@@ -17,12 +17,17 @@ import Image from 'next/image';
 import { colors, Hidden, Tab, Tabs, useMediaQuery } from '@mui/material';
 import logoIconBackup from '../public/logo-100.png'
 import { DISCORD_LINK, TWITTER_LINK, SMALL_LOGO_LINK } from '../utils/links';
-import useWalletAuth from '../hooks/useWallet';
+import { useGlobalContext } from '../context/globalProvider';
+import { setNfts } from '../context/actions';
 
 const pages = [
   {
     label: "Home",
     path: "/"
+  },
+  {
+    label: "Your Gallery",
+    path: "/holder-gallery"
   },
   {
     label: "EV3: Genesis",
@@ -55,13 +60,15 @@ export const DiscordLink = () => (
 )
 
 const Navigation: React.FC = () => {
-  const [tab, setTab] = useState(0)
-  const [anchorElNav, setAnchorElNav] = useState<Element | null>(null);
   const { palette, typography, breakpoints } = useTheme()
   const isTablet = useMediaQuery(breakpoints.down("md"))
   const router = useRouter()
+  const { state, dispatch } = useGlobalContext()
+  const wallet = state.wallet
+
+  const [tab, setTab] = useState(0)
+  const [anchorElNav, setAnchorElNav] = useState<Element | null>(null);
   const { pathname } = router
-  const wallet = useWalletAuth()
 
 
   useEffect(() => {
@@ -93,19 +100,23 @@ const Navigation: React.FC = () => {
     try {
       if (!wallet) throw new Error("No Wallet Connection Found")
       
-      if (wallet.isSignedIn) {
-        wallet.signOut()
+      if (wallet.isSignedIn()) {
+        await wallet.signOut()
+        dispatch(setNfts([]))
+        router.replace(router.pathname) //clear urlk params from wallet
       } else {
-        await wallet.signIn()
+        await wallet.requestSignIn({}, "EV3RETH")
       }
     } catch (e) {
-      alert(e)
+      console.log(e)
     }
   }
 
   const displayTabs = () => (
     <Box sx={{ display: 'flex', justifyContent: "flex-end", alignItems: "center", mr: 2 }}>
       <Tabs variant="scrollable" value={tab} indicatorColor="secondary" textColor="inherit"
+        sx={{
+        }}
         TabIndicatorProps={{
           style: {
             bottom: 7,
@@ -199,7 +210,7 @@ const Navigation: React.FC = () => {
         <Container maxWidth="xl">
           <Toolbar disableGutters
             sx={{
-              height: (Boolean(anchorElNav) && isTablet) ? 380 : 60,
+              height: (Boolean(anchorElNav) && isTablet) ? 420 : 60,
               alignItems: "flex-start",
               transition: "height 1s",
               pt: 1
@@ -211,13 +222,13 @@ const Navigation: React.FC = () => {
                 </Button>
               </Grid>
               <Grid item xs={10} display="flex" alignItems="center" justifyContent="flex-end" gap={2}>
-                <Hidden mdDown>
+                <Hidden lgDown>
                   {displayTabs()}
                 </Hidden>
-                {/* <Button variant="contained" color="secondary" onClick={handleWalletConnection} sx={{minWidth: 160}}>
-                  {wallet?.isSignedIn ? "Disconnect" : "Connect Wallet"}
-                </Button> */}
-                <Hidden mdUp>
+                <Button variant="contained" color="secondary" onClick={handleWalletConnection} sx={{minWidth: 160}}>
+                  {wallet?.isSignedIn() ? "Disconnect" : "Connect Wallet"}
+                </Button>
+                <Hidden lgUp>
                   {displayMenu()}
                 </Hidden>
               </Grid>
