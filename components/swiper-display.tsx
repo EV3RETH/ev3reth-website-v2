@@ -181,16 +181,13 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, v
       </Box>
 
     const ownerText = getOwnerText(owners, contractMappingId, tokenId)
-
-    const showTop = isMobile && isVideo
     
     return (
       <Stack>
         {element}
         {label && (
           <Box position="absolute"
-            top={showTop ? spacing(2) : "inherit"}
-            bottom={!showTop ? spacing(1) : "inherit"}
+            bottom={spacing(1)}
             width="100%"
             display="flex"
             justifyContent="center">
