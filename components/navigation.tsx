@@ -61,7 +61,7 @@ export const DiscordLink = () => (
 
 const Navigation: React.FC = () => {
   const { palette, typography, breakpoints } = useTheme()
-  const isTablet = useMediaQuery(breakpoints.down("md"))
+  const isMenuNav = useMediaQuery(breakpoints.down("lg"))
   const router = useRouter()
   const { state, dispatch } = useGlobalContext()
   const wallet = state.wallet
@@ -173,7 +173,7 @@ const Navigation: React.FC = () => {
         open={Boolean(anchorElNav)}
         onClose={handleCloseNavMenu}
         sx={{
-          display: { xs: 'block', md: 'none' },
+          display: { xs: 'block', lg: 'none' },
           '& .MuiPaper-elevation': {
             boxShadow: "none",
             width: "100%",
@@ -210,7 +210,7 @@ const Navigation: React.FC = () => {
         <Container maxWidth="xl">
           <Toolbar disableGutters
             sx={{
-              height: (Boolean(anchorElNav) && isTablet) ? 420 : 60,
+              height: (Boolean(anchorElNav) && isMenuNav) ? 420 : 60,
               alignItems: "flex-start",
               transition: "height 1s",
               pt: 1
