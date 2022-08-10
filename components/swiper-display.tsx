@@ -257,19 +257,45 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, v
               borderRadius: 3
             }}
           >
-            {wallet?.getAccountId() !== modalNftOwner
-              ? <Tooltip placement="top"
-                  title="Only the owner of this nft can download the 4k version. Consider checking out the secondary market!"
-                >
-                <Button color="secondary" variant="outlined" onClick={() => setQuickLinksOpen(true)} sx={{ width: "10rem" }}>
-                    Download
+            <Box
+              sx={{
+                "&::before": {
+                  content: "''",
+                  position: "absolute",
+                  backgroundColor: "transparent",
+                  top: { xs:"16px", md: "24.5px" },
+                  left: "-40px",
+                  height: "25px",
+                  width: "40px",
+                  borderTopRightRadius: spacing(2),
+                  boxShadow: `8px -8px 0 0 ${palette.primary.main}`,
+                },
+                "&::after": {
+                  content: "''",
+                  position: "absolute",
+                  backgroundColor: "transparent",
+                  top: { xs: "16px", md: "24.5px" },
+                  right: "-40px",
+                  height: "25px",
+                  width: "40px",
+                  borderTopLeftRadius: spacing(2),
+                  boxShadow: `-8px -8px 0 0 ${palette.primary.main}`,
+                }
+              }}
+            >
+              {wallet?.getAccountId() !== modalNftOwner
+                ? <Tooltip placement="top"
+                    title="Only the owner of this nft can download the 4k version. Consider checking out the secondary market!"
+                  >
+                  <Button color="secondary" variant="outlined" onClick={() => setQuickLinksOpen(true)} sx={{ width: "10rem" }}>
+                      Download
+                    </Button>
+                  </Tooltip>
+                : <Button color="secondary" variant="contained" onClick={download} sx={{ width: "10rem" }} disabled={downloading}>
+                    {downloading ? <CircularProgress color="inherit" size="1.5rem" /> : "Download"}
                   </Button>
-                </Tooltip>
-              : <Button color="secondary" variant="contained" onClick={download} sx={{ width: "10rem" }} disabled={downloading}>
-                  {downloading ? <CircularProgress color="inherit" size="1.5rem" /> : "Download"}
-                </Button>
-          
-            }
+              }
+            </Box>
             
           </DialogActions>
         }

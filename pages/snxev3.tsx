@@ -20,24 +20,6 @@ export const snxItems: Array<SwiperDisplayItem> = snxev3Ids.map(id => ({
 }))
 
 const TuneOut: NextPage = () => {
-
-  useEffect(() => {
-    const base = 1.5
-    let price = base
-    const prices = [base]
-    const totals = [base]
-    for (let i = 1; i < 100; i++){
-      const np = price * base
-      prices.push(np)
-      const total = prices.reduce((acc, cur) => acc + cur)
-      totals.push(total)
-      
-      price = np
-    }
-    
-    console.log("🚀 ~ file: snxev3.tsx ~ line 28 ~ useEffect ~ prices", prices)
-    console.log("🚀 ~ file: snxev3.tsx ~ line 30 ~ useEffect ~ totals", totals)
-  }, [])
   return (
     <Box component="main">
       <BannerWrapper>
