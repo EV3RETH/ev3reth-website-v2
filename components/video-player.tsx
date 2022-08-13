@@ -3,6 +3,7 @@ import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import { Box, Fab, Button, useTheme, SxProps, Theme, useMediaQuery, makeStyles, Fade } from "@mui/material";
 import useElementObserver from "../hooks/useElementObserver";
 import LoadingSkrim from "./loading-skrim";
@@ -22,7 +23,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
   const [mounted, setMounted] = useState(false)
   const [loaded, setLoaded] = useState(false)
 
-  const { breakpoints, palette } = useTheme()
+  const { breakpoints, palette, spacing } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down("sm"))
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const containerRef = useRef()
@@ -31,6 +32,24 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.volume = 0.5
+      videoRef.current.onpause = () => {
+        setIsPlaying(false)
+      }
+      videoRef.current.onplay = () => {
+        setIsPlaying(true)
+      }
+      videoRef.current.onvolumechange = (e: any) => {
+        setIsMuted(e.target.muted)
+      }
+      videoRef.current.onfullscreenchange = (e: any) => {
+        if (videoRef.current) {
+          const isFullscreen = Boolean(document.fullscreen)
+          videoRef.current.controls = isFullscreen
+          if (isMobile) {
+            setMounted(false)
+          }
+        }
+      }
     }
   }, [mounted])
 
@@ -133,17 +152,24 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
     else handlePlayClick();
   }
 
+  const handleTouch = () => {
+    setShowingControls(true)
+  }
+
+  const elem = videoRef.current
+  const canRequestFullScreen = elem?.requestFullscreen || elem?.msRequestFullscreen
+  const handleFullScreen = () => {
+    if (!elem || !canRequestFullScreen) return
+    
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+      elem.msRequestFullscreen();
+    }
+  }
+
   return (
     <Box position="relative" sx={videoSx} width={playerWidth} margin={isSmall ? "auto" : "inherit"} ref={containerRef} borderRadius={2} overflow="hidden">
-      <Box sx={controlsSx} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseOut}>
-        <Button onClick={handleControlsClick} variant="text" sx={controlScrimSx} disabled={!isActive}/>
-        <Fab color="secondary" onClick={handlePlayClick} sx={buttonSx} size={size} disabled={!isActive || !loaded} >
-          {playPause}
-        </Fab>
-        <Fab color="secondary" onClick={handleMuteClick} sx={buttonSx} size={size} disabled={!isActive || !loaded} >
-          {mutedUnmuted}
-        </Fab>
-      </Box>
       {!loaded && (
         <Box width="100%" paddingBottom={heightRatio}>
           <LoadingSkrim />
@@ -151,6 +177,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
       )}
       {mounted && 
         <video
+          controls={false}
           loop
           playsInline
           disablePictureInPicture
@@ -170,6 +197,28 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
           }}
         />
       }      
+      <Box sx={controlsSx} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseOut}>
+        <Button onClick={handleControlsClick} variant="text" sx={controlScrimSx} disabled={!isActive} />
+        {Boolean(canRequestFullScreen) && (
+          <Fab color="secondary" onClick={handleFullScreen}
+            onTouchStart={handleTouch}
+            sx={{
+              position: "absolute",
+              top: spacing(controlsPadding),
+              right: spacing(controlsPadding),
+              ...buttonSx
+            }}
+            size={size} disabled={!isActive || !loaded} >
+            <FullscreenIcon fontSize={size} />
+          </Fab>
+        )}
+        <Fab color="secondary" onClick={handlePlayClick} sx={buttonSx} size={size} disabled={!isActive || !loaded} onTouchStart={handleTouch}>
+          {playPause}
+        </Fab>
+        <Fab color="secondary" onClick={handleMuteClick} sx={buttonSx} size={size} disabled={!isActive || !loaded} onTouchStart={handleTouch}>
+          {mutedUnmuted}
+        </Fab>
+      </Box>
     </Box>
   )
 }

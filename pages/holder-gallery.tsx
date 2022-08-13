@@ -92,7 +92,7 @@ const HolderGallery: NextPage = () => {
             <Fade in={true} timeout={1000}>
               <Box position="relative">
                 <Box position="absolute" width="100%" height="100%" display="flex" justifyContent="center" alignItems="center" zIndex={1100}>
-                  <Box py={4} px={8} borderRadius={3} sx={{ background: alpha(palette.primary.main, 0.8), boxShadow: "2px 2px 2px rgba(0,0,0,0.5)" }}>
+                  <Box py={4} px={8} borderRadius={3} mx={3} sx={{ background: alpha(palette.primary.main, 0.8), boxShadow: "2px 2px 2px rgba(0,0,0,0.5)" }}>
                     {!wallet?.isSignedIn()
                       ? <Typography variant="h4" color="white">
                         Connect wallet to view your art
