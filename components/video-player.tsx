@@ -45,9 +45,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
         if (videoRef.current) {
           const isFullscreen = Boolean(document.fullscreen)
           videoRef.current.controls = isFullscreen
-          if (isMobile) {
-            setMounted(false)
-          }
+
         }
       }
     }
@@ -152,20 +150,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
     else handlePlayClick();
   }
 
-  const handleTouch = () => {
-    setShowingControls(true)
-  }
-
-  const elem = videoRef.current
-  const canRequestFullScreen = elem?.requestFullscreen || elem?.msRequestFullscreen
+  const canRequestFullScreen = videoRef.current?.requestFullscreen
   const handleFullScreen = () => {
-    if (!elem || !canRequestFullScreen) return
-    
-    if (elem.requestFullscreen) {
-      elem.requestFullscreen();
-    } else if (elem.msRequestFullscreen) {
-      elem.msRequestFullscreen();
-    }
+    if (!videoRef.current || !canRequestFullScreen) return
+    videoRef.current.requestFullscreen();
   }
 
   return (
@@ -200,22 +188,25 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, isSmall = false, isActiv
       <Box sx={controlsSx} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseOut}>
         <Button onClick={handleControlsClick} variant="text" sx={controlScrimSx} disabled={!isActive} />
         {Boolean(canRequestFullScreen) && (
-          <Fab color="secondary" onClick={handleFullScreen}
-            onTouchStart={handleTouch}
+          <Fab
+            color="secondary"
+            onClick={handleFullScreen}
             sx={{
               position: "absolute",
               top: spacing(controlsPadding),
               right: spacing(controlsPadding),
               ...buttonSx
             }}
-            size={size} disabled={!isActive || !loaded} >
+            size={size}
+            disabled={!isActive || !loaded}
+          >
             <FullscreenIcon fontSize={size} />
           </Fab>
         )}
-        <Fab color="secondary" onClick={handlePlayClick} sx={buttonSx} size={size} disabled={!isActive || !loaded} onTouchStart={handleTouch}>
+        <Fab color="secondary" onClick={handlePlayClick} sx={buttonSx} size={size} disabled={!isActive || !loaded}>
           {playPause}
         </Fab>
-        <Fab color="secondary" onClick={handleMuteClick} sx={buttonSx} size={size} disabled={!isActive || !loaded} onTouchStart={handleTouch}>
+        <Fab color="secondary" onClick={handleMuteClick} sx={buttonSx} size={size} disabled={!isActive || !loaded}>
           {mutedUnmuted}
         </Fab>
       </Box>
