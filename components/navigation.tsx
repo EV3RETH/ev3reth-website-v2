@@ -15,7 +15,6 @@ import { useTheme } from '@mui/material/styles';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import Image from 'next/image';
 import { colors, Hidden, Tab, Tabs, useMediaQuery } from '@mui/material';
-import logoIconBackup from '../public/logo-100.png'
 import { DISCORD_LINK, TWITTER_LINK, SMALL_LOGO_LINK } from '../utils/links';
 import { useGlobalContext } from '../context/globalProvider';
 import { setNfts } from '../context/actions';

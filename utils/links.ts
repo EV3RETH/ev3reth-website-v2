@@ -7,5 +7,6 @@ export const MEDIUM_MODEL_IS_ART_PART2_LINK = "https://medium.com/@EV3RETH/the-m
 export const TUNE_OUT_ARTICLE_LINK = "https://paras.id/publication/tune-out-621670f9b1808d092e26027f"
 export const TUNE_OUT_SECONDARY_LINK = "https://paras.id/collection/tune-out-by-ev3rethnear"
 export const MAIN_TITLE_LINK = "https://ev3reth.s3.us-west-2.amazonaws.com/misc/EV3RETH-black.png"
-export const SMALL_LOGO_LINK = "https://ev3reth.s3.us-west-2.amazonaws.com/misc/logo-100.png"
+// export const SMALL_LOGO_LINK = "https://ev3reth.s3.us-west-2.amazonaws.com/misc/logo-100.png"
+export const SMALL_LOGO_LINK = "/symbol-100.png"
 export const PARAS_COLLECTIONS = "https://paras.id/ev3reth.near/collections"
