@@ -11,13 +11,14 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import Image from 'next/image';
 import { colors, Hidden, Tab, Tabs, useMediaQuery } from '@mui/material';
 import { DISCORD_LINK, TWITTER_LINK, SMALL_LOGO_LINK } from '../utils/links';
 import { useGlobalContext } from '../context/globalProvider';
 import { setNfts } from '../context/actions';
+import { DiscordIcon } from '../styles/svgs';
 
 const pages = [
   {
@@ -46,15 +47,18 @@ const pages = [
   }
 ];
 
-export const Ev3rethTwitterLink = () => (
-  <a href={TWITTER_LINK} target="_blank" rel="noreferrer">
-    <TwitterIcon fontSize='small' />
-  </a>
-)
+export const Ev3rethTwitterLink = () => {
+  const {palette} = useTheme()
+  return (
+    <a href={TWITTER_LINK} target="_blank" rel="noreferrer">
+      <TwitterIcon fontSize='small' sx={{ fill: palette.background.default }} />
+    </a>
+  )
+}
 
 export const DiscordLink = () => (
   <a href={DISCORD_LINK} target="_blank" rel="noreferrer">
-    <Image src="/discord.png" height={17} width={17} alt="discord"/>
+    <DiscordIcon />
   </a>
 )
 
@@ -131,10 +135,10 @@ const Navigation: React.FC = () => {
           />
         ))}
       </Tabs>
-      <Button sx={{ mb: -1, ml: 2, p: 0, color: colors.grey[400], minWidth: "inherit", height: 20 }}>
+      <Button sx={{ mb: -1, ml: 2, p: 0, minWidth: "inherit", height: 20 }}>
         <Ev3rethTwitterLink />
       </Button>
-      <Button sx={{ mb: -1, ml: 2, p: 0, filter: "invert(0.7)", minWidth: "inherit", height: 20 }}>
+      <Button sx={{ mb: -1, ml: 2, p: 0, minWidth: "inherit", height: 20 }}>
         <DiscordLink />
       </Button>
     </Box>

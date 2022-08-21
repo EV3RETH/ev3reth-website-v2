@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
         </Typography>
         <Box>
           <Ev3rethTwitterLink />
-          <Box ml={2} display="inline" sx={{ filter: "invert(1)"}}>
+          <Box ml={2} display="inline">
             <DiscordLink />
           </Box>
         </Box>

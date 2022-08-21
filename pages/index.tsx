@@ -41,7 +41,7 @@ const Home: NextPage = () => {
 
         <Typography variant="h3" position="relative" zIndex={1} textAlign="center"
           sx={getGradientTextStyle(`linear-gradient(90deg, ${palette.secondary.main} 10%, #FFF 90%)`)}>
-          Machine Learning Artist and Composer
+          Code Artist and Composer
         </Typography>
 
         <Box mt={8} gap={3} display="flex" justifyContent="center" flexWrap="wrap">
@@ -79,18 +79,20 @@ const Home: NextPage = () => {
             <Typography variant="h3" mb={3}
               sx={getGradientTextStyle(`linear-gradient(90deg, #FFF 20%, ${palette.secondary.light} 80%)`)}
             >
-                I am driven by a deep passion for exploration
+              Making Future Art
             </Typography>
             <Typography variant="h5">
-              ❖ Training and manipulating my own machine learning models
+              ❖ Multimedia and interactive mediums
               <br />
-              ❖ Experimenting with sonic textures and musical composition
+              ❖ Training and manipulating machine learning models
+              <br />
+              ❖ Combining classical composition with modern soundscapes
               <br />
               ❖ Investigating creative uses of blockchain technology
             </Typography>
 
-            <Typography mt={6} mb={1}>
-              You can learn about my journey into machine learning by reading my article &quot;The Model is the Art&quot;
+            <Typography mt={4} mb={1}>
+              Learn about my journey into machine learning by reading &quot;The Model is the Art&quot;
               (<a href={MEDIUM_MODEL_IS_ART_PART1_LINK} target="_blank" rel="noreferrer">part one</a> | <a href={MEDIUM_MODEL_IS_ART_PART2_LINK} target="_blank" rel="noreferrer">part two</a>)
             </Typography>
           </Box>
