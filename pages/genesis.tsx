@@ -22,7 +22,7 @@ const TuneOut: NextPage = () => {
           EV3: Genesis
         </Typography>
         <Typography variant="h4" mb={4}>
-          Ongoing weekly auctions. Join the discord for details.
+          Auctions paused, revamp coming soon...
         </Typography>
         <Typography variant="h6">
           Thirty-three curated pieces of generative art from machine learning models trained and blended together by EV3RETH. 

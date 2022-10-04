@@ -109,7 +109,7 @@ const Home: NextPage = () => {
 
       <BigDisplay
         title="Tune Out"
-        tag="Part One - Sold Out"
+        tag="Sold Out"
         marketText="Learn More"
         marketLink="/tune-out"
         videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/Tune+out+promo+v3.mp4"

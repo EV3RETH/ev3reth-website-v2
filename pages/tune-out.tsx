@@ -81,7 +81,7 @@ const TuneOut: NextPage = () => {
           Tune Out
         </Typography>
         <Typography variant="h4" mb={4}>
-          Part one has sold out. Join my discord for future listings.
+          Available on secondary market.
         </Typography>
         <Typography variant="h6">
           An exploration into new artistic mediums. Combining original music with machine learning art to produce something completely unique.
@@ -101,7 +101,7 @@ const TuneOut: NextPage = () => {
 
       </BannerWrapper>
       {tuneOutDisplayItems.map(({
-        url, label, marketUrl, tagText = "Available by auction soon", thumbnail, tokenId
+        url, label, marketUrl, tagText = "Sold", thumbnail, tokenId
       }, index) => {
         const isOdd = !!(index % 2)
         const tag = getOwnerText(owners, tuneOutMappingId, tokenId, "") || tagText
