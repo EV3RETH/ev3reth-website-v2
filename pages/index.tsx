@@ -65,7 +65,7 @@ const Home: NextPage = () => {
 
       <BigDisplay
         title="EV3: Genesis"
-        tag="Weekly Auctions"
+        tag="Weekly Auctions Paused, revamp coming soon..."
         videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Genesis-final/Genesis-promo.mp4"
         // videoThumbnail='https://ev3reth.s3.us-west-2.amazonaws.com/Genesis-final/genesis-promo-thumbnail.jpg'
         marketText="Learn More"
