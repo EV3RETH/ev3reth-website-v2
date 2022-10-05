@@ -8,6 +8,8 @@ import SvgCurve from "./svgCurve";
 import base64Shimmer from "../utils/svgShimmer";
 import Link from "next/link";
 import BetterImage from "./better-image";
+import useElementObserver from "../hooks/useElementObserver";
+import { useRef } from "react";
 interface BigDisplayProps {
   title: string;
   tag: string;
@@ -35,7 +37,6 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
 }) => {
   const { breakpoints, palette } = useTheme()
   const isTablet = useMediaQuery(breakpoints.down("lg"))
-  const isMobile = useMediaQuery(breakpoints.down("sm"))
 
   const bgSx = blackBg ? blackBgSx : whiteBgSx;
   const topPad = { xs: 0, lg: 6 }
@@ -67,7 +68,6 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
   return (
     <Box sx={bgSx}>
       <Grid container maxWidth={maxDisplayWidth} margin="auto" px={{ xs: 0, md: 3 }} >
-
         <SvgCurve color={blackBg ? palette.background.default : palette.primary.main} flipped={blackBg} />
 
         {reverseDisplay && !isTablet && displayElement()}
@@ -82,6 +82,7 @@ const BigDisplay: React.FC<BigDisplayProps> = ({
             justifyContent="center"
             alignItems="center"
             height="100%"
+            position="relative"
           >
             <Typography variant="h3" noWrap mb={1}>
               {title}

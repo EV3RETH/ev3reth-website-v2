@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { NextPage } from 'next'
 import Image from 'next/image';
-import { Typography, Box, List, Hidden, Button } from "@mui/material"
+import { Typography, Box, List, Hidden, Button, CardMedia } from "@mui/material"
 import { SxProps, Theme, useTheme } from "@mui/material/styles"
 import BigDisplay from '../components/big-display';
 import BannerWrapper from '../components/banner-wrapper'
@@ -13,7 +13,6 @@ import SvgCurve from '../components/svgCurve';
 import { getGradientTextStyle, maxDisplayWidth } from '../styles/theme';
 import QuickLinks from '../components/quick-links';
 import Link from 'next/link';
-import { Pages } from '@mui/icons-material';
 
 const Home: NextPage = () => {
   const [logoLoaded, setLogoLoaded] = useState(false)
@@ -41,17 +40,12 @@ const Home: NextPage = () => {
 
         <Typography variant="h3" position="relative" zIndex={1} textAlign="center"
           sx={getGradientTextStyle(`linear-gradient(90deg, ${palette.secondary.main} 10%, #FFF 90%)`)}>
-          Code Artist and Composer
+          Composer and Code Artist
         </Typography>
 
         <Box mt={8} gap={3} display="flex" justifyContent="center" flexWrap="wrap">
           <Link href="/holder-gallery" passHref>
             <Button color="secondary" variant="contained"
-            // sx={{
-            //   backgroundImage: 'url("/seed0070.png")',
-            //   backgroundSize: "cover",
-            //   backgroundRepeat: "no-repeat"
-            // }}
             >
               Your Gallery
             </Button> 
@@ -64,18 +58,18 @@ const Home: NextPage = () => {
       </BannerWrapper>
 
       <BigDisplay
-        title="EV3: Genesis"
-        tag="Weekly Auctions Paused, revamp coming soon..."
-        videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Genesis-final/Genesis-promo.mp4"
-        // videoThumbnail='https://ev3reth.s3.us-west-2.amazonaws.com/Genesis-final/genesis-promo-thumbnail.jpg'
-        marketText="Learn More"
-        marketLink="/genesis"
+        title="Preludes"
+        tag="A Flower Blooms in Autumn - Sold"
+        videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Preludes/A+Flower+Blooms+in+Autumn.mp4"
+        marketText="Visit Exchange Art Page"
+        marketLink="https://exchange.art/single/3bzYvhvGMbenTHkS3KAej2RVV4HPQYh91hrPc91pS9F3"
+        videoHeightRatio={"137.16%"}
       />
 
       <Box>
         <SvgCurve color={palette.background.default} flipped/>
         <BannerWrapper isBody>
-          <Box pt={{ xs: 4, sm:10, xl: 12 }} px={{ xl: 10}} maxWidth={maxDisplayWidth} mx="auto">
+          <Box pt={{ xs: 4, sm: 10, xl: 12 }} px={{ xl: 10 }} maxWidth={maxDisplayWidth} mx="auto">
             <Typography variant="h3" mb={3}
               sx={getGradientTextStyle(`linear-gradient(90deg, #FFF 20%, ${palette.secondary.light} 80%)`)}
             >
@@ -100,11 +94,23 @@ const Home: NextPage = () => {
       </Box>
 
       <BigDisplay
+        title="EV3: Genesis"
+        tag="Weekly Auctions Paused, revamp coming soon..."
+        videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Genesis-final/Genesis-promo.mp4"
+        // videoThumbnail='https://ev3reth.s3.us-west-2.amazonaws.com/Genesis-final/genesis-promo-thumbnail.jpg'
+        marketText="Learn More"
+        marketLink="/genesis"
+        
+      />
+
+      <BigDisplay
         title="SNxEV3"
         tag="Sold Out"
         imgSrc="https://ev3reth.s3.us-west-2.amazonaws.com/SNxEV3-images/SNxEV3-0.png"
         marketText="Learn More"
         marketLink="/snxev3"
+        reverseDisplay
+        blackBg
       />
 
       <BigDisplay
@@ -115,10 +121,8 @@ const Home: NextPage = () => {
         videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/Tune+out+promo+v3.mp4"
         videoHeightRatio={"56.25%"}
         videoThumbnail="https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/tune-out-thumbnail.jpg"
-        reverseDisplay
-        blackBg
       />
-      <SwiperDisplay items={tuneOutDisplayItems} blackBg contractMappingId={tuneOutMappingId} />
+      <SwiperDisplay items={tuneOutDisplayItems} contractMappingId={tuneOutMappingId} />
     
     </Box>
   )

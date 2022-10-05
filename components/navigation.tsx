@@ -18,7 +18,8 @@ import { colors, Hidden, Tab, Tabs, useMediaQuery } from '@mui/material';
 import { DISCORD_LINK, TWITTER_LINK, SMALL_LOGO_LINK } from '../utils/links';
 import { useGlobalContext } from '../context/globalProvider';
 import { setNfts } from '../context/actions';
-import { DiscordIcon } from '../styles/svgs';
+import { DiscordIcon } from '../styles/svgs'; 
+import logo from '../public/clover-transp.png'
 
 const pages = [
   {
@@ -221,7 +222,7 @@ const Navigation: React.FC = () => {
             <Grid container spacing={3} alignItems="center">
               <Grid item xs={2}>
                 <Button color="inherit" variant='text' onClick={handleLogoClick} disableRipple sx={{p:0, ...typography.h6}}>
-                  <Image width="35px" height="35px" src={SMALL_LOGO_LINK} alt="EV3RETH" priority/>
+                  <Image width="35px" height="35px" src={logo} alt="EV3RETH" priority/>
                 </Button>
               </Grid>
               <Grid item xs={10} display="flex" alignItems="center" justifyContent="flex-end" gap={2}>
