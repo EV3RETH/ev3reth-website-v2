@@ -80,9 +80,9 @@ const TuneOut: NextPage = () => {
         <Typography variant="h1" mb={3} >
           Tune Out
         </Typography>
-        <Typography variant="h4" mb={4}>
+        {/* <Typography variant="h4" mb={4}>
           Available on secondary market.
-        </Typography>
+        </Typography> */}
         <Typography variant="h6">
           An exploration into new artistic mediums. Combining original music with machine learning art to produce something completely unique.
         </Typography>

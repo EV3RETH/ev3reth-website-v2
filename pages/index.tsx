@@ -60,7 +60,7 @@ const Home: NextPage = () => {
       <BigDisplay
         title="Preludes"
         tag="A Flower Blooms in Autumn - Sold"
-        videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Preludes/A+Flower+Blooms+in+Autumn.mp4"
+        videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Preludes/A+Flower+Blooms+in+Autumn_improved-render.mp4"
         marketText="Visit Exchange Art Page"
         marketLink="https://exchange.art/single/3bzYvhvGMbenTHkS3KAej2RVV4HPQYh91hrPc91pS9F3"
         videoHeightRatio={"137.16%"}
@@ -121,8 +121,9 @@ const Home: NextPage = () => {
         videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/Tune+out+promo+v3.mp4"
         videoHeightRatio={"56.25%"}
         videoThumbnail="https://ev3reth.s3.us-west-2.amazonaws.com/Tune-Out/tune-out-thumbnail.jpg"
-      />
+      /> 
       <SwiperDisplay items={tuneOutDisplayItems} contractMappingId={tuneOutMappingId} />
+     
     
     </Box>
   )

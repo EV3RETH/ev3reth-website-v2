@@ -10,6 +10,7 @@ import Link from "next/link";
 import BetterImage from "./better-image";
 import useElementObserver from "../hooks/useElementObserver";
 import { useRef } from "react";
+import ReactPlayer from "react-player";
 interface BigDisplayProps {
   title: string;
   tag: string;

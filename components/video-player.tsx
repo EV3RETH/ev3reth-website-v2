@@ -7,6 +7,7 @@ import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import { Box, Fab, Button, useTheme, SxProps, Theme, useMediaQuery, makeStyles, Fade } from "@mui/material";
 import useElementObserver from "../hooks/useElementObserver";
 import LoadingSkrim from "./loading-skrim";
+import ReactPlayer from "react-player";
 
 interface VideoPlayerProps {
   url: string;
