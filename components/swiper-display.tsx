@@ -156,10 +156,6 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, v
       setModalImage(hiResUrl || url)
       
       const id = contractMappingId || contractId
-      console.log("🚀 ~ file: swiper-display.tsx ~ line 162 ~ handleExpand ~ id", id, tokenId)
-      console.log("🚀 ~ file: swiper-display.tsx ~ line 167 ~ handleExpand ~ owners", owners)
-     
-
       if (id && tokenId) {
         setModalNftOwner(owners[id][tokenId])
       }
@@ -283,7 +279,7 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, v
                 }
               }}
             >
-              {wallet?.getAccountId() !== modalNftOwner
+              {/* {wallet?.getAccountId() !== modalNftOwner
                 ? <Tooltip placement="top"
                     title="Only the owner of this nft can download the 4k version. Consider checking out the secondary market!"
                   >
@@ -294,7 +290,10 @@ const SwiperDisplay: React.FC<SwiperDisplayProps> = ({ items, blackBg = false, v
                 : <Button color="secondary" variant="contained" onClick={download} sx={{ width: "10rem" }} disabled={downloading}>
                     {downloading ? <CircularProgress color="inherit" size="1.5rem" /> : "Download"}
                   </Button>
-              }
+              } */}
+              <Button color="secondary" variant="contained" onClick={download} sx={{ width: "10rem" }} disabled={downloading}>
+                {downloading ? <CircularProgress color="inherit" size="1.5rem" /> : "Download"}
+              </Button>
             </Box>
             
           </DialogActions>

@@ -1,7 +1,7 @@
 import { Content, truncateOwnerId } from "../hooks/useContract"
 
 type ContentMap = { [key: number]: Content }
-export const genesisIds = [33, 32, 31, 30, 29, 28, 27, 26, 25]
+export const t3rraIds = [1,2,3,4,5,6,7,8,9,10,11]
 export const snxev3Ids = Array.from(Array(30).keys())
 const CONTENT: {[key: string]: ContentMap} = {
   "mint.snxev3.near": snxev3Ids.reduce((acc: ContentMap, id) => {
@@ -12,11 +12,10 @@ const CONTENT: {[key: string]: ContentMap} = {
     }
     return acc
   }, {}),
-  "ev3.neartopia.near": genesisIds.reduce((acc: ContentMap, id) => {
+  "ev3.neartopia.near": t3rraIds.reduce((acc: ContentMap, id) => {
     acc[id] = {
-      type: id > 7 ? "image" : "video",
-      normal: `https://ev3reth.s3.us-west-2.amazonaws.com/Genesis-final/EV3_+Genesis-${id}.png`,
-      hiRes: `https://ev3reth.s3.us-west-2.amazonaws.com/EV3-Genesis-upres/EV3_+Genesis-${id}-4k.png`,
+      type: "image", // id < 27 ? "image" : "video",
+      normal: `https://ev3reth.s3.us-west-2.amazonaws.com/T3RRA/T3RRA-${id}.png`,
     }
     return acc
   }, {}),
@@ -57,7 +56,7 @@ export const OWNERS: OwnerMap = {
     acc[id] = "";
     return acc
   }, {}),
-  "ev3.neartopia.near": genesisIds.reduce((acc: OwnerItem, id) => {
+  "ev3.neartopia.near": t3rraIds.reduce((acc: OwnerItem, id) => {
     acc[id] = ""
     return acc
   }, {}),

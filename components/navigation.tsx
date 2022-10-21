@@ -26,13 +26,13 @@ const pages = [
     label: "Home",
     path: "/"
   },
+  // {
+  //   label: "Your Gallery",
+  //   path: "/holder-gallery"
+  // },
   {
-    label: "Your Gallery",
-    path: "/holder-gallery"
-  },
-  {
-    label: "EV3: Genesis",
-    path: "/genesis"
+    label: "T3RRA",
+    path: "/t3rra"
   },
   {
     label: "SNxEV3",
@@ -229,9 +229,9 @@ const Navigation: React.FC = () => {
                 <Hidden lgDown>
                   {displayTabs()}
                 </Hidden>
-                <Button variant="contained" color="secondary" onClick={handleWalletConnection} sx={{minWidth: 160}}>
+                {/* <Button variant="contained" color="secondary" onClick={handleWalletConnection} sx={{minWidth: 160}}>
                   {wallet?.isSignedIn() ? "Disconnect" : "Connect Wallet"}
-                </Button>
+                </Button> */}
                 <Hidden lgUp>
                   {displayMenu()}
                 </Hidden>

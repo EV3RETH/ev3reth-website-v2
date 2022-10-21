@@ -8,11 +8,12 @@ import BannerWrapper from '../components/banner-wrapper'
 import SwiperDisplay from '../components/swiper-display';
 import { tuneOutDisplayItems, tuneOutMappingId } from './tune-out';
 import titleBackup from '../public/EV3RETH-black.png'
-import { DISCORD_LINK, MAIN_TITLE_LINK, MEDIUM_MODEL_IS_ART_PART1_LINK, MEDIUM_MODEL_IS_ART_PART2_LINK } from '../utils/links';
+import { MAIN_TITLE_LINK, MEDIUM_MODEL_IS_ART_PART1_LINK, MEDIUM_MODEL_IS_ART_PART2_LINK } from '../utils/links';
 import SvgCurve from '../components/svgCurve';
 import { getGradientTextStyle, maxDisplayWidth } from '../styles/theme';
 import QuickLinks from '../components/quick-links';
 import Link from 'next/link';
+import About from '../components/about';
 
 const Home: NextPage = () => {
   const [logoLoaded, setLogoLoaded] = useState(false)
@@ -40,17 +41,17 @@ const Home: NextPage = () => {
 
         <Typography variant="h3" position="relative" zIndex={1} textAlign="center"
           sx={getGradientTextStyle(`linear-gradient(90deg, ${palette.secondary.main} 10%, #FFF 90%)`)}>
-          Composer and Code Artist
+          Composer and Machine Learning Artist
         </Typography>
 
         <Box mt={8} gap={3} display="flex" justifyContent="center" flexWrap="wrap">
-          <Link href="/holder-gallery" passHref>
+          {/* <Link href="/holder-gallery" passHref>
             <Button color="secondary" variant="contained"
             >
               Your Gallery
             </Button> 
-          </Link>
-          <Button color="secondary" variant="outlined" onClick={() => setQuickLinksOpen(true)}>
+          </Link> */}
+          <Button color="secondary" variant="contained" onClick={() => setQuickLinksOpen(true)}>
             Quick Links
           </Button>          
           <QuickLinks open={quickLinksOpen} onClose={() => setQuickLinksOpen(false)} />
@@ -58,49 +59,22 @@ const Home: NextPage = () => {
       </BannerWrapper>
 
       <BigDisplay
+        title="T3RRA"
+        tag="Regular Auctions"
+        imgSrc="https://ev3reth.s3.us-west-2.amazonaws.com/T3RRA/T3RRA-1.png"
+        marketText="Learn More"
+        marketLink="/t3rra"
+      />
+
+      <About />
+
+      <BigDisplay
         title="Preludes"
-        tag="A Flower Blooms in Autumn - Sold"
+        tag="A Flower Blooms in Autumn"
         videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Preludes/A+Flower+Blooms+in+Autumn_improved-render.mp4"
         marketText="Visit Exchange Art Page"
         marketLink="https://exchange.art/single/3bzYvhvGMbenTHkS3KAej2RVV4HPQYh91hrPc91pS9F3"
         videoHeightRatio={"137.16%"}
-      />
-
-      <Box>
-        <SvgCurve color={palette.background.default} flipped/>
-        <BannerWrapper isBody>
-          <Box pt={{ xs: 4, sm: 10, xl: 12 }} px={{ xl: 10 }} maxWidth={maxDisplayWidth} mx="auto">
-            <Typography variant="h3" mb={3}
-              sx={getGradientTextStyle(`linear-gradient(90deg, #FFF 20%, ${palette.secondary.light} 80%)`)}
-            >
-              Making Future Art
-            </Typography>
-            <Typography variant="h5">
-              ❖ Multimedia and interactive mediums
-              <br />
-              ❖ Training and manipulating machine learning models
-              <br />
-              ❖ Combining classical composition with modern soundscapes
-              <br />
-              ❖ Investigating creative uses of blockchain technology
-            </Typography>
-
-            <Typography mt={4} mb={1}>
-              Learn about my journey into machine learning by reading &quot;The Model is the Art&quot;
-              (<a href={MEDIUM_MODEL_IS_ART_PART1_LINK} target="_blank" rel="noreferrer">part one</a> | <a href={MEDIUM_MODEL_IS_ART_PART2_LINK} target="_blank" rel="noreferrer">part two</a>)
-            </Typography>
-          </Box>
-        </BannerWrapper>
-      </Box>
-
-      <BigDisplay
-        title="EV3: Genesis"
-        tag="Weekly Auctions Paused, revamp coming soon..."
-        videoSrc="https://ev3reth.s3.us-west-2.amazonaws.com/Genesis-final/Genesis-promo.mp4"
-        // videoThumbnail='https://ev3reth.s3.us-west-2.amazonaws.com/Genesis-final/genesis-promo-thumbnail.jpg'
-        marketText="Learn More"
-        marketLink="/genesis"
-        
       />
 
       <BigDisplay

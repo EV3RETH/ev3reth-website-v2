@@ -7,7 +7,7 @@ import { useGlobalContext } from "../context/globalProvider"
 import { getAllEv3rethNftsByOwner } from "../hooks/useContract"
 import BannerWrapper from "../components/banner-wrapper";
 import SvgCurve from "../components/svgCurve";
-import { genesisItems } from "./genesis";
+import { genesisItems } from "./t3rra";
 import { snxItems } from "./snxev3";
 import { tuneOutDisplayItems } from "./tune-out";
 import QuickLinks from "../components/quick-links";

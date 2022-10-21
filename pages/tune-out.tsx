@@ -26,7 +26,8 @@ export const tuneOutDisplayItems: Array<DisplayListItem> = [
     label: 'CH1 - The Endless',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253374",
-    tokenId: 253374
+    tokenId: 253374,
+    tagText: "Owner - supah"
   },
   {
     url: CONTENT[tuneOutMappingId][253392].normal,
@@ -34,7 +35,8 @@ export const tuneOutDisplayItems: Array<DisplayListItem> = [
     label: 'CH2 - The Expanse',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253392",
-    tokenId: 253392
+    tokenId: 253392,
+    tagText: "Owner - echobase"
   },
   {
     url: CONTENT[tuneOutMappingId][253401].normal,
@@ -42,7 +44,8 @@ export const tuneOutDisplayItems: Array<DisplayListItem> = [
     label: 'CH3 - The Serene',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253401",
-    tokenId: 253401
+    tokenId: 253401,
+    tagText: "Owner - bennyblanco"
   },
   {
     url: CONTENT[tuneOutMappingId][253415].normal,
@@ -50,7 +53,8 @@ export const tuneOutDisplayItems: Array<DisplayListItem> = [
     label: 'CH4 - The Disturbed',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253415",
-    tokenId: 253415
+    tokenId: 253415,
+    tagText: "Owner - steveospirals"
   },
   {
     url: CONTENT[tuneOutMappingId][253421].normal,
@@ -58,7 +62,8 @@ export const tuneOutDisplayItems: Array<DisplayListItem> = [
     label: 'CH5 - The Traveler',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253421",
-    tokenId: 253421
+    tokenId: 253421,
+    tagText: "Owner - yupig"
   },
   {
     url: CONTENT[tuneOutMappingId][253461].normal,
@@ -66,7 +71,8 @@ export const tuneOutDisplayItems: Array<DisplayListItem> = [
     label: 'CH6 - The Mystic',
     isVideo: true,
     marketUrl: "https://paras.id/token/x.paras.near::253461",
-    tokenId: 253461
+    tokenId: 253461,
+    tagText: "Owner - augie"
   }
 ]
 
@@ -91,10 +97,7 @@ const TuneOut: NextPage = () => {
         </Typography>
 
         <Box mt={3}>
-          <Button color="secondary" variant="contained" sx={{ mr: 3, mt: 3 }} href={DISCORD_LINK} target="_blank" rel="noreferrer">
-            Join Discord
-          </Button>
-          <Button color="secondary" variant="outlined" sx={{ mt: 3 }} href={TUNE_OUT_SECONDARY_LINK} target="_blank" rel="noreferrer">
+          <Button color="secondary" variant="contained" sx={{ mt: 3 }} href={TUNE_OUT_SECONDARY_LINK} target="_blank" rel="noreferrer">
             Visit Secondary Market
           </Button>
         </Box>

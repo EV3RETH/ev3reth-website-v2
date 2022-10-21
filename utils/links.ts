@@ -10,3 +10,6 @@ export const MAIN_TITLE_LINK = "https://ev3reth.s3.us-west-2.amazonaws.com/misc/
 // export const SMALL_LOGO_LINK = "https://ev3reth.s3.us-west-2.amazonaws.com/misc/logo-100.png"
 export const SMALL_LOGO_LINK = "/symbol-100.png"
 export const PARAS_COLLECTIONS = "https://paras.id/ev3reth.near/collections"
+export const T3RRA_MARKET_LINK = "https://exchange.art/series/T3RRA/nfts"
+export const T3RRA_ABOUT_LINK = "https://exchange.art/series/T3RRA/about"
+export const PRELUDES_MARKET_LINK = "https://exchange.art/series/edit/H7AXAFMYmoCub3gg2IbJ/live"
