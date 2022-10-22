@@ -27,7 +27,7 @@ const TuneOut: NextPage = () => {
           &quot;One day mother T3RRA had a series of dreams. In these dreams she gave form to the chaos around her.&quot;
         </Typography>
         <Typography variant="h6">
-          Join my discord for auction details. Click <a href={T3RRA_ABOUT_LINK} target="_blank" rel="noreferrer">here</a> to learn more about how the series was made.
+          Join my discord for auction details. Read my <a href={MEDIUM_MODEL_IS_ART_PART2_LINK} target="_blank" rel="noreferrer">Medium article</a> to learn more about how the series was made.
         </Typography>
 
         <Box mt={3}>
