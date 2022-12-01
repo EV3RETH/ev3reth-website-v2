@@ -1,7 +1,7 @@
 import { Content, truncateOwnerId } from "../hooks/useContract"
 
 type ContentMap = { [key: number]: Content }
-export const t3rraIds = [1,2,3,4,5,6,7,8,9,10,11]
+export const t3rraIds = [12,11,10,9,8,7,6,5,4,3,2,1]//[1,2,3,4,5,6,7,8,9,10,11,12]
 export const snxev3Ids = Array.from(Array(30).keys())
 const CONTENT: {[key: string]: ContentMap} = {
   "mint.snxev3.near": snxev3Ids.reduce((acc: ContentMap, id) => {
