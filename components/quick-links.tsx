@@ -55,9 +55,7 @@ const QuickLinks: FC<QuickLinksProps> = ({
         )}
         <br />
         <Button variant="contained" color="secondary" onClick={onClose}>
-          Not just yet,
-          <br />
-          I would like to enjoy your beautiful website a little longer!
+          Not just yet
         </Button>
       </Stack>
     </Modal>

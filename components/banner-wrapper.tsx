@@ -11,8 +11,10 @@ const BannerWrapper: React.FC<{ blackBg?: boolean, isBody?: boolean, children: R
   const py = isBody
     ? { xs: 4, lg: 8 }
     : { xs: 6, lg: 10 }
+  
+  const pt = !isBody ? { xs: 0} : undefined
   return (
-    <Box px={px} py={py} textAlign={{ xs: "left", md: "center"}} sx={bgSx} >
+    <Box px={px} py={py} pt={pt} textAlign={{ xs: "left", md: "center"}} sx={bgSx} >
       {children}
     </Box>
   )
