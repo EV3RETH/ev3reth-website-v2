@@ -68,7 +68,8 @@ const Home: NextPage = () => {
         </Box> */}
 
         <Typography variant="h3" position="relative" zIndex={1} textAlign="center"
-          sx={getGradientTextStyle(`linear-gradient(90deg, ${palette.secondary.main} 10%, #FFF 90%)`)}>
+        // sx={getGradientTextStyle(`linear-gradient(90deg, ${palette.secondary.main} 10%, #FFF 90%)`)}
+        >
           Composer and Creative Coder
         </Typography>
 
