@@ -38,10 +38,10 @@ const Home: NextPage = () => {
   return (
     <Box component="main" sx={{overflowX: "hidden"}}>
       <BannerWrapper >
-        <Box pb={{ xs: "54%",sm:"52%", md: "36%" }}>
+        <Box pb={{ xs: "60%",sm:"52%", md: "36%" }}>
           <Box
             position="absolute"
-            top={{ xs: "7%", sm: "5%", md: 0 }}
+            top={{ xs: "12%", sm: "5%", md: 0 }}
             left={0}
             width="100vw" height="50vw"
             display="flex" justifyContent="center"
@@ -49,6 +49,7 @@ const Home: NextPage = () => {
             sx={{
               ...logoSx,
               cursor: "pointer",
+              touchAction: "none"
             }}
           >
             <canvas ref={canvasRef}

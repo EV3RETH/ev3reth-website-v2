@@ -17,7 +17,7 @@ random.setSeed(seed)
 const particles = [];
 const largeNum = 9999
 const cursor = { x: largeNum, y: largeNum }
-const frequency = 0.002;
+const frequency = 0.0005;
 const amplitude = 0.35;
 
 let elCanvas;
@@ -141,11 +141,15 @@ const sketch = ({ width, height, canvas, context }) => {
 };
 
 const onMouseDown = (e) => {
+  e.preventDefault()
+  e.stopPropagation()
   window.addEventListener('pointermove', onMouseMove);
   window.addEventListener('pointerup', onMouseUp)
   onMouseMove(e)
 }
 const onMouseMove = (e) => {
+  e.preventDefault()
+  e.stopPropagation()
   const x = (e.offsetX / elCanvas.offsetWidth) * elCanvas.width - mx;
   const y = (e.offsetY / elCanvas.offsetHeight) * elCanvas.height - my;
   
