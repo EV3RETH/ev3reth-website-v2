@@ -49,7 +49,8 @@ const Home: NextPage = () => {
             sx={{
               ...logoSx,
               cursor: "pointer",
-              touchAction: "none"
+              touchAction: "none",
+              userSelect: "none",
             }}
           >
             <canvas ref={canvasRef}
