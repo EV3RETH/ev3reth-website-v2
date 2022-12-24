@@ -6,7 +6,7 @@ import interpolate from 'color-interpolate';
 const settings = {
   dimensions: [2048, 1024],
   animate: true,
-  fps: 24,
+  fps: 12,
   playbackRate: "fixed"
 };
 
@@ -17,7 +17,7 @@ random.setSeed(seed)
 const particles = [];
 const largeNum = 9999
 const cursor = { x: largeNum, y: largeNum }
-const frequency = 0.005;
+const frequency = 0.004;
 const amplitude = 0.4;
 
 let elCanvas;
@@ -26,6 +26,7 @@ let imgA, imgB, bgImg, mx, my;
 const cols = 80;
 const rows = 40;
 const numCells = cols * rows
+const particleStart = 6
 const particleRadius = 16
 
 const hPad = 0.7
@@ -76,7 +77,7 @@ const sketch = ({ width, height, canvas, context }) => {
 
   //Particles
   for (let i = 0; i < numCells; i++) {
-    let ix, iy, idx, r,g,b;
+    let ix, iy, idx, r,g,b,a;
     x = (i % cols) * cw;
     y = Math.floor(i / cols) * ch;
 
@@ -87,12 +88,13 @@ const sketch = ({ width, height, canvas, context }) => {
     r = imgAData[idx]
     g = imgAData[idx + 1]
     b = imgAData[idx + 2]
-    const colA = `rgb(${r}, ${g}, ${b})`
-    radius = math.mapRange(r, 0, 255, 2, particleRadius)
+    a = imgAData[idx + 3]
+    const colA = `rgba(${ r }, ${ g }, ${ b }, ${ a})`
+    radius = math.mapRange(r, 0, 255, particleStart, particleRadius)
 
-    const offset = i / (numCells);
-    const newRadius = radius - offset
-    radius = newRadius > 0 ? newRadius : radius  
+    // const offset = i / (numCells);
+    // const newRadius = radius - offset
+    // radius = newRadius > 0 ? newRadius : radius  
 
     ix = Math.floor((x / width) * imgB.width)
     iy = Math.floor((y / height) * imgB.height)
@@ -101,7 +103,8 @@ const sketch = ({ width, height, canvas, context }) => {
     r = imgBData[idx]
     g = imgBData[idx + 1]
     b = imgBData[idx + 2]
-    const colB = `rgb(${ r }, ${ g }, ${ b })`
+    a = imgBData[idx + 3]
+    const colB = `rgba(${ r }, ${ g }, ${ b }, ${a})`
 
     // const colB = "#" + random.pick(Object.values(myColors.Gainsboro))
 
@@ -113,12 +116,10 @@ const sketch = ({ width, height, canvas, context }) => {
 
   
   return ({ context, width, height, frame,  }) => {
-    // context.globalCompositeOperation = "source-over"
-    // context.fillStyle = '#222121';
-    // context.fillRect(0, 0, width, height);
-    context.clearRect(0, 0, width, height)
-    //  context.fillStyle = 'red';
-    // context.fillRect(0, 0, width, height);
+    context.globalCompositeOperation = "source-over"
+    context.fillStyle = '#222121';
+    context.fillRect(0, 0, width, height);
+
 
     context.save()
     context.translate(mx, my)
@@ -132,12 +133,9 @@ const sketch = ({ width, height, canvas, context }) => {
       particle.draw(context, index)
     })
     context.restore()
-
-    // context.globalAlpha = 0.2
-    // context.drawImage(imgACanvas, 0, 0)
     
-    // context.globalCompositeOperation = "multiply"
-    // context.drawImage(bgCanvas, 0, 0)
+    context.globalCompositeOperation = "multiply"
+    context.drawImage(bgCanvas, 0, 0)
   };
 };
 
@@ -256,8 +254,7 @@ const drawPetal = ({ context, radius = 100, sides = 4, color }) => {
 }
 
 export const start = async (canvas) => {
-  imgA = await loadImage("images/ev3-big.png")
-  // imgA = await loadImage("images/ev3-title-tan.png")
+  imgA = await loadImage("images/ev3-plain.png")
   imgB = await loadImage("images/bg-particles.png")
   bgImg = await loadImage("images/white-paper-texture.jpg")
   const settingsCanvas = {
@@ -289,7 +286,7 @@ class Particle {
     this.radius = radius;
     this.scale = 1;
     this.colMap = colMap
-    this.color = colMap(0.1)
+    this.color = colMap(0)
 
     this.initSides = random.range(3, 4);
     this.sides = this.initSides
@@ -300,10 +297,6 @@ class Particle {
     this.pushFactor = random.range(0.01, 0.02);
     this.pullFactor = random.range(0.0022, 0.0066);
     this.dampFactor = random.range(0.9, 0.95);
-
-
-    this.dashWidth = random.range(5, 50)
-    this.dashGap = random.range(1, 10)
   }
 
   update(noise) {
@@ -318,10 +311,10 @@ class Particle {
     this.ax = dx * this.pullFactor;
     this.ay = dy * this.pullFactor;
 
-    this.scale = math.mapRange(dd, 0, 200, 1, 4)
+    this.scale = math.mapRange(dd, 0, 200, 1, 3)
 
     this.color = this.colMap(math.mapRange(dd, 0, 200, 0, 1, true))
-    this.rotation = math.mapRange(dd, 0, 200, this.initRotation, this.initRotation + 360)
+    this.rotation = math.mapRange(dd, 0, 200, this.initRotation, this.initRotation + 270)
     
     
     //push force
@@ -352,20 +345,18 @@ class Particle {
 
   draw(context, index) {
     context.save();
-    // const n = random.noise2D(this.x, this.y, frequency, amplitude);
-    // this.x += n;
-    // this.y += n;
 
     context.translate(this.x, this.y);
     context.rotate(math.degToRad(this.rotation))
     context.fillStyle = this.color
 
     const scaledRadius = this.radius * this.scale
-
-    context.shadowColor = "rgba(0,0,0,0.8)"
-    context.shadowOffsetX = -scaledRadius * 0.1;
-    context.shadowOffsetY = scaledRadius * 0.1;
-
+    if (this.radius > (particleStart + particleRadius) / 2 || this.scale > 2.5) {
+      context.shadowColor = "black"
+      context.shadowOffsetX = -scaledRadius * 0.1;
+      context.shadowOffsetY = scaledRadius * 0.1;
+    }
+  
     const option = {
       context,
       radius: scaledRadius,

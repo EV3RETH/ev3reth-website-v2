@@ -25,8 +25,9 @@ const Home: NextPage = () => {
   const isMobile = useMediaQuery(breakpoints.down("md"))
 
   const logoSx: SxProps<Theme> = {
-    transition: "filter 2s",
-    filter: logoLoaded ? "blur(0px) brightness(1)" : "blur(8px) brightness(0.4)",
+    transition: "filter 2s, opacity 2s",
+    filter: logoLoaded ? "blur(0px)" : "blur(8px)",
+    opacity: logoLoaded ? 1 : 0,
   }
   useEffect(() => {
     if (canvasRef?.current) {
@@ -51,8 +52,8 @@ const Home: NextPage = () => {
             }}
           >
             <canvas ref={canvasRef}
-              style={{transform: isMobile ? "scale(1.5)" : "scale(1.2)"}
-            } />
+            style={{transform: isMobile ? "scale(1.5)" : "scale(1.2)"}} 
+            />
           </Box>
         </Box>
         {/* <Box maxWidth={1024} mx="auto" mt={6} mb={4} zIndex={20} sx={logoSx} position="relative">
