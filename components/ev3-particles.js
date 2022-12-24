@@ -17,8 +17,8 @@ random.setSeed(seed)
 const particles = [];
 const largeNum = 9999
 const cursor = { x: largeNum, y: largeNum }
-const frequency = 0.004;
-const amplitude = 0.4;
+const frequency = 0.002;
+const amplitude = 0.35;
 
 let elCanvas;
 let imgA, imgB, bgImg, mx, my;
@@ -67,13 +67,14 @@ const sketch = ({ width, height, canvas, context }) => {
   imgAContext.drawImage(imgA, 0, 0, imgAWidth, imgAHeight)
   const imgAData = imgAContext.getImageData(0, 0, imgAWidth, imgAHeight).data
 
+  const imgBWidth = Math.ceil(imgB.width * wPad)
+  const imgBHeight = Math.ceil(imgB.height * hPad)
   const imgBCanvas = document.createElement('canvas')
   const imgBContext = imgBCanvas.getContext('2d')
-  imgBCanvas.width = imgB.width
-  imgBCanvas.height = imgB.height
-  imgBContext.drawImage(imgB, 0, 0, imgB.width, imgB.height)
-  const imgBData = imgBContext.getImageData(0, 0, imgB.width, imgB.height).data
-
+  imgBCanvas.width = imgBWidth
+  imgBCanvas.height = imgBHeight
+  imgBContext.drawImage(imgB, 0, 0, imgBWidth, imgBHeight)
+  const imgBData = imgBContext.getImageData(0, 0, imgBWidth, imgBHeight).data
 
   //Particles
   for (let i = 0; i < numCells; i++) {
@@ -98,7 +99,7 @@ const sketch = ({ width, height, canvas, context }) => {
 
     ix = Math.floor((x / width) * imgB.width)
     iy = Math.floor((y / height) * imgB.height)
-    idx = (iy * (imgB.width) + ix) * 4;
+    idx = (iy * (imgBWidth) + ix) * 4;
 
     r = imgBData[idx]
     g = imgBData[idx + 1]
