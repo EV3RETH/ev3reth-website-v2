@@ -17,7 +17,7 @@ random.setSeed(seed)
 const particles = [];
 const largeNum = 9999
 const cursor = { x: largeNum, y: largeNum }
-const frequency = 0.0005;
+const frequency = 0.001;
 const amplitude = 0.35;
 
 let elCanvas;
