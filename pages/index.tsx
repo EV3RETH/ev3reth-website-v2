@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { NextPage } from 'next'
 import Image from 'next/image';
-import { Typography, Box, List, Hidden, Button, CardMedia } from "@mui/material"
+import { Typography, Box, List, Hidden, Button, CardMedia, useMediaQuery } from "@mui/material"
 import { SxProps, Theme, useTheme } from "@mui/material/styles"
 import BigDisplay from '../components/big-display';
 import BannerWrapper from '../components/banner-wrapper'
@@ -10,25 +10,54 @@ import { tuneOutDisplayItems, tuneOutMappingId } from './tune-out';
 import titleBackup from '../public/EV3RETH-black.png'
 import { MAIN_TITLE_LINK, MEDIUM_MODEL_IS_ART_PART1_LINK, MEDIUM_MODEL_IS_ART_PART2_LINK } from '../utils/links';
 import SvgCurve from '../components/svgCurve';
-import { getGradientTextStyle, maxDisplayWidth } from '../styles/theme';
+import { blackBgSx, getGradientTextStyle, maxDisplayWidth } from '../styles/theme';
 import QuickLinks from '../components/quick-links';
 import Link from 'next/link';
 import About from '../components/about';
+import {start} from '../components/ev3-particles.js'
 
 const Home: NextPage = () => {
   const [logoLoaded, setLogoLoaded] = useState(false)
   const [quickLinksOpen, setQuickLinksOpen] = useState(false)
-  const { typography, palette } = useTheme()
+  const { typography, palette, breakpoints } = useTheme()
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
+
+  const isMobile = useMediaQuery(breakpoints.down("md"))
+
   const logoSx: SxProps<Theme> = {
-    transition: "filter 2s",
-    filter: logoLoaded ? "blur(0px) brightness(1)" : "blur(8px) brightness(0.4)",
-    ...typography.h1, //for alt text fallback
+    transition: "filter 2s, opacity 2s",
+    filter: logoLoaded ? "blur(0px)" : "blur(8px)",
+    opacity: logoLoaded ? 1 : 0,
   }
-  
+  useEffect(() => {
+    if (canvasRef?.current) {
+      setLogoLoaded(true)
+      start(canvasRef.current)
+    }
+  },[canvasRef])
   return (
-    <Box component="main">
-      <BannerWrapper>
-        <Box maxWidth={1024} mx="auto" mt={6} mb={4} sx={logoSx}>
+    <Box component="main" sx={{overflowX: "hidden"}}>
+      <BannerWrapper >
+        <Box pb={{ xs: "60%",sm:"52%", md: "36%" }}>
+          <Box
+            position="absolute"
+            top={{ xs: "12%", sm: "5%", md: 0 }}
+            left={0}
+            width="100vw" height="50vw"
+            display="flex" justifyContent="center"
+            overflow="hidden"
+            sx={{
+              ...logoSx,
+              cursor: "pointer",
+              touchAction: "none"
+            }}
+          >
+            <canvas ref={canvasRef}
+            style={{transform: isMobile ? "scale(1.5)" : "scale(1.2)"}} 
+            />
+          </Box>
+        </Box>
+        {/* <Box maxWidth={1024} mx="auto" mt={6} mb={4} zIndex={20} sx={logoSx} position="relative">
           <Image
             height={324}
             width={1937}
@@ -36,12 +65,13 @@ const Home: NextPage = () => {
             alt={"EV3RETH"}
             priority
             onLoadingComplete={() => setLogoLoaded(true)}
-          />
-        </Box>
+          /> 
+        </Box> */}
 
         <Typography variant="h3" position="relative" zIndex={1} textAlign="center"
-          sx={getGradientTextStyle(`linear-gradient(90deg, ${palette.secondary.main} 10%, #FFF 90%)`)}>
-          Composer and Machine Learning Artist
+        // sx={getGradientTextStyle(`linear-gradient(90deg, ${palette.secondary.main} 10%, #FFF 90%)`)}
+        >
+          Composer and Creative Coder
         </Typography>
 
         <Box mt={8} gap={3} display="flex" justifyContent="center" flexWrap="wrap">

@@ -13,7 +13,7 @@ const About: FC = () => {
       <BannerWrapper isBody>
         <Box pt={{ xs: 4, sm: 10, xl: 12 }} px={{ xl: 10 }} maxWidth={maxDisplayWidth} mx="auto">
           <Typography variant="h3" mb={3}
-            sx={getGradientTextStyle(`linear-gradient(90deg, #FFF 20%, ${palette.secondary.light} 80%)`)}
+            // sx={getGradientTextStyle(`linear-gradient(90deg, #FFF 20%, ${palette.secondary.light} 80%)`)}
           >
             Making Future Art
           </Typography>
