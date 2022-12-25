@@ -34,7 +34,6 @@ const wPad = hPad
 
 const sketch = ({ width, height, canvas, context }) => {
   let x, y, particle, radius;
-
   // grid
   const gw = Math.ceil(width * wPad)
   const gh = Math.ceil(height * hPad)
