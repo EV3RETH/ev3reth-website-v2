@@ -329,9 +329,7 @@ class Particle {
     dx = this.x - cursor.x;
     dy = this.y - cursor.y;
     dd = Math.sqrt(dx * dx + dy * dy) * cursor.pressure
-    console.log("🚀 ~ file: ev3-particles.js:333 ~ Particle ~ update ~ cursor.pressure", cursor.pressure)
-    
-    
+  
     distDelta = this.minDist - dd;
 
     if (dd < this.minDist) {
