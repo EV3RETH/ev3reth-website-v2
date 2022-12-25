@@ -16,7 +16,7 @@ random.setSeed(seed)
 
 const particles = [];
 const largeNum = 9999
-const cursor = { x: largeNum, y: largeNum }
+const cursor = { x: largeNum, y: largeNum, pressure: 1 }
 const frequency = 0.001;
 const amplitude = 0.35;
 
@@ -151,7 +151,10 @@ const onMouseMove = (e) => {
   e.stopPropagation()
   const x = (e.offsetX / elCanvas.offsetWidth) * elCanvas.width - mx;
   const y = (e.offsetY / elCanvas.offsetHeight) * elCanvas.height - my;
-  
+
+  if (e.pointerType === "touch") {
+    cursor.pressure = e.pressure + 1
+  }
   cursor.x = x
   cursor.y = y
 }
@@ -161,6 +164,7 @@ const onMouseUp = () => {
   
   cursor.x = largeNum;
   cursor.y = largeNum;
+  cursor.pressure = 1;
 }
 
 const loadImage = async (url) => {
@@ -324,7 +328,8 @@ class Particle {
     //push force
     dx = this.x - cursor.x;
     dy = this.y - cursor.y;
-    dd = Math.sqrt(dx * dx + dy * dy)
+    dd = Math.sqrt(dx * dx + dy * dy) * cursor.pressure
+    console.log("🚀 ~ file: ev3-particles.js:333 ~ Particle ~ update ~ cursor.pressure", cursor.pressure)
     
     
     distDelta = this.minDist - dd;
