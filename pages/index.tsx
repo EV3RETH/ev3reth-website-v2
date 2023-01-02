@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { NextPage } from 'next'
 import Image from 'next/image';
-import { Typography, Box, List, Hidden, Button, CardMedia, useMediaQuery } from "@mui/material"
+import { Typography, Box, List, Hidden, Button, CardMedia, useMediaQuery, IconButton } from "@mui/material"
 import { SxProps, Theme, useTheme } from "@mui/material/styles"
 import BigDisplay from '../components/big-display';
 import BannerWrapper from '../components/banner-wrapper'
@@ -15,6 +15,7 @@ import QuickLinks from '../components/quick-links';
 import Link from 'next/link';
 import About from '../components/about';
 import {start} from '../components/ev3-particles.js'
+import Fullscreen from '@mui/icons-material/Fullscreen';
 
 const Home: NextPage = () => {
   const [logoLoaded, setLogoLoaded] = useState(false)
@@ -38,10 +39,19 @@ const Home: NextPage = () => {
   return (
     <Box component="main" sx={{overflowX: "hidden"}}>
       <BannerWrapper >
-        <Box pb={{ xs: "60%",sm:"52%", md: "36%" }}>
+        <Box
+          pb={{ xs: "60%", sm: "52%", md: "36%" }}
+          sx={{
+            "&:hover": {
+              "& + #playground-link": {
+                opacity: 1,
+              }
+            }
+          }}
+        >
           <Box
             position="absolute"
-            top={{ xs: "12%", sm: "5%", md: 0 }}
+            top={{ xs: "9%", sm: "5%", md: 0 }}
             left={0}
             width="100vw" height="50vw"
             display="flex" justifyContent="center"
@@ -69,6 +79,26 @@ const Home: NextPage = () => {
           /> 
         </Box> */}
 
+        <Box
+          id="playground-link"
+          position="absolute" top={"5rem"} right={"1rem"} zIndex={3}
+          sx={{
+            transition: "opacity 1s",
+            opacity: isMobile ? 1 : 0,
+            "&:hover": {
+              opacity:1
+            }
+          }}
+        >
+          <Link href="/ev3reth" passHref>
+            <Button
+              color="secondary" variant="contained"
+              sx={{ p: 0, minWidth: 30 }}
+            >
+              <Fullscreen fontSize="large"/>
+            </Button>
+          </Link>
+        </Box>
         <Typography variant="h3" position="relative" zIndex={1} textAlign="center"
         // sx={getGradientTextStyle(`linear-gradient(90deg, ${palette.secondary.main} 10%, #FFF 90%)`)}
         >
